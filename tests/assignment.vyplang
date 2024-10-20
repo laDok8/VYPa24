@@ -1,0 +1,8 @@
+// example of assignment of an integer value and its print out
+void main ( void )
+{
+int var;
+var = 777;
+
+print(var, "\n");
+}  // end of main
