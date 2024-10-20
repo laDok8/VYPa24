@@ -26,21 +26,39 @@ class VypListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by VypParser#data_type.
-    def enterData_type(self, ctx:VypParser.Data_typeContext):
+    # Enter a parse tree produced by VypParser#var_type.
+    def enterVar_type(self, ctx:VypParser.Var_typeContext):
         pass
 
-    # Exit a parse tree produced by VypParser#data_type.
-    def exitData_type(self, ctx:VypParser.Data_typeContext):
+    # Exit a parse tree produced by VypParser#var_type.
+    def exitVar_type(self, ctx:VypParser.Var_typeContext):
         pass
 
 
-    # Enter a parse tree produced by VypParser#param_list.
-    def enterParam_list(self, ctx:VypParser.Param_listContext):
+    # Enter a parse tree produced by VypParser#ret_type.
+    def enterRet_type(self, ctx:VypParser.Ret_typeContext):
         pass
 
-    # Exit a parse tree produced by VypParser#param_list.
-    def exitParam_list(self, ctx:VypParser.Param_listContext):
+    # Exit a parse tree produced by VypParser#ret_type.
+    def exitRet_type(self, ctx:VypParser.Ret_typeContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#f_param_list.
+    def enterF_param_list(self, ctx:VypParser.F_param_listContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#f_param_list.
+    def exitF_param_list(self, ctx:VypParser.F_param_listContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#f_call_list.
+    def enterF_call_list(self, ctx:VypParser.F_call_listContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#f_call_list.
+    def exitF_call_list(self, ctx:VypParser.F_call_listContext):
         pass
 
 
@@ -80,12 +98,21 @@ class VypListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by VypParser#assignment.
-    def enterAssignment(self, ctx:VypParser.AssignmentContext):
+    # Enter a parse tree produced by VypParser#var_assign.
+    def enterVar_assign(self, ctx:VypParser.Var_assignContext):
         pass
 
-    # Exit a parse tree produced by VypParser#assignment.
-    def exitAssignment(self, ctx:VypParser.AssignmentContext):
+    # Exit a parse tree produced by VypParser#var_assign.
+    def exitVar_assign(self, ctx:VypParser.Var_assignContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#instance_assign.
+    def enterInstance_assign(self, ctx:VypParser.Instance_assignContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#instance_assign.
+    def exitInstance_assign(self, ctx:VypParser.Instance_assignContext):
         pass
 
 
@@ -116,12 +143,129 @@ class VypListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by VypParser#expr.
-    def enterExpr(self, ctx:VypParser.ExprContext):
+    # Enter a parse tree produced by VypParser#id_expr.
+    def enterId_expr(self, ctx:VypParser.Id_exprContext):
         pass
 
-    # Exit a parse tree produced by VypParser#expr.
-    def exitExpr(self, ctx:VypParser.ExprContext):
+    # Exit a parse tree produced by VypParser#id_expr.
+    def exitId_expr(self, ctx:VypParser.Id_exprContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#cast_expr.
+    def enterCast_expr(self, ctx:VypParser.Cast_exprContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#cast_expr.
+    def exitCast_expr(self, ctx:VypParser.Cast_exprContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#instance_creation_expr.
+    def enterInstance_creation_expr(self, ctx:VypParser.Instance_creation_exprContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#instance_creation_expr.
+    def exitInstance_creation_expr(self, ctx:VypParser.Instance_creation_exprContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#invocation_expr.
+    def enterInvocation_expr(self, ctx:VypParser.Invocation_exprContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#invocation_expr.
+    def exitInvocation_expr(self, ctx:VypParser.Invocation_exprContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#mul_div_expr.
+    def enterMul_div_expr(self, ctx:VypParser.Mul_div_exprContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#mul_div_expr.
+    def exitMul_div_expr(self, ctx:VypParser.Mul_div_exprContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#rel_expr.
+    def enterRel_expr(self, ctx:VypParser.Rel_exprContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#rel_expr.
+    def exitRel_expr(self, ctx:VypParser.Rel_exprContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#not_expr.
+    def enterNot_expr(self, ctx:VypParser.Not_exprContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#not_expr.
+    def exitNot_expr(self, ctx:VypParser.Not_exprContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#add_sub_expr.
+    def enterAdd_sub_expr(self, ctx:VypParser.Add_sub_exprContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#add_sub_expr.
+    def exitAdd_sub_expr(self, ctx:VypParser.Add_sub_exprContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#and_expr.
+    def enterAnd_expr(self, ctx:VypParser.And_exprContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#and_expr.
+    def exitAnd_expr(self, ctx:VypParser.And_exprContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#brace_expr.
+    def enterBrace_expr(self, ctx:VypParser.Brace_exprContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#brace_expr.
+    def exitBrace_expr(self, ctx:VypParser.Brace_exprContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#or_expr.
+    def enterOr_expr(self, ctx:VypParser.Or_exprContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#or_expr.
+    def exitOr_expr(self, ctx:VypParser.Or_exprContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#literal_expr.
+    def enterLiteral_expr(self, ctx:VypParser.Literal_exprContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#literal_expr.
+    def exitLiteral_expr(self, ctx:VypParser.Literal_exprContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#eq_expr.
+    def enterEq_expr(self, ctx:VypParser.Eq_exprContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#eq_expr.
+    def exitEq_expr(self, ctx:VypParser.Eq_exprContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#fun_call_expr.
+    def enterFun_call_expr(self, ctx:VypParser.Fun_call_exprContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#fun_call_expr.
+    def exitFun_call_expr(self, ctx:VypParser.Fun_call_exprContext):
         pass
 
 
@@ -143,21 +287,39 @@ class VypListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by VypParser#fun_call_head.
-    def enterFun_call_head(self, ctx:VypParser.Fun_call_headContext):
-        pass
-
-    # Exit a parse tree produced by VypParser#fun_call_head.
-    def exitFun_call_head(self, ctx:VypParser.Fun_call_headContext):
-        pass
-
-
     # Enter a parse tree produced by VypParser#literal_val.
     def enterLiteral_val(self, ctx:VypParser.Literal_valContext):
         pass
 
     # Exit a parse tree produced by VypParser#literal_val.
     def exitLiteral_val(self, ctx:VypParser.Literal_valContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#first_instance_ref.
+    def enterFirst_instance_ref(self, ctx:VypParser.First_instance_refContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#first_instance_ref.
+    def exitFirst_instance_ref(self, ctx:VypParser.First_instance_refContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#instance_expr.
+    def enterInstance_expr(self, ctx:VypParser.Instance_exprContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#instance_expr.
+    def exitInstance_expr(self, ctx:VypParser.Instance_exprContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#nested_invocation.
+    def enterNested_invocation(self, ctx:VypParser.Nested_invocationContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#nested_invocation.
+    def exitNested_invocation(self, ctx:VypParser.Nested_invocationContext):
         pass
 
 
