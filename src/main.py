@@ -6,7 +6,7 @@ from antlr4.error.ErrorListener import ConsoleErrorListener
 from antlr_src.VypLexer import VypLexer
 from antlr_src.VypParser import VypParser
 from src.utils import _constants
-from src.utils.lexical_error_listener import LexicalErrorListener
+from src.compiler.lexical_error_listener import LexicalErrorListener
 
 
 def _exit(code: int, message: str):
