@@ -5,8 +5,8 @@ from antlr4.error.ErrorListener import ConsoleErrorListener
 
 from antlr_src.VypLexer import VypLexer
 from antlr_src.VypParser import VypParser
-from src.utils import _constants
-from src.compiler.lexical_error_listener import LexicalErrorListener
+from src.utils import _constants # TODO: _heresy
+from src.compiler import *
 
 
 def _exit(code: int, message: str):
@@ -38,8 +38,15 @@ def main(argv):
     if parser.getNumberOfSyntaxErrors() > 0:
         _exit(_constants.SYNTAX_ERROR, "Syntax error")
 
-    print(tree.toStringTree(recog=parser))
     # now it's time for semantic analysis (and code generation)
+    print("tree:", tree.toStringTree(recog=parser))
+
+    definition_listener = DefinitionListener()
+    walker = ParseTreeWalker()
+    try:
+        walker.walk(definition_listener, tree)
+    except ValueError as e:
+        _exit(_constants.SEMANTIC_DECLARATION_ERROR, str(e))
 
 
 if __name__ == '__main__':
