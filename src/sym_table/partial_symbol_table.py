@@ -10,12 +10,12 @@ class PartialSymbolTable:
         self.symbols = {}
 
     def add_symbol(self, symbol: Symbol):
-        if symbol.name in self.symbols:
+        if symbol.name in [s.name for s in self.symbols.values()]:
             raise ValueError(f"Symbol {symbol.name} already exists")
         self.symbols[symbol.name] = symbol
 
     def get_symbol(self, name: str) -> Symbol:
-        if name not in self.symbols:
+        if name not in [s.name for s in self.symbols.values()]:
             raise ValueError(f"Symbol {name} not found")
         return self.symbols.get(name)
 

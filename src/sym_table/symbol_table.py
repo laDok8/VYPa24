@@ -33,12 +33,23 @@ class SymbolTable:
         assert self.tables, "No scope to add symbol to"
         self.tables[-1].add_symbol(s)
 
+    def add_global_symbol(self, s: Symbol):
+        """
+        add f() or class to the global scope
+        """
+        assert self.tables, "No scope to add symbol to"
+        self.tables[0].add_symbol(s)
+
     def get_symbol(self, name) -> Symbol | None:
         """
         search for a symbol within all available scopes
         """
         for table in reversed(self.tables):
-            s = table.get_symbol(name)
+            # We are looking through all tables so exception is possible
+            try:
+                s = table.get_symbol(name)
+            except ValueError:
+                continue
             if s:
                 return s
         return None

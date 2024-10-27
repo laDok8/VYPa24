@@ -1,3 +1,13 @@
+
+void g ( void )
+{;;
+// foo
+}
+void f ( int x, string z )
+{
+// bar
+}
+
 // example of assignment of an integer value and its print out
 void main ( void )
 {

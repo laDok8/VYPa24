@@ -39,7 +39,7 @@ def main(argv):
         _exit(_constants.SYNTAX_ERROR, "Syntax error")
 
     # now it's time for semantic analysis (and code generation)
-    print("tree:", tree.toStringTree(recog=parser))
+    # print("tree:", tree.toStringTree(recog=parser))
 
     definition_listener = DefinitionListener()
     walker = ParseTreeWalker()
