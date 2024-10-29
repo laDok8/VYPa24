@@ -5,6 +5,7 @@ from antlr4.error.ErrorListener import ConsoleErrorListener
 
 from antlr_src.VypLexer import VypLexer
 from antlr_src.VypParser import VypParser
+from src.compiler.semantic_check_listener import SemanticListener
 from src.utils import _constants # TODO: _heresy
 from src.compiler import *
 
@@ -43,8 +44,12 @@ def main(argv):
 
     definition_listener = DefinitionListener()
     walker = ParseTreeWalker()
+    walker.walk(definition_listener, tree)
+
+    # 2nd pass
+    semantic_checker = SemanticListener(definition_listener.getFunctionTable())
     try:
-        walker.walk(definition_listener, tree)
+        walker.walk(semantic_checker, tree)
     except ValueError as e:
         _exit(_constants.SEMANTIC_DECLARATION_ERROR, str(e))
 

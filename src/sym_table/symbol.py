@@ -2,11 +2,10 @@ from enum import Enum
 
 
 class SymbolTypes(Enum):
-    INT = 'int'
-    STR = 'string'
-    VOID = 'void'
-    FNC = 'function'
-    CLS = 'class'
+    CLASS = 'class'
+    FUN = 'function'
+    VAR = 'variable'
+    LiT = 'literal'
 
 
 class Symbol:
@@ -14,16 +13,12 @@ class Symbol:
     Represents a symbol of a program (var, fun, class)
     """
 
-    def __init__(self, name: str, var_type=SymbolTypes.INT, value=None, f_args=None, f_ret=SymbolTypes.VOID,
-                 class_parent=None):
+    def __init__(self, name: str, symbol_type: SymbolTypes, data_type):
         self.name = name
-        if var_type not in SymbolTypes:
-            raise ValueError(f"Unknown type {var_type}")
-        self.var_type = var_type
-        self.value = value
-        self.f_args = f_args
-        self.f_ret = f_ret
-        self.class_parent = class_parent
+        self.data_type = data_type
+        if symbol_type not in SymbolTypes:
+            raise ValueError(f"Unknown type {symbol_type}")
+        self.symbol_type = symbol_type
 
     def __str__(self):
-        return f"{self.var_type} {self.name}"
+        return f"{self.symbol_type} {self.name}"

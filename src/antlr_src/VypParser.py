@@ -133,7 +133,7 @@ class VypParser ( Parser ):
     RULE_ret_type = 3
     RULE_f_param_list = 4
     RULE_f_call_list = 5
-    RULE_param = 6
+    RULE_f_param_def = 6
     RULE_code_block = 7
     RULE_statement = 8
     RULE_declaration = 9
@@ -153,9 +153,9 @@ class VypParser ( Parser ):
     RULE_class_member = 23
 
     ruleNames =  [ "program", "function_def", "var_type", "ret_type", "f_param_list", 
-                   "f_call_list", "param", "code_block", "statement", "declaration", 
-                   "var_assign", "instance_assign", "ret_stmt", "if_else_stmt", 
-                   "while_stmt", "expr", "fun_call", "instance_creation", 
+                   "f_call_list", "f_param_def", "code_block", "statement", 
+                   "declaration", "var_assign", "instance_assign", "ret_stmt", 
+                   "if_else_stmt", "while_stmt", "expr", "fun_call", "instance_creation", 
                    "literal_val", "first_instance_ref", "instance_expr", 
                    "nested_invocation", "class_def", "class_member" ]
 
@@ -465,11 +465,11 @@ class VypParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def param(self, i:int=None):
+        def f_param_def(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(VypParser.ParamContext)
+                return self.getTypedRuleContexts(VypParser.F_param_defContext)
             else:
-                return self.getTypedRuleContext(VypParser.ParamContext,i)
+                return self.getTypedRuleContext(VypParser.F_param_defContext,i)
 
 
         def VOID(self):
@@ -501,7 +501,7 @@ class VypParser ( Parser ):
             token = self._input.LA(1)
             if token in [25, 27, 34]:
                 self.state = 67
-                self.param()
+                self.f_param_def()
                 self.state = 72
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
@@ -509,7 +509,7 @@ class VypParser ( Parser ):
                     self.state = 68
                     self.match(VypParser.T__2)
                     self.state = 69
-                    self.param()
+                    self.f_param_def()
                     self.state = 74
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
@@ -595,7 +595,7 @@ class VypParser ( Parser ):
         return localctx
 
 
-    class ParamContext(ParserRuleContext):
+    class F_param_defContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -610,23 +610,23 @@ class VypParser ( Parser ):
             return self.getToken(VypParser.ID, 0)
 
         def getRuleIndex(self):
-            return VypParser.RULE_param
+            return VypParser.RULE_f_param_def
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterParam" ):
-                listener.enterParam(self)
+            if hasattr( listener, "enterF_param_def" ):
+                listener.enterF_param_def(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitParam" ):
-                listener.exitParam(self)
+            if hasattr( listener, "exitF_param_def" ):
+                listener.exitF_param_def(self)
 
 
 
 
-    def param(self):
+    def f_param_def(self):
 
-        localctx = VypParser.ParamContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 12, self.RULE_param)
+        localctx = VypParser.F_param_defContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 12, self.RULE_f_param_def)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 88

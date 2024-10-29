@@ -89,7 +89,7 @@ var_type
 ret_type
 f_param_list
 f_call_list
-param
+f_param_def
 code_block
 statement
 declaration

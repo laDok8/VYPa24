@@ -12,9 +12,9 @@ program: (function_def | class_def)+;
 function_def: ret_type ID '(' f_param_list ')' code_block;
 var_type: INT | STRING | ID;
 ret_type: var_type | VOID;
-f_param_list: (param (',' param)*|VOID) ;
+f_param_list: (f_param_def (',' f_param_def)*|VOID) ;
 f_call_list: (expr (',' expr)*)? ;
-param: var_type ID;
+f_param_def: var_type ID;
 code_block
     : '{' statement* '}'
     | '{' code_block '}';

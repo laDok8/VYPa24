@@ -62,12 +62,12 @@ class VypListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by VypParser#param.
-    def enterParam(self, ctx:VypParser.ParamContext):
+    # Enter a parse tree produced by VypParser#f_param_def.
+    def enterF_param_def(self, ctx:VypParser.F_param_defContext):
         pass
 
-    # Exit a parse tree produced by VypParser#param.
-    def exitParam(self, ctx:VypParser.ParamContext):
+    # Exit a parse tree produced by VypParser#f_param_def.
+    def exitF_param_def(self, ctx:VypParser.F_param_defContext):
         pass
 
 
