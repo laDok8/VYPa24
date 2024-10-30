@@ -1,4 +1,5 @@
 from .definition_listener import DefinitionListener
 from .lexical_error_listener import LexicalErrorListener
+from .semantic_check_listener import SemanticListener
 
-__all__ = ['DefinitionListener', 'LexicalErrorListener']
+__all__ = ['DefinitionListener', 'LexicalErrorListener', 'SemanticListener']

@@ -5,9 +5,8 @@ from antlr4.error.ErrorListener import ConsoleErrorListener
 
 from antlr_src.VypLexer import VypLexer
 from antlr_src.VypParser import VypParser
-from src.compiler.semantic_check_listener import SemanticListener
-from src.utils import _constants # TODO: _heresy
 from src.compiler import *
+from src.utils import constants
 
 
 def _exit(code: int, message: str):
@@ -20,9 +19,9 @@ def main(argv):
     try:
         input_stream = FileStream(argv[1])
     except IndexError:
-        _exit(_constants.INTERNAL_ERROR, "Missing argument: input file")
+        _exit(constants.INTERNAL_ERROR, "Missing argument: input file")
     except FileNotFoundError:
-        _exit(_constants.INTERNAL_ERROR, "File not found")
+        _exit(constants.INTERNAL_ERROR, "File not found")
 
     lexer = VypLexer(input_stream)
     lexer.removeErrorListener(ConsoleErrorListener.INSTANCE)  # useful for debugging
@@ -35,12 +34,9 @@ def main(argv):
     tree = parser.program()
 
     if lexical_error_listener.has_errors:
-        _exit(_constants.LEXICAL_ERROR, "Lexical error")
+        _exit(constants.LEXICAL_ERROR, "Lexical error")
     if parser.getNumberOfSyntaxErrors() > 0:
-        _exit(_constants.SYNTAX_ERROR, "Syntax error")
-
-    # now it's time for semantic analysis (and code generation)
-    # print("tree:", tree.toStringTree(recog=parser))
+        _exit(constants.SYNTAX_ERROR, "Syntax error")
 
     definition_listener = DefinitionListener()
     walker = ParseTreeWalker()
@@ -51,7 +47,7 @@ def main(argv):
     try:
         walker.walk(semantic_checker, tree)
     except ValueError as e:
-        _exit(_constants.SEMANTIC_DECLARATION_ERROR, str(e))
+        _exit(constants.SEMANTIC_DECLARATION_ERROR, str(e))
 
 
 if __name__ == '__main__':

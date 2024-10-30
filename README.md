@@ -12,3 +12,9 @@ To compile grammar and run the compiler we need antlr4
 ```bash
 pip install -r requirements.txt
 ```
+
+# Interpreter
+To invoke the interpreter, run the following command:
+```bash
+java -jar vypint-1.0.jar src.vypcode < input > output
+```

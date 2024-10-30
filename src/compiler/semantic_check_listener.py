@@ -1,8 +1,8 @@
 from antlr4.tree.Tree import ParseTreeListener
 
 from src.antlr_src.VypParser import VypParser  # for the constants
+from src.code_gen.code_generator import *
 from src.sym_table import *
-from src.sym_table.symbol import SymbolTypes
 
 
 class SemanticListener(ParseTreeListener):
@@ -17,8 +17,12 @@ class SemanticListener(ParseTreeListener):
         self.class_symbols = class_symbols
         self.sym_table = SymbolTable()
         self._legal_data_types = ['int', 'string']
+        self.code_generator = CodeGenerator()
         # add classes to legal data types
         self._legal_data_types.extend([sym for sym in class_symbols.get_current_symbols()])
+
+    def exitProgram(self, _):
+        self.code_generator.generate_code()
 
     def assert_legal_data_type(self, _type):
         if _type not in self._legal_data_types:

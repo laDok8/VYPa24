@@ -2,9 +2,6 @@ from antlr4.tree.Tree import ParseTreeListener
 
 from src.antlr_src.VypParser import VypParser  # for the constants
 from src.sym_table import *
-from src.sym_table.class_symbol import ClassSymbol
-from src.sym_table.function_symbol import FunctionSymbol
-from src.sym_table.symbol import SymbolTypes
 
 
 class DefinitionListener(ParseTreeListener):
@@ -32,8 +29,6 @@ class DefinitionListener(ParseTreeListener):
         # every good program should have a main function
         self.function_table.get_symbol("main")
 
-        print("exiting 1st pass with symtable:")
-        print(self.function_table)
 
     def _define_builtin(self):
         # classes
