@@ -47,7 +47,7 @@ def main(argv):
     walker.walk(definition_listener, tree)
 
     # 2nd pass
-    semantic_checker = SemanticListener(definition_listener.getFunctionTable())
+    semantic_checker = SemanticListener(definition_listener.getFunctionTable(), definition_listener.getClassTable())
     try:
         walker.walk(semantic_checker, tree)
     except ValueError as e:

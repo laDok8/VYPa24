@@ -13,5 +13,11 @@ class FunctionSymbol(Symbol):
     def add_param(self, param: Symbol):
         self.f_args.append(param)
 
+    def get_params(self):
+        return self.f_args
+
+    def get_return_type(self):
+        return self.data_type
+
     def __str__(self):
         return f"{self.data_type} {self.name}({', '.join([str(arg) for arg in self.f_args])})"

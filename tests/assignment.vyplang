@@ -1,3 +1,13 @@
+class Shape : Object {
+    int id;
+    void Shape ( void ) { print("Shape constructor\n"); }
+    string toString(void) { return "Shape" + (string)this.id;}
+}
+class Rectangle : Shape {
+    int width, height;
+    string toString(void) { return super.toString() + " - Rectangle" + (string)this.width + "x" + (string)this.area(); }
+    int area(void) { return this.width * this.height; }
+}
 
 void g ( void )
 {;;
@@ -15,4 +25,10 @@ int var;
 var = 777;
 
 print(var, "\n");
+
+Rectangle r; r = new Rectangle;
+r.id = 42; r.width = readInt(); r.height = readInt();
+Shape s; s = r;
+print(s.toString(), "\n");
+
 }  // end of main

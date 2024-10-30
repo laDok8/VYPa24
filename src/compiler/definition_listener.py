@@ -2,6 +2,7 @@ from antlr4.tree.Tree import ParseTreeListener
 
 from src.antlr_src.VypParser import VypParser  # for the constants
 from src.sym_table import *
+from src.sym_table.class_symbol import ClassSymbol
 from src.sym_table.function_symbol import FunctionSymbol
 from src.sym_table.symbol import SymbolTypes
 
@@ -16,11 +17,16 @@ class DefinitionListener(ParseTreeListener):
     def __init__(self):
         self.function_table = SymbolTable()
         self.symbol_table = SymbolTable()
+        self.class_table = SymbolTable()
         self.curr_class = None
         self.curr_fid = ''
+        self._define_builtin()
 
     def getFunctionTable(self) -> SymbolTable:
         return self.function_table
+
+    def getClassTable(self) -> SymbolTable:
+        return self.class_table
 
     def exitProgram(self, _):
         # every good program should have a main function
@@ -29,10 +35,37 @@ class DefinitionListener(ParseTreeListener):
         print("exiting 1st pass with symtable:")
         print(self.function_table)
 
+    def _define_builtin(self):
+        # classes
+        object_sym = ClassSymbol("Object")
+        object_sym.add_method(FunctionSymbol('toString', 'string'))
+        object_sym.add_method(FunctionSymbol('getClass', 'string'))
+        self.class_table.add_symbol(object_sym)
+
+        # functions
+        self.function_table.add_symbol(FunctionSymbol("print", "void"))
+        self.function_table.add_symbol(FunctionSymbol("readInt", "string"))
+        self.function_table.add_symbol(FunctionSymbol("readString", "string"))
+
+        length_func = FunctionSymbol('length', 'int')
+        length_func.add_param(Symbol('s', SymbolTypes.VAR, 'string'))
+
+        substr_func = FunctionSymbol('subStr', 'string')
+        substr_func.add_param(Symbol('s', SymbolTypes.VAR, 'string'))
+        substr_func.add_param(Symbol('i', SymbolTypes.VAR, 'int'))
+        substr_func.add_param(Symbol('n', SymbolTypes.VAR, 'int'))
+
+        self.function_table.add_symbol(length_func)
+        self.function_table.add_symbol(substr_func)
+
     def _defineFunc(self, name, ret_type):
         self.curr_fid = name
         fun_sym = FunctionSymbol(name, ret_type)
-        self.function_table.add_symbol(fun_sym)
+
+        if self.curr_class:
+            self.curr_class.add_method(fun_sym)
+        else:
+            self.function_table.add_symbol(fun_sym)
 
     def _defineFuncArg(self, name, var_type):
         arg = Symbol(name, SymbolTypes.VAR, var_type)
@@ -48,14 +81,26 @@ class DefinitionListener(ParseTreeListener):
         _type = ctx.var_type().getText()
         self._defineFuncArg(_id, _type)
 
-    def enterClass_def(self, ctx):
-        pass
+    def enterClass_def(self, ctx: VypParser.Class_defContext):
+        c_name, prt_name = ctx.class_id.text, ctx.parent_id.text
+        _class = ClassSymbol(c_name)
+        self.curr_class = _class
+        self.class_table.add_symbol(_class)
 
-    def exitClass_def(self, ctx):
-        pass
+    def exitClass_def(self, ctx: VypParser.Class_defContext):
+        self.curr_class = None
 
     def enterCode_block(self, ctx: VypParser.Code_blockContext):
         self.symbol_table.push_scope()
 
     def exitCode_block(self, ctx: VypParser.Code_blockContext):
         self.symbol_table.pop_scope()
+
+    def enterClass_field(self, ctx: VypParser.Class_fieldContext):
+        _type = ctx.declaration().var_type().getText()
+        # TODO: need to check types, unable to do it here
+
+        # multiple ids can be declared at once
+        for _id in ctx.declaration().ID():
+            _symbol = Symbol(_id.getText(), SymbolTypes.VAR, _type)
+            self.curr_class.add_field(_symbol)

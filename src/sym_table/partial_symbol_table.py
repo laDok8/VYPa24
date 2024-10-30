@@ -19,6 +19,9 @@ class PartialSymbolTable:
             raise ValueError(f"Symbol {name} not found")
         return self.symbols.get(name)
 
+    def get_symbols(self):
+        return self.symbols.keys()
+
     def __str__(self):
         if not self.symbols:
             return "{}"

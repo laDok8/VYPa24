@@ -332,12 +332,21 @@ class VypListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by VypParser#class_member.
-    def enterClass_member(self, ctx:VypParser.Class_memberContext):
+    # Enter a parse tree produced by VypParser#class_field.
+    def enterClass_field(self, ctx:VypParser.Class_fieldContext):
         pass
 
-    # Exit a parse tree produced by VypParser#class_member.
-    def exitClass_member(self, ctx:VypParser.Class_memberContext):
+    # Exit a parse tree produced by VypParser#class_field.
+    def exitClass_field(self, ctx:VypParser.Class_fieldContext):
+        pass
+
+
+    # Enter a parse tree produced by VypParser#class_method.
+    def enterClass_method(self, ctx:VypParser.Class_methodContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#class_method.
+    def exitClass_method(self, ctx:VypParser.Class_methodContext):
         pass
 
 

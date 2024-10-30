@@ -2072,6 +2072,8 @@ class VypParser ( Parser ):
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
+            self.class_id = None # Token
+            self.parent_id = None # Token
 
         def CLASS(self):
             return self.getToken(VypParser.CLASS, 0)
@@ -2113,11 +2115,11 @@ class VypParser ( Parser ):
             self.state = 233
             self.match(VypParser.CLASS)
             self.state = 234
-            self.match(VypParser.ID)
+            localctx.class_id = self.match(VypParser.ID)
             self.state = 235
             self.match(VypParser.T__21)
             self.state = 236
-            self.match(VypParser.ID)
+            localctx.parent_id = self.match(VypParser.ID)
             self.state = 237
             self.match(VypParser.T__3)
             self.state = 241
@@ -2148,25 +2150,52 @@ class VypParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def declaration(self):
-            return self.getTypedRuleContext(VypParser.DeclarationContext,0)
 
+        def getRuleIndex(self):
+            return VypParser.RULE_class_member
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class Class_methodContext(Class_memberContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a VypParser.Class_memberContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
 
         def function_def(self):
             return self.getTypedRuleContext(VypParser.Function_defContext,0)
 
 
-        def getRuleIndex(self):
-            return VypParser.RULE_class_member
-
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterClass_member" ):
-                listener.enterClass_member(self)
+            if hasattr( listener, "enterClass_method" ):
+                listener.enterClass_method(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitClass_member" ):
-                listener.exitClass_member(self)
+            if hasattr( listener, "exitClass_method" ):
+                listener.exitClass_method(self)
 
+
+    class Class_fieldContext(Class_memberContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a VypParser.Class_memberContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def declaration(self):
+            return self.getTypedRuleContext(VypParser.DeclarationContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterClass_field" ):
+                listener.enterClass_field(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitClass_field" ):
+                listener.exitClass_field(self)
 
 
 
@@ -2179,6 +2208,7 @@ class VypParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,20,self._ctx)
             if la_ == 1:
+                localctx = VypParser.Class_fieldContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 246
                 self.declaration()
@@ -2187,6 +2217,7 @@ class VypParser ( Parser ):
                 pass
 
             elif la_ == 2:
+                localctx = VypParser.Class_methodContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 249
                 self.function_def()

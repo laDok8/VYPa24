@@ -61,10 +61,10 @@ first_instance_ref: ref=(SUPER | THIS | ID) | fun_call;
 instance_expr: first_instance_ref '.' nested_invocation;
 nested_invocation: (fun_call | ID) ('.' nested_invocation)?;
 
-class_def: CLASS ID ':' ID '{' (class_member)* '}';
+class_def: CLASS class_id=ID ':' parent_id=ID '{' (class_member)* '}';
 class_member
-    : declaration ';'
-    | function_def;
+    : declaration ';' #class_field
+    | function_def #class_method;
 
 CLASS: 'class';
 NEW: 'new';

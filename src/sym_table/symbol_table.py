@@ -54,6 +54,12 @@ class SymbolTable:
                 return s
         return None
 
+    def get_current_symbols(self):
+        """
+        get all symbols in the current scope
+        """
+        return self.tables[-1].get_symbols()
+
     def __str__(self):
         _str = ""
         for i, table in zip(range(len(self.tables)), self.tables):
