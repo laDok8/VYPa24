@@ -5,7 +5,7 @@ class SymbolTypes(Enum):
     CLASS = 'class'
     FUN = 'function'
     VAR = 'variable'
-    LiT = 'literal'
+    LIT = 'literal'
 
 
 class Symbol:
