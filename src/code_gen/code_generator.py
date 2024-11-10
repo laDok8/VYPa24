@@ -1,3 +1,5 @@
+import re
+
 from src.sym_table import Symbol
 
 # use modified cdecl calling convention
@@ -20,59 +22,59 @@ DI = '$DI'  # string dest
 def read_string():
     return f'''
 LABEL readString
-\tREADS {AX}
-\tSET [{SP}-1] {AX}
-\tRETURN [{SP}+1]
+READS {AX}
+SET [{SP}-1] {AX}
+RETURN [{SP}+1]
 '''
 
 
 def read_int():
     return f'''
 LABEL readInt
-\tREADI {AX}
-\tSET [{SP}-1] {AX}
-\tRETURN [{SP}+1]
+READI {AX}
+SET [{SP}-1] {AX}
+RETURN [{SP}+1]
 '''
 
 
 def length():
     return f'''
 LABEL length
-\tGETSIZE {AX} [{SP}-2]
-\t{POP()}
-\tSET [{SP}-1] {AX}
-\tRETURN [{SP}+1]
+GETSIZE {AX} [{SP}-2]
+{POP()}
+SET [{SP}-1] {AX}
+RETURN [{SP}+1]
 '''
 
 
 def PUSH(x=None):
     """my SP points to last full"""
     if x is None:
-        return f'\tADDI {SP}, {SP}, 1'
+        return f'ADDI {SP}, {SP}, 1'
     else:
-        return f'''\tADDI {SP}, {SP}, 1
-\tSET [{SP}] {x}'''
+        return f'''ADDI {SP}, {SP}, 1
+SET [{SP}] {x}'''
 
 
 def POP(x=None):
     if x is None:
-        return f'\tSUBI {SP}, {SP}, 1'
+        return f'SUBI {SP}, {SP}, 1'
     else:
-        return f'''\tSET {x} [{SP}]
-\tSUBI {SP}, {SP}, 1'''
+        return f'''SET {x} [{SP}]
+SUBI {SP}, {SP}, 1'''
 
 
 def LEAVE():
     """leave function (reset SP, BP, return)"""
     return f'''SET {SP} {BP}
 {POP(BP)}
-\tRETURN [{SP}]'''
+RETURN [{SP}]'''
 
 
 def ENTER():
     return f'''{PUSH()} # space for PC
 {PUSH(BP)}
-\tSET {BP} {SP}'''
+SET {BP} {SP}'''
 
 
 class CodeGenerator:
@@ -96,6 +98,7 @@ ALIAS DI $7\n'''
         return self.variables.index(symbol)
 
     def generate_code(self):
+        self.pretifyOutput()
         print(self.header)
         print(self.alias)
         print("SET $BP 0")
@@ -103,30 +106,37 @@ ALIAS DI $7\n'''
         print("JUMP _end\n")
         print(self.body)
         print("LABEL _end")
-        pass
+
+    def pretifyOutput(self):
+        """add tabs"""
+        def add_tabs(match):
+            lines = match.group(0).split('\n')
+            return '\n' + lines[0] + '\n' + '\n'.join('\t' + line if line else line for line in lines[1:])
+
+        self.body = re.sub(r'LABEL.*?(?=LABEL|$)', add_tabs, self.body, flags=re.DOTALL)
 
     def declaration(self, symbol: Symbol):
         _name = symbol.name
         self.variables.append(_name)
         _type = symbol.data_type
-        self.body += f'\t# declaration of {_name}\n'
-        self.body += f'\tSET [{BP}+{self.get_var_offset(_name)}] 0\n'
+        self.body += f'# declaration of {_name}\n'
+        self.body += f'SET [{BP}+{self.get_var_offset(_name)}] 0\n'
         self.body += f'{PUSH()}\n\n'
 
     def print(self, symbol: [Symbol]):
-        self.body += f'\t# print\n'
+        self.body += f'# print\n'
 
         for acc, s in enumerate(symbol, -len(symbol)+1):
             acc = '' if acc == 0 else acc
             if s.data_type == 'int':
-                self.body += f'\tWRITEI [{SP}{acc}]\n'
+                self.body += f'WRITEI [{SP}{acc}]\n'
             else:
-                self.body += f'\tWRITES [{SP}{acc}]\n'
+                self.body += f'WRITES [{SP}{acc}]\n'
 
     def fun_call(self, fname: str):
-        self.body += f'\t# function call {fname}\n'
+        self.body += f'# function call {fname}\n'
         self.body += f'{PUSH()} # space for return value\n'
-        self.body += f'\tCALL [{SP}+1] {fname}\n\n'
+        self.body += f'CALL [{SP}+1] {fname}\n\n'
 
     def literal(self, symbol: Symbol):
         if symbol.data_type == 'int':
@@ -135,26 +145,25 @@ ALIAS DI $7\n'''
             self._string_literal(symbol.name)
 
     def _string_literal(self, value):
-        self.body += f'\t# string literal {value}\n'
-        self.body += f'\tCREATE {DI} 1\n'
-        self.body += f'\tSETWORD {DI} 0 {value}\n'
-        self.body += f'\tGETWORD {DI} {DI} 0\n'
+        self.body += f'# string literal {value}\n'
+        self.body += f'CREATE {DI} 1\n'
+        self.body += f'SETWORD {DI} 0 {value}\n'
+        self.body += f'GETWORD {DI} {DI} 0\n'
         self.body += f'{PUSH(DI)}\n\n'
 
     def _int_literal(self, value):
-        self.body += f'\t# int literal {value}\n'
+        self.body += f'# int literal {value}\n'
         self.body += f'{PUSH(value)}\n\n'
 
     def restore_stack(self):
         _vars = len(self.variables)
-        self.body += f'\t# restore stack\n'
-        self.body += f'\tADDI {SP} {BP} {_vars}\n\n'
+        self.body += f'# restore stack\n'
+        self.body += f'ADDI {SP} {BP} {_vars}\n\n'
 
     def function_def(self, fun_name):
-        self.body += f'\t# function {fun_name}\n'
-        self.body += f'\tLABEL {fun_name}\n'
+        self.body += f'LABEL {fun_name}\n'
         self.body += f'{ENTER()}\n'
 
     def exit_function(self):
-        self.body += f'\t# exit function\n'
-        self.body += f'\t{LEAVE()}\n'
+        self.body += f'# exit function\n'
+        self.body += f'{LEAVE()}\n'
