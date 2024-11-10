@@ -22,7 +22,7 @@ def read_string():
 LABEL readString
 \tREADS {AX}
 \tSET [{SP}-1] {AX}
-\tRETURN [{SP}]
+\tRETURN [{SP}+1]
 '''
 
 
@@ -31,7 +31,7 @@ def read_int():
 LABEL readInt
 \tREADI {AX}
 \tSET [{SP}-1] {AX}
-\tRETURN [{SP}]
+\tRETURN [{SP}+1]
 '''
 
 
@@ -39,18 +39,40 @@ def length():
     return f'''
 LABEL length
 \tGETSIZE {AX} [{SP}-2]
-\tSUBI {SP}, {SP}, 1
+\t{POP()}
 \tSET [{SP}-1] {AX}
 \tRETURN [{SP}+1]
 '''
 
 
 def PUSH(x=None):
+    """my SP points to last full"""
     if x is None:
         return f'\tADDI {SP}, {SP}, 1'
     else:
-        return f'''\tSET [{SP}] {x}
-\tADDI {SP}, {SP}, 1'''
+        return f'''\tADDI {SP}, {SP}, 1
+\tSET [{SP}] {x}'''
+
+
+def POP(x=None):
+    if x is None:
+        return f'\tSUBI {SP}, {SP}, 1'
+    else:
+        return f'''\tSET {x} [{SP}]
+\tSUBI {SP}, {SP}, 1'''
+
+
+def LEAVE():
+    """leave function (reset SP, BP, return)"""
+    return f'''SET {SP} {BP}
+{POP(BP)}
+\tRETURN [{SP}]'''
+
+
+def ENTER():
+    return f'''{PUSH()} # space for PC
+{PUSH(BP)}
+\tSET {BP} {SP}'''
 
 
 class CodeGenerator:
@@ -76,7 +98,9 @@ ALIAS DI $7\n'''
     def generate_code(self):
         print(self.header)
         print(self.alias)
-        print("JUMP main")
+        print("SET $BP 0")
+        print("CALL [$SP+1] main")
+        print("JUMP _end\n")
         print(self.body)
         print("LABEL _end")
         pass
@@ -92,11 +116,17 @@ ALIAS DI $7\n'''
     def print(self, symbol: [Symbol]):
         self.body += f'\t# print\n'
 
-        for acc, s in enumerate(symbol, -len(symbol)):
+        for acc, s in enumerate(symbol, -len(symbol)+1):
+            acc = '' if acc == 0 else acc
             if s.data_type == 'int':
                 self.body += f'\tWRITEI [{SP}{acc}]\n'
             else:
                 self.body += f'\tWRITES [{SP}{acc}]\n'
+
+    def fun_call(self, fname: str):
+        self.body += f'\t# function call {fname}\n'
+        self.body += f'{PUSH()} # space for return value\n'
+        self.body += f'\tCALL [{SP}+1] {fname}\n\n'
 
     def literal(self, symbol: Symbol):
         if symbol.data_type == 'int':
@@ -123,10 +153,8 @@ ALIAS DI $7\n'''
     def function_def(self, fun_name):
         self.body += f'\t# function {fun_name}\n'
         self.body += f'\tLABEL {fun_name}\n'
-        self.body += f'{PUSH()}\n'
-        self.body += f'\tSET {BP} {SP}\n\n'
+        self.body += f'{ENTER()}\n'
 
     def exit_function(self):
         self.body += f'\t# exit function\n'
-        self.body += f'\tSET {SP} {BP}\n'
-        self.body += f'\tJUMP _end\n\n'
+        self.body += f'\t{LEAVE()}\n'

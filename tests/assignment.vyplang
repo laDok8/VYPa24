@@ -1,6 +1,13 @@
 // example of assignment of an integer value and its print out
+
+int f( void){    print("ECD \n");g();}
+
+
+int g( void){    print("e11 \n");}
+
 void main ( void )
 {
-    int a, res;
-    print("Enter an integer to compute its factorial:\n", "asd\n", "sda\n");
+    f();
+    g();
+    print("EA \n");
 }  // end of main
