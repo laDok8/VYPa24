@@ -1,7 +1,6 @@
 # Generated from Vyp.g4 by ANTLR 4.13.2
 # encoding: utf-8
 from antlr4 import *
-from io import StringIO
 import sys
 if sys.version_info[1] > 5:
 	from typing import TextIO
@@ -2267,8 +2266,3 @@ class VypParser ( Parser ):
 
             if predIndex == 5:
                 return self.precpred(self._ctx, 6)
-         
-
-
-
-

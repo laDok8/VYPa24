@@ -54,7 +54,7 @@ class SymbolTable:
                 return s
         return None
 
-    def get_current_symbols(self):
+    def get_current_symbols(self) -> dict:
         """
         get all symbols in the current scope
         """
@@ -65,5 +65,3 @@ class SymbolTable:
         for i, table in zip(range(len(self.tables)), self.tables):
             _str += str(table) + f" table{i} \n"
         return _str
-
-# also for further work I'll unfortunately have to remember scopes and line numbers 4ever

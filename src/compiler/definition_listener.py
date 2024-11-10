@@ -29,17 +29,22 @@ class DefinitionListener(ParseTreeListener):
         # every good program should have a main function
         self.function_table.get_symbol("main")
 
+        # set parents for classes
+        for class_sym in self.class_table.get_current_symbols().values():
+            if not class_sym.parent:
+                pass
+            class_sym.set_parent(self.class_table.get_symbol(class_sym.parent))
 
     def _define_builtin(self):
         # classes
-        object_sym = ClassSymbol("Object")
+        object_sym = ClassSymbol("Object", None)
         object_sym.add_method(FunctionSymbol('toString', 'string'))
         object_sym.add_method(FunctionSymbol('getClass', 'string'))
         self.class_table.add_symbol(object_sym)
 
         # functions
         self.function_table.add_symbol(FunctionSymbol("print", "void"))
-        self.function_table.add_symbol(FunctionSymbol("readInt", "string"))
+        self.function_table.add_symbol(FunctionSymbol("readInt", "int"))
         self.function_table.add_symbol(FunctionSymbol("readString", "string"))
 
         length_func = FunctionSymbol('length', 'int')
@@ -78,7 +83,7 @@ class DefinitionListener(ParseTreeListener):
 
     def enterClass_def(self, ctx: VypParser.Class_defContext):
         c_name, prt_name = ctx.class_id.text, ctx.parent_id.text
-        _class = ClassSymbol(c_name)
+        _class = ClassSymbol(c_name, prt_name)
         self.curr_class = _class
         self.class_table.add_symbol(_class)
 

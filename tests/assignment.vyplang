@@ -1,13 +1,17 @@
-// example of assignment of an integer value and its print out
-
-int f( void){    print("ECD \n");g();}
-
-
-int g( void){    print("e11 \n");}
-
-void main ( void )
-{
-    f();
-    g();
-    print("EA \n");
-}  // end of main
+/* Program 4: Program with Classes and Objects */
+class Shape : Object {
+  int id;
+  void Shape(void) { print("constructor of Shape"); }
+  string toString(void) { return "instance of Shape"; }
+}
+class Rectangle : Shape {
+  int height, width;
+  string toString(void) { return "instance of rectangle"; }
+  int area(void) { return 20; }
+}
+void main(void) {
+  Rectangle r; r = new Rectangle;
+  r.id = 42; r.width = readInt(); r.height = readInt();
+  Shape s; s = r;
+  //print(s.toString());
+} // end of main

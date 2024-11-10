@@ -21,3 +21,6 @@ class FunctionSymbol(Symbol):
 
     def __str__(self):
         return f"{self.data_type} {self.name}({', '.join([str(arg) for arg in self.f_args])})"
+
+    def __eq__(self, other):
+        return self.name == other.name and self.data_type == other.data_type and self.f_args == other.f_args

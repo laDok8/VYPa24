@@ -1,6 +1,6 @@
 import re
 
-from src.sym_table import Symbol
+from src.sym_table import Symbol, ClassSymbol
 
 # use modified cdecl calling convention
 # args are pushed on stack from RTL, caller cleans up, return value on stack
@@ -98,17 +98,18 @@ ALIAS DI $7\n'''
         return self.variables.index(symbol)
 
     def generate_code(self):
-        self.pretifyOutput()
+        self.prettifyOutput()
         print(self.header)
         print(self.alias)
-        print("SET $BP 0")
+        print("SET $BP $SP")
         print("CALL [$SP+1] main")
         print("JUMP _end\n")
         print(self.body)
         print("LABEL _end")
 
-    def pretifyOutput(self):
+    def prettifyOutput(self):
         """add tabs"""
+
         def add_tabs(match):
             lines = match.group(0).split('\n')
             return '\n' + lines[0] + '\n' + '\n'.join('\t' + line if line else line for line in lines[1:])
@@ -126,7 +127,7 @@ ALIAS DI $7\n'''
     def print(self, symbol: [Symbol]):
         self.body += f'# print\n'
 
-        for acc, s in enumerate(symbol, -len(symbol)+1):
+        for acc, s in enumerate(symbol, -len(symbol) + 1):
             acc = '' if acc == 0 else acc
             if s.data_type == 'int':
                 self.body += f'WRITEI [{SP}{acc}]\n'
@@ -167,3 +168,15 @@ ALIAS DI $7\n'''
     def exit_function(self):
         self.body += f'# exit function\n'
         self.body += f'{LEAVE()}\n'
+
+    def VMT(self, current_class: ClassSymbol):
+        """VMT goes before functions"""
+        methods = current_class.getVMT().keys()
+        self.body += f'# VMT for {current_class.name}\n'
+        self.body += f'CREATE {AX} {len(methods)}\n'
+        for i, method in enumerate(methods):
+            self.body += f'SETWORD {AX} {i} "{method}"\n'
+
+        self.body += f'{PUSH(AX)}\n\n'
+        #TODO: need to store it as "variable" as it's on stack
+        self.body += '\n'
