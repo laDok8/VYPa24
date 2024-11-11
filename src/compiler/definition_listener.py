@@ -38,8 +38,8 @@ class DefinitionListener(ParseTreeListener):
     def _define_builtin(self):
         # classes
         object_sym = ClassSymbol("Object", None)
-        object_sym.add_method(FunctionSymbol('toString', 'string'))
-        object_sym.add_method(FunctionSymbol('getClass', 'string'))
+        object_sym.add_method(FunctionSymbol('Object:toString', 'string'))
+        object_sym.add_method(FunctionSymbol('Object:getClass', 'string'))
         self.class_table.add_symbol(object_sym)
 
         # functions
@@ -59,8 +59,8 @@ class DefinitionListener(ParseTreeListener):
         self.function_table.add_symbol(substr_func)
 
     def _defineFunc(self, name, ret_type):
-        self.curr_fid = name
-        fun_sym = FunctionSymbol(name, ret_type)
+        self.curr_fid = f'{self.curr_class.name}:{name}' if self.curr_class else name
+        fun_sym = FunctionSymbol(self.curr_fid, ret_type)
 
         if self.curr_class:
             self.curr_class.add_method(fun_sym)

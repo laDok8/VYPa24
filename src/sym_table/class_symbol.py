@@ -26,14 +26,15 @@ class ClassSymbol(Symbol):
 
     def getVMT(self) -> dict:
         # it's okay to have recursion_check just for fields
-        self_methods = {f"{self.name}:{name}": symbol for name, symbol in self.methods.items()}
+        self_methods = self.methods.copy()
 
         if self.parent is None:
             return self_methods
 
         prt_methods = self.parent.getVMT()
         # prefer overridden methods
-        return {**self_methods, **{nm: sym for nm, sym in prt_methods.items() if sym not in self_methods.values()}}
+        self_methods.update({nm: sym for nm, sym in prt_methods.items() if sym not in self_methods.values()})
+        return self_methods
 
     def get_method(self, name: str):
         return self.methods.get(name)
