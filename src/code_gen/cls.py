@@ -17,6 +17,17 @@ class ClassCodeGenerator:
 
         body += f'{Stack.push(Register.AX)}\n\n'
 
-        # TODO: need to store it as "variable" as it's on stack
         body += '\n'
+        return body
+
+    def create_instance(self, VMT_loc: int):
+        """allocate memory for fields and VMT*"""
+        body = f'# create instance of {self.cls.name}\n'
+        # TODO: check field duplication?
+        body += f'CREATE {Register.AX} {len(self.cls.get_all_fields()) + 1}\n'
+        body += f'SETWORD {Register.AX} 0 [{VMT_loc}]\n'
+        # init fields to 0
+        for i in range(len(self.cls.get_all_fields())):
+            body += f'SETWORD {Register.AX} {i + 1} 0\n'
+        body += f'{Stack.push(Register.AX)}\n\n'
         return body

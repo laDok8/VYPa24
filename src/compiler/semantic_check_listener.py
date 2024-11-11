@@ -118,3 +118,11 @@ class SemanticListener(ParseTreeListener):
 
     def exitClass_field(self, ctx: VypParser.Class_fieldContext):
         self.skip_field_redeclaration = False
+
+    def exitInstance_creation(self, ctx: VypParser.Instance_creationContext):
+        class_name = ctx.ID().getText()
+        class_sym = self.class_symbols.get_symbol(class_name)
+        # f_args = self.result[ctx.f_call_list()]
+        self.result[ctx] = class_sym
+        self.code_generator.create_instance(class_sym)
+        # self.code_generator.fun_call(class_name, f_args)
