@@ -22,16 +22,16 @@ class ClassSymbol(Symbol):
 
     def add_method(self, method: FunctionSymbol):
         self.methods[method.name] = method
+        method.update_code_name(f'{self.name}:{method.name}')
 
     def get_methods(self):
         return self.methods
 
     def get_self_methods(self):
-        return {nm.split(':')[-1]: sym for nm, sym in self.methods.items() if nm.startswith(self.name)}
-        #return {nm: sym for nm, sym in self.methods.items() if nm.startswith(self.name)}
+        return {nm: sym for nm, sym in self.methods.items() if nm.startswith(self.name)}
 
     def get_constructor(self):
-        return self.get_methods().get(f'{self.name}:{self.name}')
+        return self.get_methods().get(self.name)
 
     def getVMT(self) -> dict:
         """only from this class and without prefix"""

@@ -49,7 +49,7 @@ class SemanticListener(ParseTreeListener):
         current_fun = self.fun_symbols.get_symbol(fun_name)
 
         if self.curr_class:
-            fun_name = f'{self.curr_class.name}:{fun_name}'
+            fun_name = fun_name.split(':')[-1]
             current_fun = self.curr_class.get_method(fun_name)
 
         self.assert_legal_return_type(current_fun.get_return_type())
@@ -57,7 +57,7 @@ class SemanticListener(ParseTreeListener):
             self.assert_legal_data_type(param.data_type)
             self.sym_table.add_symbol(param)
 
-        self.code_generator.function_def(fun_name)
+        self.code_generator.function_def(current_fun.name)
 
     def exitFunction_def(self, ctx: VypParser.Function_defContext):
         self.sym_table.pop_scope()
@@ -97,7 +97,7 @@ class SemanticListener(ParseTreeListener):
         fun_name = ctx.ID().getText()
         fun_sym = self.fun_symbols.get_symbol(fun_name)
         args = self.result[ctx.f_call_list()]
-        self.code_generator.fun_call(fun_name, args)
+        self.code_generator.fun_call(fun_sym.name, args)
 
     def exitLiteral_expr(self, ctx: VypParser.Literal_exprContext):
         _sym = Symbol(ctx.getText(), SymbolTypes.LIT, 'string' if ctx.literal_val().INT_LIT() is None else 'int')
