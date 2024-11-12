@@ -16,7 +16,7 @@ void main(void) {
   x = s.id;
   print(x);
   print("\n");
-  //s.toString();
-  //r.toString();
+  s.toString();
+  r.toString();
   //print(s.toString());
 } // end of main
