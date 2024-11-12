@@ -29,11 +29,12 @@ class Function:
                 body += f'WRITES [{Register.SP}{acc}]\n'
         return body
 
-    def call(self, args: [Symbol] = []):
+    def call(self, args: [Symbol] = [], ret_val=True):
         if self.f_name == 'print':
             return self._print(args)
 
         body = f'# function call {self.f_name}\n'
-        body += f'{Stack.push()} # space for return value\n'
+        if ret_val:
+            body += f'{Stack.push()} # space for return value\n'
         body += f'CALL [{Register.SP}+1] {self.f_name}\n\n'
         return body

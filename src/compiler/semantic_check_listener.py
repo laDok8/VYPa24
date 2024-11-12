@@ -95,6 +95,7 @@ class SemanticListener(ParseTreeListener):
 
     def exitFun_call(self, ctx: VypParser.Fun_callContext):
         fun_name = ctx.ID().getText()
+        fun_sym = self.fun_symbols.get_symbol(fun_name)
         args = self.result[ctx.f_call_list()]
         self.code_generator.fun_call(fun_name, args)
 
@@ -122,7 +123,58 @@ class SemanticListener(ParseTreeListener):
     def exitInstance_creation(self, ctx: VypParser.Instance_creationContext):
         class_name = ctx.ID().getText()
         class_sym = self.class_symbols.get_symbol(class_name)
-        # f_args = self.result[ctx.f_call_list()]
-        self.result[ctx] = class_sym
+        # self.result[ctx] = class_sym
         self.code_generator.create_instance(class_sym)
-        # self.code_generator.fun_call(class_name, f_args)
+
+    def exitInstance_expr(self, ctx: VypParser.Instance_exprContext):
+        first = self.result[ctx.first_instance_ref()]
+        second = self.result[ctx.nested_invocation()][-1]  # TODO: check this - field.name
+        # get first symbol
+        instance_type = self.sym_table.get_symbol(first).data_type
+        # get class symbol
+        class_sym = self.class_symbols.get_symbol(instance_type)
+        # need to return class symbol and field name
+        self.result[ctx] = (class_sym, second)
+        #TODO: get object to stack
+        self.code_generator.push_object(first)
+
+    def exitFirst_instance_ref(self, ctx: VypParser.First_instance_refContext):
+        if ctx.fun_call():
+            self.result[ctx] = self.result[ctx.fun_call()]
+        else:
+            self.result[ctx] = ctx.ref.text
+        self.result[ctx] = ctx.ID().getText()
+
+    def exitNested_invocation(self, ctx: VypParser.Nested_invocationContext):
+        _res = []
+        if ctx.fun_call():
+            _res.append(self.result[ctx.fun_call()])
+        else:
+            _res.append(ctx.ID().getText())
+        if ctx.nested_invocation():
+            _res.extend(self.result[ctx.nested_invocation()])
+        self.result[ctx] = _res
+
+    def exitInstance_assign(self, ctx: VypParser.Instance_assignContext):
+        cls_sym, field = self.result[ctx.instance_expr()]
+        self.code_generator.assign_field(cls_sym, field)
+
+    def exitVar_assign(self, ctx: VypParser.Var_assignContext):
+        _id = ctx.ID().getText()
+        #_expr = self.result[ctx.expr()]
+        self.code_generator.assign_var(_id)
+
+    def exitId_expr(self, ctx: VypParser.Id_exprContext):
+        _id = ctx.ID().getText()
+        # get symbol
+        _sym = self.sym_table.get_symbol(_id)
+        self.result[ctx] = _sym
+        self.code_generator.push_object(_id)
+
+    def exitInstance_assign(self, ctx: VypParser.Instance_assignContext):
+        cls_sym, field = self.result[ctx.instance_expr()]
+        self.code_generator.assign_field(cls_sym, field)
+
+    def exitInvocation_expr(self, ctx: VypParser.Invocation_exprContext):
+        cls_sym, field = self.result[ctx.instance_expr()]
+        self.code_generator.field_expr(cls_sym, field)

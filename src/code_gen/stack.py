@@ -30,3 +30,7 @@ RETURN [{Register.SP}]'''
         return f'''{Stack.push()} # space for PC
 {Stack.push(Register.BP)}
 SET {Register.BP} {Register.SP}'''
+
+    @staticmethod
+    def replace(x):
+        return f'SET [{Register.SP}] {x}'

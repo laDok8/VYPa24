@@ -1,13 +1,13 @@
 class Register:
     SP = '$SP'
-    BP = '$BP'
-    AX = '$AX'
-    BX = '$BX'
-    CX = '$CX'
-    DX = '$DX'
-    EX = '$EX'
-    SI = '$SI'
-    DI = '$DI'
+    BP = '$BP'  # - 0
+    AX = '$AX'  # return values, arithmetics
+    BX = '$BX'  # index
+    CX = '$CX'  # iterator
+    DX = '$DX'  # I/O & AX extension div/mul ?
+    EX = '$EX'  # misc
+    SI = '$SI'  # string src
+    DI = '$DI'  # string dest
 
     @staticmethod
     def aliases():
@@ -19,4 +19,4 @@ ALIAS CX $3
 ALIAS DX $4
 ALIAS EX $5
 ALIAS SI $6
-ALIAS DI $7\n'''
+ALIAS DI $7'''

@@ -23,6 +23,12 @@ class FunctionSymbol(Symbol):
         return f"{self.data_type} {self.name}({', '.join([str(arg) for arg in self.f_args])})"
 
     def __eq__(self, other):
-        _name = self.name.split(':')[-1]
-        _other = other.name.split(':')[-1]
-        return _name == _other and self.data_type == other.data_type and self.f_args == other.f_args
+        return self.name == other.name and self.data_type == other.data_type and self.f_args == other.f_args
+
+    def eq(self, other):
+        _n = self.name.split(':')[-1]
+        _o = other.name.split(':')[-1]
+        return _n == _o and self.data_type == other.data_type and self.f_args == other.f_args
+
+    def update_code_name(self, param):
+        self.name = param

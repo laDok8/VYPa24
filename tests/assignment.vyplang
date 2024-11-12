@@ -1,17 +1,22 @@
 /* Program 4: Program with Classes and Objects */
 class Shape : Object {
   int id;
-  void Shape(void) { print("constructor of Shape"); }
-  string toString(void) { return "instance of Shape"; }
+  void Shape(void) { print("constructor of Shape\n"); }
+  string toString(void) { print("Shape"); return "\n"; }
 }
 class Rectangle : Shape {
   int height, width;
-  string toString(void) { return "instance of rectangle"; }
+  string toString(void) { print("Rect"); return "\n"; }
   int area(void) { return 20; }
 }
 void main(void) {
   Rectangle r; r = new Rectangle;
-  r.id = 42; r.width = readInt(); r.height = readInt();
+  int x; r.id = 42;
   Shape s; s = r;
+  x = s.id;
+  print(x);
+  print("\n");
+  //s.toString();
+  //r.toString();
   //print(s.toString());
 } // end of main
