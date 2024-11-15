@@ -61,7 +61,7 @@ class SemanticListener(ParseTreeListener):
             self.assert_legal_data_type(param.data_type)
             self.sym_table.add_symbol(param)
 
-        self.code_generator.function_def(current_fun.name)
+        self.code_generator.function_def(current_fun)
 
     def exitFunction_def(self, ctx: VypParser.Function_defContext):
         self.sym_table.pop_scope()
@@ -103,6 +103,7 @@ class SemanticListener(ParseTreeListener):
         if self.curr_obj:
             fun_sym = self.curr_obj.get_method(fun_name)
         args = self.result[ctx.f_call_list()]
+        self.verify_fun_signature(fun_sym, args)
         self.code_generator.fun_call(fun_sym.name, args)
         self.result[ctx] = fun_sym
 
@@ -235,3 +236,13 @@ class SemanticListener(ParseTreeListener):
 
     def exitFun_call_expr(self, ctx: VypParser.Fun_call_exprContext):
         self.result[ctx] = self.result[ctx.fun_call()]
+
+    @staticmethod
+    def verify_fun_signature(fun_sym, args):
+        arg_types = [arg.data_type for arg in args]
+        if fun_sym.name == 'print':
+            return all(arg_type in ['int', 'string'] for arg_type in arg_types)
+
+        param_types = [param.data_type for param in fun_sym.get_params()]
+        if arg_types != param_types:
+            raise SemanticTypeError(f"Function call mismatch {arg_types} != {param_types}")
