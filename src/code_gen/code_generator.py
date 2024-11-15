@@ -94,7 +94,7 @@ class CodeGenerator:
 
         self.body += f'# push object ref {first}\n'
         self.body += f'{Stack.push(ref)}\n\n'
-        #self.body += f'PUSH [{Register.BP}+{self.get_var_offset(first)}]\n\n'
+        # self.body += f'PUSH [{Register.BP}+{self.get_var_offset(first)}]\n\n'
 
     def assign_var(self, _id):
         self.body += f'# assign var {_id}\n'
@@ -103,3 +103,23 @@ class CodeGenerator:
     def field_expr(self, cls_sym, field):
         cls_gen = ClassCodeGenerator(cls_sym)
         self.body += cls_gen.field_expr(field)
+
+    def binary_op(self, op: str):
+        map = {
+            '+': 'ADDI',
+            '-': 'SUBI',
+            '*': 'MULI',
+            '/': 'DIVI',
+            '<': 'LTI',
+            '>': 'GTI',
+            '=': 'EQI',
+            '<': 'LTS',
+            '>': 'GTS',
+            '=': 'EQS',
+            '&&': 'AND',
+            '||': 'OR',
+        }
+        _op = map[op]
+
+        self.body += f'# binary operation: {op}\n'
+        self.body += f'{Stack.binary_op(_op)}\n\n'

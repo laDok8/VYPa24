@@ -191,3 +191,15 @@ class SemanticListener(ParseTreeListener):
     def exitInvocation_expr(self, ctx: VypParser.Invocation_exprContext):
         cls_sym, field = self.result[ctx.instance_expr()]
         self.code_generator.field_expr(cls_sym, field)
+
+    def exitAdd_sub_expr(self, ctx: VypParser.Add_sub_exprContext):
+        _op = ctx.op.text
+        _lhs = self.result[ctx.expr(0)]
+        _rhs = self.result[ctx.expr(1)]
+        if _lhs.data_type != _rhs.data_type:
+            raise ValueError(f"Type mismatch in {_op} operation")
+        #print(_op, _lhs, _rhs)
+        _res = Symbol('temp', SymbolTypes.VAR, 'int')
+        self.result[ctx] = _res
+        self.code_generator.binary_op(_op)
+        pass

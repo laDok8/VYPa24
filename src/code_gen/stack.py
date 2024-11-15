@@ -34,3 +34,10 @@ SET {Register.BP} {Register.SP}'''
     @staticmethod
     def replace(x):
         return f'SET [{Register.SP}] {x}'
+
+    @staticmethod
+    def binary_op(op: str):
+        """values and res on stack"""
+        return f'''{op} {Register.AX} [{Register.SP}] [{Register.SP}-1]\n
+{Stack.pop()}
+{Stack.replace(Register.AX)}'''

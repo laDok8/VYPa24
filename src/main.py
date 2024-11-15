@@ -44,10 +44,10 @@ def main(argv):
 
     # 2nd pass
     semantic_checker = SemanticListener(definition_listener.getFunctionTable(), definition_listener.getClassTable())
-    try:
-        walker.walk(semantic_checker, tree)
-    except ValueError as e:
-        _exit(constants.SEMANTIC_DECLARATION_ERROR, str(e))
+    #try:
+    walker.walk(semantic_checker, tree)
+    #except ValueError as e:
+    #    _exit(constants.SEMANTIC_DECLARATION_ERROR, str(e))
 
 
 if __name__ == '__main__':
