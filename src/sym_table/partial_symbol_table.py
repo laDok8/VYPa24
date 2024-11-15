@@ -1,4 +1,5 @@
 from src.sym_table.symbol import Symbol
+import src.compiler.exceptions as exceptions
 
 
 class PartialSymbolTable:
@@ -11,12 +12,12 @@ class PartialSymbolTable:
 
     def add_symbol(self, symbol: Symbol):
         if symbol.name in [s.name for s in self.symbols.values()]:
-            raise ValueError(f"Symbol {symbol.name} already exists")
+            raise exceptions.SemanticDeclarationError(f"Symbol {symbol.name} already exists")
         self.symbols[symbol.name] = symbol
 
     def get_symbol(self, name: str) -> Symbol:
         if name not in [s.name for s in self.symbols.values()]:
-            raise ValueError(f"Symbol {name} not found")
+            raise exceptions.SemanticDeclarationError(f"Symbol {name} not found")
         return self.symbols.get(name)
 
     def get_symbols(self) -> dict:

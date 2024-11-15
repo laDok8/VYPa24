@@ -32,7 +32,7 @@ class DefinitionListener(ParseTreeListener):
         # set parents for classes
         for class_sym in self.class_table.get_current_symbols().values():
             if not class_sym.parent:
-                pass
+                continue
             class_sym.set_parent(self.class_table.get_symbol(class_sym.parent))
 
     def _define_builtin(self):

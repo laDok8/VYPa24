@@ -1,3 +1,4 @@
+import src.compiler.exceptions as exceptions
 from src.sym_table.partial_symbol_table import PartialSymbolTable
 from src.sym_table.symbol import Symbol
 
@@ -48,7 +49,7 @@ class SymbolTable:
             # We are looking through all tables so exception is possible
             try:
                 s = table.get_symbol(name)
-            except ValueError:
+            except exceptions.CompilerError:
                 continue
             if s:
                 return s

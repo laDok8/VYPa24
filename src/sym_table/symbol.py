@@ -1,5 +1,6 @@
 from enum import Enum
 
+import src.compiler.exceptions as exceptions
 
 class SymbolTypes(Enum):
     CLASS = 'class'
@@ -17,7 +18,7 @@ class Symbol:
         self.name = name
         self.data_type = data_type
         if symbol_type not in SymbolTypes:
-            raise ValueError(f"Unknown type {symbol_type}")
+            raise exceptions.SemanticDeclarationError(f"Unknown type {symbol_type}")
         self.symbol_type = symbol_type
 
     def __str__(self):

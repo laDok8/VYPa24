@@ -23,18 +23,20 @@ def main(argv):
     except FileNotFoundError:
         _exit(constants.INTERNAL_ERROR, "File not found")
 
-    lexer = VypLexer(input_stream)
-    lexer.removeErrorListener(ConsoleErrorListener.INSTANCE)  # useful for debugging
-    lexical_error_listener = LexicalErrorListener()
-    lexer.addErrorListener(lexical_error_listener)
+    parser, tree = None, None
+    try:
+        lexer = VypLexer(input_stream)
+        lexer.removeErrorListener(ConsoleErrorListener.INSTANCE)  # useful for debugging
+        lexical_error_listener = LexicalErrorListener()
+        lexer.addErrorListener(lexical_error_listener)
 
-    stream = CommonTokenStream(lexer)
-    parser = VypParser(stream)
-    parser.removeErrorListener(ConsoleErrorListener.INSTANCE)  # useful for debugging
-    tree = parser.program()
+        stream = CommonTokenStream(lexer)
+        parser = VypParser(stream)
+        parser.removeErrorListener(ConsoleErrorListener.INSTANCE)  # useful for debugging
+        tree = parser.program()
+    except CompilerError as e:
+        e.handle()
 
-    if lexical_error_listener.has_errors:
-        _exit(constants.LEXICAL_ERROR, "Lexical error")
     if parser.getNumberOfSyntaxErrors() > 0:
         _exit(constants.SYNTAX_ERROR, "Syntax error")
 
@@ -44,10 +46,10 @@ def main(argv):
 
     # 2nd pass
     semantic_checker = SemanticListener(definition_listener.getFunctionTable(), definition_listener.getClassTable())
-    #try:
-    walker.walk(semantic_checker, tree)
-    #except ValueError as e:
-    #    _exit(constants.SEMANTIC_DECLARATION_ERROR, str(e))
+    try:
+        walker.walk(semantic_checker, tree)
+    except CompilerError as e:
+        e.handle()
 
 
 if __name__ == '__main__':

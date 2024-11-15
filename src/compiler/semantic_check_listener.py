@@ -2,6 +2,7 @@ from antlr4.tree.Tree import ParseTreeListener
 
 from src.antlr_src.VypParser import VypParser  # for the constants
 from src.code_gen.code_generator import *
+from src.compiler.exceptions import *
 from src.sym_table import *
 
 
@@ -36,11 +37,11 @@ class SemanticListener(ParseTreeListener):
 
     def assert_legal_data_type(self, _type):
         if _type not in self._legal_data_types:
-            raise ValueError(f"Unknown data type {_type}")
+            raise SemanticDeclarationError(f"Unknown data type {_type}")
 
     def assert_legal_return_type(self, _type):
         if _type not in [*self._legal_data_types, 'void']:
-            raise ValueError(f"Unknown return type {_type}")
+            raise SemanticDeclarationError(f"Unknown return type {_type}")
 
     def enterFunction_def(self, ctx: VypParser.Function_defContext):
         # this way f() pushes 2 scopes
@@ -193,13 +194,13 @@ class SemanticListener(ParseTreeListener):
         self.code_generator.field_expr(cls_sym, field)
 
     def exitAdd_sub_expr(self, ctx: VypParser.Add_sub_exprContext):
-        _op = ctx.op.text
-        _lhs = self.result[ctx.expr(0)]
-        _rhs = self.result[ctx.expr(1)]
-        if _lhs.data_type != _rhs.data_type:
-            raise ValueError(f"Type mismatch in {_op} operation")
-        #print(_op, _lhs, _rhs)
+        op = ctx.op.text
+        lhs = self.result[ctx.expr(0)]
+        rhs = self.result[ctx.expr(1)]
+        if lhs.data_type != rhs.data_type:
+            raise SemanticTypeError(f"{lhs.data_type} {op} {rhs.data_type} incompatible")
+        #print(op, lhs, rhs)
         _res = Symbol('temp', SymbolTypes.VAR, 'int')
         self.result[ctx] = _res
-        self.code_generator.binary_op(_op)
+        self.code_generator.binary_op(op)
         pass

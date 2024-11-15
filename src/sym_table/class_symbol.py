@@ -1,3 +1,4 @@
+import src.compiler.exceptions as exceptions
 from src.sym_table import Symbol, FunctionSymbol
 from src.sym_table.symbol import SymbolTypes
 from collections import OrderedDict
@@ -66,7 +67,7 @@ class ClassSymbol(Symbol):
             return self.fields
 
         if self.name in recursion_check:
-            raise ValueError("TODO: semantic error: Circular inheritance")
+            raise exceptions.SemanticDeclarationError("Circular inheritance")
 
         fields = self.fields.copy()
         prt_fields = self.parent.get_all_fields(recursion_check + [self.name])
