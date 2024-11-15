@@ -26,13 +26,13 @@ def main(argv):
     parser, tree = None, None
     try:
         lexer = VypLexer(input_stream)
-        lexer.removeErrorListener(ConsoleErrorListener.INSTANCE)  # useful for debugging
+        lexer.removeErrorListener(ConsoleErrorListener.INSTANCE)
         lexical_error_listener = LexicalErrorListener()
         lexer.addErrorListener(lexical_error_listener)
 
         stream = CommonTokenStream(lexer)
         parser = VypParser(stream)
-        parser.removeErrorListener(ConsoleErrorListener.INSTANCE)  # useful for debugging
+        # parser.removeErrorListener(ConsoleErrorListener.INSTANCE)  # useful for debugging
         tree = parser.program()
     except CompilerError as e:
         e.handle()

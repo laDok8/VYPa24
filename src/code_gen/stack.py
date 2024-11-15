@@ -22,7 +22,8 @@ SUBI {Register.SP}, {Register.SP}, 1'''
         """leave function (reset SP, BP, return)"""
         return f'''SET {Register.SP} {Register.BP}
 {Stack.pop(Register.BP)}
-RETURN [{Register.SP}]'''
+{Stack.pop()}
+RETURN [{Register.SP}+1]'''
 
     @staticmethod
     def enter():

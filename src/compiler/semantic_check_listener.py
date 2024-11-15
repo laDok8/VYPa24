@@ -2,6 +2,7 @@ from antlr4.tree.Tree import ParseTreeListener
 
 from src.antlr_src.VypParser import VypParser  # for the constants
 from src.code_gen.code_generator import *
+from src.compiler.decorators import binary_op
 from src.compiler.exceptions import *
 from src.sym_table import *
 
@@ -25,6 +26,7 @@ class SemanticListener(ParseTreeListener):
         self.result = {}
         self.curr_class = None
         self.curr_obj = None
+        self.cur_fun = None
 
         # generate VMT
         for class_sym in class_symbols.get_current_symbols().values():
@@ -49,6 +51,7 @@ class SemanticListener(ParseTreeListener):
 
         fun_name = ctx.ID().getText()
         current_fun = self.fun_symbols.get_symbol(fun_name)
+        self.cur_fun = current_fun
 
         if self.curr_class:
             current_fun = self.curr_class.get_method(fun_name)
@@ -101,6 +104,7 @@ class SemanticListener(ParseTreeListener):
             fun_sym = self.curr_obj.get_method(fun_name)
         args = self.result[ctx.f_call_list()]
         self.code_generator.fun_call(fun_sym.name, args)
+        self.result[ctx] = fun_sym
 
     def exitLiteral_expr(self, ctx: VypParser.Literal_exprContext):
         _sym = Symbol(ctx.getText(), SymbolTypes.LIT, 'string' if ctx.literal_val().INT_LIT() is None else 'int')
@@ -136,7 +140,7 @@ class SemanticListener(ParseTreeListener):
         else:
             # f call
             second = 'id'  # foo
-            #TODO: this is just redundant
+            # TODO: this is just redundant
             pass
         # get first symbol
         instance_type = self.sym_table.get_symbol(first).data_type
@@ -193,14 +197,41 @@ class SemanticListener(ParseTreeListener):
         cls_sym, field = self.result[ctx.instance_expr()]
         self.code_generator.field_expr(cls_sym, field)
 
+    @binary_op
     def exitAdd_sub_expr(self, ctx: VypParser.Add_sub_exprContext):
-        op = ctx.op.text
-        lhs = self.result[ctx.expr(0)]
-        rhs = self.result[ctx.expr(1)]
-        if lhs.data_type != rhs.data_type:
-            raise SemanticTypeError(f"{lhs.data_type} {op} {rhs.data_type} incompatible")
-        #print(op, lhs, rhs)
-        _res = Symbol('temp', SymbolTypes.VAR, 'int')
-        self.result[ctx] = _res
-        self.code_generator.binary_op(op)
         pass
+
+    @binary_op
+    def exitMul_div_expr(self, ctx: VypParser.Mul_div_exprContext):
+        pass
+
+    @binary_op
+    def exitRel_expr(self, ctx: VypParser.Rel_exprContext):
+        pass
+
+    @binary_op
+    def exitEq_expr(self, ctx: VypParser.Eq_exprContext):
+        pass
+
+    @binary_op
+    def exitAnd_expr(self, ctx: VypParser.And_exprContext):
+        pass
+
+    @binary_op
+    def exitOr_expr(self, ctx: VypParser.Or_exprContext):
+        pass
+
+    def exitRet_stmt(self, ctx: VypParser.Ret_stmtContext):
+        sym = None  # void
+        if ctx.expr():
+            sym = self.result[ctx.expr()]
+
+        if sym is None and self.cur_fun.get_return_type() != 'void':
+            raise SemanticTypeError(f"Return mismatch {sym} != {self.cur_fun.get_return_type()}")
+        if sym.data_type != self.cur_fun.get_return_type():
+            raise SemanticTypeError(f"Return mismatch {sym.data_type} != {self.cur_fun.get_return_type()}")
+
+        self.code_generator.ret_val(sym)
+
+    def exitFun_call_expr(self, ctx: VypParser.Fun_call_exprContext):
+        self.result[ctx] = self.result[ctx.fun_call()]

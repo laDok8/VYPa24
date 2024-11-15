@@ -25,7 +25,7 @@ class CodeGenerator:
         self.classes = []
 
     def get_var_offset(self, symbol: str):
-        return self.variables.index(symbol)
+        return self.variables.index(symbol) + 1 # 0 is BP
 
     def generate_code(self):
         self.prettifyOutput()
@@ -115,11 +115,19 @@ class CodeGenerator:
             '=': 'EQI',
             '<': 'LTS',
             '>': 'GTS',
-            '=': 'EQS',
+            '==': 'EQS',
             '&&': 'AND',
             '||': 'OR',
         }
         _op = map[op]
+        # TODO: exceptions for >=, <=, !=
 
         self.body += f'# binary operation: {op}\n'
         self.body += f'{Stack.binary_op(_op)}\n\n'
+
+    def ret_val(self, sym):
+        self.body += f'# return value\n'
+        # set return value below bp  ( PC is also ther)
+        self.body += f'SET [{Register.BP}-2] [{Register.SP}]\n'
+        self.body += f'{Stack.leave()}\n\n'
+        pass
