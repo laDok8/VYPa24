@@ -5,7 +5,8 @@ from src.code_gen.function import Function
 from src.code_gen.literal import Literal
 from src.code_gen.register import Register
 from src.code_gen.stack import Stack
-from src.sym_table import Symbol, ClassSymbol
+from src.compiler import CompilerError
+from src.sym_table import *
 
 
 # WARN: for some reason, stack grows up
@@ -13,7 +14,7 @@ from src.sym_table import Symbol, ClassSymbol
 class CodeGenerator:
     """
     use modified cdecl calling convention
-        args are pushed on stack from RTL, caller cleans up, return value on stack
+        args are pushed on stack from LTR, caller cleans up, return value on stack
      """
 
     def __init__(self):
@@ -23,9 +24,17 @@ class CodeGenerator:
         self.body = ''
         self.variables = []
         self.classes = []
+        # TODO: perhaps refactor to function
+        self.params = []
 
-    def get_var_offset(self, symbol: str):
-        return self.variables.index(symbol) + 1 # 0 is BP
+    def get_var_offset(self, symbol: str) -> str:
+        if symbol in self.variables:
+            return '+' + str(self.variables.index(symbol) + 1)  # 0 is BP
+        elif symbol in self.params:
+            # in negative 0-BP, 1-PC, 2-ret_val, 3-arg1, 4-arg2, 5-arg3, (RTL) ...
+            return str(-(self.params.index(symbol) + 3))
+        else:
+            raise CompilerError(f"Variable {symbol} not found", 14)
 
     def generate_code(self):
         self.prettifyOutput()
@@ -51,7 +60,7 @@ class CodeGenerator:
         self.variables.append(_name)
         _type = symbol.data_type
         self.body += f'# declare {_name}\n'
-        self.body += f'SET [{Register.BP}+{self.get_var_offset(_name)}] 0\n'
+        self.body += f'SET [{Register.BP}{self.get_var_offset(_name)}] 0\n'
         self.body += f'{Stack.push()}\n\n'
 
     def fun_call(self, fname: str, args: [Symbol]):
@@ -69,12 +78,17 @@ class CodeGenerator:
         self.body += f'# restore stack\n'
         self.body += f'ADDI {Register.SP} {Register.BP} {_vars}\n\n'
 
-    def function_def(self, fun_name):
-        function = Function(fun_name)
+    def function_def(self, fun_sym: FunctionSymbol):
+        function = Function(fun_sym.name)
         self.body += function.define()
+
+        # add params to stack
+        for param in fun_sym.get_params():
+            self.params.insert(0, param.name)
 
     def exit_function(self):
         self.body += Function.exit()
+        self.params = []
 
     def VMT(self, current_class: ClassSymbol):
         cls_gen = ClassCodeGenerator(current_class)
@@ -90,15 +104,15 @@ class CodeGenerator:
         self.body += cls_gen.assign_field(field)
 
     def push_object(self, first: str):
-        ref = f'[{Register.BP}+{self.get_var_offset(first)}]'
+        ref = f'[{Register.BP}{self.get_var_offset(first)}]'
 
         self.body += f'# push object ref {first}\n'
         self.body += f'{Stack.push(ref)}\n\n'
-        # self.body += f'PUSH [{Register.BP}+{self.get_var_offset(first)}]\n\n'
+        # self.body += f'PUSH [{Register.BP}{self.get_var_offset(first)}]\n\n'
 
     def assign_var(self, _id):
         self.body += f'# assign var {_id}\n'
-        self.body += f'SET [{Register.BP}+{self.get_var_offset(_id)}] [{Register.SP}]\n\n'
+        self.body += f'SET [{Register.BP}{self.get_var_offset(_id)}] [{Register.SP}]\n\n'
 
     def field_expr(self, cls_sym, field):
         cls_gen = ClassCodeGenerator(cls_sym)

@@ -1,18 +1,16 @@
-int f(void) {
-    int x;
-    x = 43;
-    print(x);
+int f(int x,int y) {
+    print(y);
     print("\n");
-    return x;
+    print(x);
+    return x+y;
 }
 
 
 void main(void) {
-  int x, y;
-  x = 42;
-  y = 12;
-  int z;
-  z = f();
-  print(z);
+int y;
+  y= f(1,9);
   print("\n");
+  print(y);
+  print("\n");
+
 } // end of main

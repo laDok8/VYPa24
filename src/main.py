@@ -1,4 +1,5 @@
 import sys
+import traceback
 
 from antlr4 import *
 from antlr4.error.ErrorListener import ConsoleErrorListener
@@ -50,6 +51,9 @@ def main(argv):
         walker.walk(semantic_checker, tree)
     except CompilerError as e:
         e.handle()
+    except Exception as e:
+        traceback.print_exc()
+        _exit(constants.SEMANTIC_DECLARATION_ERROR, str(e))
 
 
 if __name__ == '__main__':

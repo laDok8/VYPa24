@@ -16,8 +16,9 @@ class DefinitionListener(ParseTreeListener):
         self.symbol_table = SymbolTable()
         self.class_table = SymbolTable()
         self.curr_class = None
-        self.curr_fid = ''
+        self.curr_fun = None
         self._define_builtin()
+
 
     def getFunctionTable(self) -> SymbolTable:
         return self.function_table
@@ -60,6 +61,7 @@ class DefinitionListener(ParseTreeListener):
 
     def _defineFunc(self, name, ret_type):
         fun_sym = FunctionSymbol(name, ret_type)
+        self.curr_fun = fun_sym
 
         if self.curr_class:
             self.curr_class.add_method(fun_sym)
@@ -68,7 +70,7 @@ class DefinitionListener(ParseTreeListener):
 
     def _defineFuncArg(self, name, var_type):
         arg = Symbol(name, SymbolTypes.VAR, var_type)
-        self.function_table.get_symbol(self.curr_fid).add_param(arg)
+        self.curr_fun.add_param(arg)
 
     def enterFunction_def(self, ctx: VypParser.Function_defContext):
         f_ret = ctx.ret_type().getText()
@@ -103,3 +105,6 @@ class DefinitionListener(ParseTreeListener):
         for _id in ctx.declaration().ID():
             _symbol = Symbol(_id.getText(), SymbolTypes.VAR, _type)
             self.curr_class.add_field(_symbol)
+
+    def exitFunction_def(self, ctx: VypParser.Function_defContext):
+        self.curr_fun = None
