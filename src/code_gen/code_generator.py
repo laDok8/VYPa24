@@ -42,14 +42,13 @@ class CodeGenerator:
             raise CompilerError(f"Variable {symbol} not found", 14)
 
     def generate_code(self):
+        self.body += Builtin.get_all_funs()
         self.prettifyOutput()
         print(self.header)
         print(Register.aliases())
         print("SET $BP $SP")
         print("CALL [$SP+1] main")
         print("JUMP _end\n\n")
-        print("# Builtin functions")
-        print(Builtin.get_all_funs())
         print("# User program")
         print(self.body)
         print("LABEL _end")
@@ -57,12 +56,21 @@ class CodeGenerator:
     def prettifyOutput(self):
         """add tabs"""
 
-        def add_tabs(match):
-            lines = match.group(0).split('\n')
-            return '\n' + lines[0] + '\n' + '\n'.join('\t' + line if line else line for line in lines[1:])
+        lines = self.body.split('\n')
+        result = []
+        indent = False
+        exclusion = r'(_end_while|_start_while|_else|_end)$'
 
-        self.body = re.sub(r'LABEL.*?(?=LABEL(!=(end|else|startwhile|endwhile))|$)', add_tabs, self.body,
-                           flags=re.DOTALL)
+        for line in lines:
+            if line.strip().startswith("LABEL"):
+                label_name = line.strip().split()[1]
+                indent = True
+                indent_self = re.search(exclusion, label_name)
+                result.append(f'\t{line}' if indent_self else line)
+            else:
+                result.append(f'\t{line}' if indent else line)
+
+        self.body = '\n'.join(result)
 
     def declaration(self, symbol: Symbol):
         _name = symbol.name

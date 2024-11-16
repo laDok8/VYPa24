@@ -59,11 +59,11 @@ SET {Register.EX} [{Register.BP}-2]
 ADDI {Register.EX} {Register.EX} {Register.BX} # n + i
 
 GTI {Register.CX} {Register.EX} {Register.AX} # n + i > size
-JUMPNZ substr_min_else {Register.CX}
-JUMP substr_min_end # n + 1 <= size
-LABEL substr_min_else # n + i > size
+JUMPNZ subStr_min_else {Register.CX}
+JUMP subStr_min_end # n + 1 <= size
+LABEL subStr_min_else # n + i > size
 SET {Register.EX} [{Register.BP}-4]
-LABEL substr_min_end
+LABEL subStr_min_end
 #SUBI {Register.EX} {Register.EX} 1
 ADDI {Register.SP} {Register.SP} 1
 SET [{Register.SP}] {Register.EX} # [{Register.SP}]=min(n+i,len(str))- 1
@@ -71,7 +71,7 @@ SET [{Register.SP}] {Register.EX} # [{Register.SP}]=min(n+i,len(str))- 1
 
 SET {Register.AX} 0 #index new
 #SET {Register.BX} {Register.BX} #index old
-LABEL substr_start
+LABEL subStr_start_while
 LTI {Register.EX} {Register.BX} [{Register.SP}] # i < n+i-1
 JUMPZ subStr_end {Register.EX}
 
@@ -82,7 +82,7 @@ SETWORD {Register.DI} {Register.AX} {Register.EX} # rewrite char
 
 ADDI {Register.AX} {Register.AX} 1
 ADDI {Register.BX} {Register.BX} 1
-JUMP substr_start
+JUMP subStr_start_while
 
 
 LABEL subStr_end
