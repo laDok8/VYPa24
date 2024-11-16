@@ -2,6 +2,7 @@ import re
 
 from src.code_gen.cls import ClassCodeGenerator
 from src.code_gen.function import Function
+from src.code_gen.if_else import IfElseGenerator
 from src.code_gen.literal import Literal
 from src.code_gen.register import Register
 from src.code_gen.stack import Stack
@@ -24,8 +25,9 @@ class CodeGenerator:
         self.body = ''
         self.variables = []
         self.classes = []
-        # TODO: perhaps refactor to function
+        # TODO: perhaps refactor to function class
         self.params = []
+        self.if_else_stack = []
 
     def get_var_offset(self, symbol: str) -> str:
         if symbol in self.variables:
@@ -53,7 +55,8 @@ class CodeGenerator:
             lines = match.group(0).split('\n')
             return '\n' + lines[0] + '\n' + '\n'.join('\t' + line if line else line for line in lines[1:])
 
-        self.body = re.sub(r'LABEL.*?(?=LABEL|$)', add_tabs, self.body, flags=re.DOTALL)
+        self.body = re.sub(r'LABEL.*?(?=LABEL(!=(end|else|startwhile|endwhile))|$)', add_tabs, self.body,
+                           flags=re.DOTALL)
 
     def declaration(self, symbol: Symbol):
         _name = symbol.name
@@ -141,7 +144,19 @@ class CodeGenerator:
 
     def ret_val(self, sym):
         self.body += f'# return value\n'
-        # set return value below bp  ( PC is also ther)
+        # set return value below bp  ( PC is also there)
         self.body += f'SET [{Register.BP}-2] [{Register.SP}]\n'
         self.body += f'{Stack.leave()}\n\n'
         pass
+
+    def gen_enter_if(self, not_label, end_label):
+        if_else_generator = IfElseGenerator(not_label, end_label)
+        self.if_else_stack.append(if_else_generator)
+        self.body += self.if_else_stack[-1].enter_if()
+
+    def gen_enter_else(self):
+        self.body += self.if_else_stack[-1].enter_else()
+
+    def gen_exit_if_else(self):
+        self.body += self.if_else_stack[-1].exit_if_else()
+        self.if_else_stack.pop()

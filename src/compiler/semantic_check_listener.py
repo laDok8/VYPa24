@@ -23,7 +23,7 @@ class SemanticListener(ParseTreeListener):
         self.code_generator = CodeGenerator()
         # add classes to legal data types
         self._legal_data_types.extend([sym for sym in class_symbols.get_current_symbols().keys()])
-        self.result = {}
+        self.result = {}  # store results of expressions
         self.curr_class = None
         self.curr_obj = None
         self.cur_fun = None
@@ -248,3 +248,15 @@ class SemanticListener(ParseTreeListener):
         param_types = [param.data_type for param in fun_sym.get_params()]
         if arg_types != param_types:
             raise SemanticTypeError(f"Function call mismatch {arg_types} != {param_types}")
+
+    def enterIf_else_stmt(self, ctx: VypParser.If_else_stmtContext):
+        ln = ctx.start.line
+        not_label = self.cur_fun.name + "_" + str(ln) + '_else'
+        end_label = self.cur_fun.name + "_" + str(ln) + '_end'
+        self.code_generator.gen_enter_if(not_label, end_label)
+
+    def exitIf_else_stmt(self, ctx: VypParser.If_else_stmtContext):
+        self.code_generator.gen_exit_if_else()
+
+    def enterElse_stmt(self, ctx: VypParser.Else_stmtContext):
+        self.code_generator.gen_enter_else()

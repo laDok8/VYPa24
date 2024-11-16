@@ -1,16 +1,16 @@
-int f(int x,int y) {
-    print(y);
-    print("\n");
-    print(x);
-    return x+y;
-}
-
 
 void main(void) {
-int y;
-  y= f(1,9);
-  print("\n");
-  print(y);
-  print("\n");
-
+int x;
+x= 0;
+    if (x) {
+    int z;
+    z= 2;
+        print("nice");
+        if (z) {
+            print("nice2");
+        } else {
+            print("not nice");
+        }
+    }
+    //try nested if else and if alone
 } // end of main
