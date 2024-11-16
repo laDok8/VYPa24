@@ -15,7 +15,7 @@ from src.sym_table import *
 class CodeGenerator:
     """
     use modified cdecl calling convention
-        args are pushed on stack from LTR, caller cleans up, return value on stack
+        args are pushed on stack from LTR, callee cleans up, return value on stack
      """
 
     def __init__(self):
@@ -28,13 +28,14 @@ class CodeGenerator:
         # TODO: perhaps refactor to function class
         self.params = []
         self.if_else_stack = []
+        self.cur_func = None
 
     def get_var_offset(self, symbol: str) -> str:
         if symbol in self.variables:
             return '+' + str(self.variables.index(symbol) + 1)  # 0 is BP
         elif symbol in self.params:
-            # in negative 0-BP, 1-PC, 2-ret_val, 3-arg1, 4-arg2, 5-arg3, (RTL) ...
-            return str(-(self.params.index(symbol) + 3))
+            # in negative 0-BP, 1-PC, 3-arg1, 4-arg2, 5-arg3, (RTL) ...
+            return str(-(self.params.index(symbol) + 2))
         else:
             raise CompilerError(f"Variable {symbol} not found", 14)
 
@@ -66,9 +67,10 @@ class CodeGenerator:
         self.body += f'SET [{Register.BP}{self.get_var_offset(_name)}] 0\n'
         self.body += f'{Stack.push()}\n\n'
 
-    def fun_call(self, fname: str, args: [Symbol]):
-        f = Function(fname)
+    def fun_call(self, fun: FunctionSymbol, args: [Symbol]):
+        f = Function(fun)
         self.body += f.call(args)
+        self.cur_func = f
 
     def literal(self, symbol: Symbol):
         if symbol.data_type == 'int':
@@ -82,16 +84,19 @@ class CodeGenerator:
         self.body += f'ADDI {Register.SP} {Register.BP} {_vars}\n\n'
 
     def function_def(self, fun_sym: FunctionSymbol):
-        function = Function(fun_sym.name)
+        function = Function(fun_sym)
         self.body += function.define()
 
         # add params to stack
         for param in fun_sym.get_params():
             self.params.insert(0, param.name)
+        self.cur_func = function  # beware im using this for both definition and call TO be refactored
 
     def exit_function(self):
+        self.cur_func = None
         self.body += Function.exit()
         self.params = []
+        self.variables = []
 
     def VMT(self, current_class: ClassSymbol):
         cls_gen = ClassCodeGenerator(current_class)
@@ -142,11 +147,8 @@ class CodeGenerator:
         self.body += f'# binary operation: {op}\n'
         self.body += f'{Stack.binary_op(_op)}\n\n'
 
-    def ret_val(self, sym):
-        self.body += f'# return value\n'
-        # set return value below bp  ( PC is also there)
-        self.body += f'SET [{Register.BP}-2] [{Register.SP}]\n'
-        self.body += f'{Stack.leave()}\n\n'
+    def ret_val(self, symb: Symbol):
+        self.body += self.cur_func.exit_with_val(symb)
         pass
 
     def gen_enter_if(self, not_label, end_label):

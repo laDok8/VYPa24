@@ -39,6 +39,6 @@ SET {Register.BP} {Register.SP}'''
     @staticmethod
     def binary_op(op: str):
         """values and res on stack"""
-        return f'''{op} {Register.AX} [{Register.SP}] [{Register.SP}-1]\n
+        return f'''{op} {Register.AX} [{Register.SP}-1] [{Register.SP}]\n
 {Stack.pop()}
 {Stack.replace(Register.AX)}'''

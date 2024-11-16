@@ -1,16 +1,10 @@
-
-void main(void) {
-int x;
-x= 0;
-    if (x) {
-    int z;
-    z= 2;
-        print("nice");
-        if (z) {
-            print("nice2");
-        } else {
-            print("not nice");
-        }
+int fact(int n) {
+    if (n-1) {
+        return n * fact(n-1);
+    } else {
+        return 1;
     }
-    //try nested if else and if alone
+}
+void main(void) {
+print(fact(5),"\n");
 } // end of main

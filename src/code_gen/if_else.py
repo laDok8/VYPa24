@@ -4,6 +4,7 @@ from src.code_gen.stack import Stack
 
 class IfElseGenerator:
     """ else is optional and gets paired to nearest if """
+
     def __init__(self, not_label, end_label):
         self.not_label = not_label
         self.end_label = end_label

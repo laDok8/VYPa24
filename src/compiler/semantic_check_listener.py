@@ -104,7 +104,7 @@ class SemanticListener(ParseTreeListener):
             fun_sym = self.curr_obj.get_method(fun_name)
         args = self.result[ctx.f_call_list()]
         self.verify_fun_signature(fun_sym, args)
-        self.code_generator.fun_call(fun_sym.name, args)
+        self.code_generator.fun_call(fun_sym, args)
         self.result[ctx] = fun_sym
 
     def exitLiteral_expr(self, ctx: VypParser.Literal_exprContext):
@@ -249,7 +249,7 @@ class SemanticListener(ParseTreeListener):
         if arg_types != param_types:
             raise SemanticTypeError(f"Function call mismatch {arg_types} != {param_types}")
 
-    def enterIf_else_stmt(self, ctx: VypParser.If_else_stmtContext):
+    def exitIf_cond(self, ctx: VypParser.If_condContext):
         ln = ctx.start.line
         not_label = self.cur_fun.name + "_" + str(ln) + '_else'
         end_label = self.cur_fun.name + "_" + str(ln) + '_end'
