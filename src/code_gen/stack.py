@@ -1,5 +1,6 @@
 from src.code_gen.register import Register
 
+
 class Stack:
     @staticmethod
     def push(x=None):
@@ -18,13 +19,19 @@ SET [{Register.SP}] {x}'''
 SUBI {Register.SP}, {Register.SP}, 1'''
 
     @staticmethod
-    def leave():
+    def pops(x: int):
+        return f'SUBI {Register.SP}, {Register.SP}, {x}'
+
+    @staticmethod
+    def leave(pops: int):
         """leave function (reset SP, BP, return)"""
-        #TODO: shouldnt i pop more args?
-        return f'''SET {Register.SP} {Register.BP}
-{Stack.pop(Register.BP)}
-{Stack.pop()}
-RETURN [{Register.SP}+1]'''
+        sp_loc = pops + 1
+
+        body = f'SET {Register.SP} {Register.BP}\n'
+        body += f'{Stack.pop(Register.BP)}\n'
+        body += f'{Stack.pops(pops)}\n'
+        body += f'RETURN [{Register.SP}+{sp_loc - 1}]\n'
+        return body
 
     @staticmethod
     def enter():

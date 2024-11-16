@@ -98,8 +98,8 @@ class CodeGenerator:
         self.cur_func = function  # beware im using this for both definition and call TO be refactored
 
     def exit_function(self):
+        self.body += self.cur_func.exit()
         self.cur_func = None
-        self.body += Function.exit()
         self.params = []
         self.variables = []
 

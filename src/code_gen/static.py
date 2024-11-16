@@ -85,3 +85,12 @@ SET {Register.BP} [{Register.SP}]
 SUBI {Register.SP}, {Register.SP}, 4
 SET [{Register.SP}] {Register.DI}
 RETURN [{Register.SP}+3]'''
+
+"""
+TODO: concatenate_strings
+4.9 Embedded Class Object
+• string toString\( void \) – Gives the chunk id that represents the object
+converted to string.
+• string getClass\( void \) – Returns the string with the name of the run-time
+class of this object.
+"""

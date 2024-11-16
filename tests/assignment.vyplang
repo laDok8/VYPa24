@@ -1,6 +1,10 @@
+
+int g(int a, int b, int c, int d, int e, int f, int g) {
+    return 2;
+} // end of g
+
+
 void main(void) {
-    string x,y;
-    x = "hello world\n";
-    y = subStr(x, 2, 10);
-    print(y);
+    int x;
+    print(g(1,2,3,4,5,6,7), "\n");
 } // end of main

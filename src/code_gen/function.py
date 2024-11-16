@@ -13,10 +13,10 @@ class Function:
         body += f'{Stack.enter()}\n'
         return body
 
-    @staticmethod
-    def exit():
+    def exit(self):
+        len_args = len(self.args)
         body = f'# exit function\n'
-        body += f'{Stack.leave()}\n'
+        body += f'{Stack.leave(len_args)}\n'
         return body
 
     @staticmethod
@@ -45,8 +45,9 @@ class Function:
         body = f'# return value\n'
         # overwrite arg0 with retval
         ret_symb = str(0) if symb is None else Register.SP
+        len_args = len(self.args)
 
         offset = str(-1 - len(self.args)) if len(self.args) != 0 else str(-2 - len(self.args))  # below  PC, args
         body += f'SET [{Register.BP}{offset}] [{ret_symb}]\n'
-        body += f'{Stack.leave()}\n\n'
+        body += f'{Stack.leave(len_args)}\n\n'
         return body
