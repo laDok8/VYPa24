@@ -99,7 +99,6 @@ class DefinitionListener(ParseTreeListener):
 
     def enterClass_field(self, ctx: VypParser.Class_fieldContext):
         _type = ctx.declaration().var_type().getText()
-        # TODO: need to check types, unable to do it here
 
         # multiple ids can be declared at once
         for _id in ctx.declaration().ID():

@@ -3,9 +3,16 @@ from src.code_gen.register import Register
 
 class Builtin:
     @staticmethod
-    def get_all_funs()   :
-        return Builtin.read_string() + Builtin.read_int() + Builtin.length() + Builtin.subStr()
-
+    def get_all_funs():
+        functions = [
+            Builtin.read_string(),
+            Builtin.read_int(),
+            Builtin.length(),
+            Builtin.subStr(),
+            Builtin.toString(),
+            Builtin.getClass()
+        ]
+        return ''.join(functions)
 
     @staticmethod
     def read_string():
@@ -84,13 +91,20 @@ SET {Register.SP} {Register.BP}
 SET {Register.BP} [{Register.SP}]
 SUBI {Register.SP}, {Register.SP}, 4
 SET [{Register.SP}] {Register.DI}
-RETURN [{Register.SP}+3]'''
+RETURN [{Register.SP}+3]\n\n'''
 
-"""
-TODO: concatenate_strings
-4.9 Embedded Class Object
-• string toString\( void \) – Gives the chunk id that represents the object
-converted to string.
-• string getClass\( void \) – Returns the string with the name of the run-time
-class of this object.
-"""
+    @staticmethod
+    def toString():
+        return f'''LABEL Object:toString
+INT2STRING {Register.AX} [{Register.SP}]
+SET [{Register.SP}] {Register.AX}
+RETURN [{Register.SP}]\n\n'''
+
+    @staticmethod
+    def getClass():
+        return f'''LABEL Object:getClass
+GETWORD {Register.AX} [{Register.SP}] 2
+SET [{Register.SP}] {Register.AX}
+RETURN [{Register.SP}+1]\n\n'''
+
+# TODO: concatenate_strings

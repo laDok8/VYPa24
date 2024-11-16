@@ -1,5 +1,3 @@
-from email.quoprimime import body_decode
-
 from src.code_gen.function import Function
 from src.code_gen.register import Register
 from src.code_gen.stack import Stack
@@ -7,7 +5,7 @@ from src.sym_table import ClassSymbol
 
 
 class ClassCodeGenerator:
-    VMT_HEADER = 2
+    VMT_HEADER = 3  # VMT, parent, classname
 
     def __init__(self, cls: ClassSymbol):
         self.cls = cls
@@ -40,8 +38,9 @@ class ClassCodeGenerator:
         body += f'CREATE {Register.AX} {len(self.cls.get_all_fields()) + ClassCodeGenerator.VMT_HEADER}\n'
         body += f'SETWORD {Register.AX} 0 [{vmt_loc}]\n'
         body += f'SETWORD {Register.AX} 1 [{vmt_prt}]\n'
+        body += f'SETWORD {Register.AX} 2 "{self.cls.name}"\n'
         # init fields to 0
-        for i in range(1, len(self.cls.get_all_fields())+ClassCodeGenerator.VMT_HEADER-1):
+        for i in range(1, len(self.cls.get_all_fields()) + ClassCodeGenerator.VMT_HEADER - 1):
             body += f'SETWORD {Register.AX} {i + 1} 0\n'
         body += '\n'
 
