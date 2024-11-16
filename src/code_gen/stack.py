@@ -20,6 +20,7 @@ SUBI {Register.SP}, {Register.SP}, 1'''
     @staticmethod
     def leave():
         """leave function (reset SP, BP, return)"""
+        #TODO: shouldnt i pop more args?
         return f'''SET {Register.SP} {Register.BP}
 {Stack.pop(Register.BP)}
 {Stack.pop()}

@@ -6,6 +6,7 @@ from src.code_gen.if_else import IfElseGenerator
 from src.code_gen.literal import Literal
 from src.code_gen.register import Register
 from src.code_gen.stack import Stack
+from src.code_gen.static import Builtin
 from src.compiler import CompilerError
 from src.sym_table import *
 
@@ -46,7 +47,10 @@ class CodeGenerator:
         print(Register.aliases())
         print("SET $BP $SP")
         print("CALL [$SP+1] main")
-        print("JUMP _end\n")
+        print("JUMP _end\n\n")
+        print("# Builtin functions")
+        print(Builtin.get_all_funs())
+        print("# User program")
         print(self.body)
         print("LABEL _end")
 
