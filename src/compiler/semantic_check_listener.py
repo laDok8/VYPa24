@@ -260,3 +260,15 @@ class SemanticListener(ParseTreeListener):
 
     def enterElse_stmt(self, ctx: VypParser.Else_stmtContext):
         self.code_generator.gen_enter_else()
+
+    def enterWhile_cond(self, ctx: VypParser.While_condContext):
+        ln = ctx.start.line
+        start_label = self.cur_fun.name + "_" + str(ln) + '_start_while'
+        end_label = self.cur_fun.name + "_" + str(ln) + '_end_while'
+        self.code_generator.gen_enter_while1(start_label, end_label)
+
+    def exitWhile_cond(self, ctx: VypParser.While_condContext):
+        self.code_generator.gen_enter_while2()
+
+    def exitWhile_stmt(self, ctx: VypParser.While_stmtContext):
+        self.code_generator.gen_exit_while()

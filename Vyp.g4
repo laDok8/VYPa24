@@ -36,7 +36,8 @@ ret_stmt: 'return' expr?;
 if_else_stmt: if_cond code_block else_stmt?;
 if_cond: 'if' '(' expr ')';
 else_stmt: 'else' code_block;
-while_stmt: 'while' '(' expr ')' code_block;
+while_stmt: while_cond code_block;
+while_cond: 'while' '(' expr ')';
 
 expr
     : '(' var_type ')' expr #cast_expr

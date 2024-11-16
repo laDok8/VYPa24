@@ -29,6 +29,7 @@ class CodeGenerator:
         self.params = []
         self.if_else_stack = []
         self.cur_func = None
+        self.while_stack = []
 
     def get_var_offset(self, symbol: str) -> str:
         if symbol in self.variables:
@@ -162,3 +163,17 @@ class CodeGenerator:
     def gen_exit_if_else(self):
         self.body += self.if_else_stack[-1].exit_if_else()
         self.if_else_stack.pop()
+
+    def gen_enter_while1(self, start_label, end_label):
+        self.while_stack.append((start_label, end_label))
+        self.body += f'# while stmt\n'
+        self.body += f'LABEL {start_label}\n'
+
+    def gen_enter_while2(self):
+        start_label, end_label = self.while_stack[-1]
+        self.body += f'JUMPZ {end_label} [{Register.SP}]\n'
+
+    def gen_exit_while(self):
+        start_label, end_label = self.while_stack.pop()
+        self.body += f'JUMP {start_label}\n'
+        self.body += f'LABEL {end_label}\n'

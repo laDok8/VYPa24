@@ -161,6 +161,15 @@ class VypListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by VypParser#while_cond.
+    def enterWhile_cond(self, ctx:VypParser.While_condContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#while_cond.
+    def exitWhile_cond(self, ctx:VypParser.While_condContext):
+        pass
+
+
     # Enter a parse tree produced by VypParser#id_expr.
     def enterId_expr(self, ctx:VypParser.Id_exprContext):
         pass
