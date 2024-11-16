@@ -10,92 +10,94 @@ else:
 
 def serializedATN():
     return [
-        4,1,39,248,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,39,254,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
         2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,
-        7,20,2,21,7,21,2,22,7,22,2,23,7,23,1,0,1,0,4,0,51,8,0,11,0,12,0,
-        52,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,2,1,3,1,3,3,3,66,8,3,1,4,1,
-        4,1,4,5,4,71,8,4,10,4,12,4,74,9,4,1,4,3,4,77,8,4,1,5,1,5,1,5,5,5,
-        82,8,5,10,5,12,5,85,9,5,3,5,87,8,5,1,6,1,6,1,6,1,7,1,7,5,7,94,8,
-        7,10,7,12,7,97,9,7,1,7,1,7,1,7,1,7,1,7,3,7,104,8,7,1,8,1,8,1,8,1,
-        8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,3,8,124,
-        8,8,1,9,1,9,1,9,1,9,5,9,130,8,9,10,9,12,9,133,9,9,1,10,1,10,1,10,
-        1,10,1,11,1,11,1,11,1,11,1,12,1,12,3,12,145,8,12,1,13,1,13,1,13,
-        1,13,1,13,1,13,1,13,1,13,1,14,1,14,1,14,1,14,1,14,1,14,1,15,1,15,
-        1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,
-        1,15,1,15,3,15,178,8,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,
-        1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,5,15,198,8,15,
-        10,15,12,15,201,9,15,1,16,1,16,1,16,1,16,1,16,1,17,1,17,1,17,1,18,
-        1,18,1,19,1,19,3,19,215,8,19,1,20,1,20,1,20,1,20,1,21,1,21,3,21,
-        223,8,21,1,21,1,21,3,21,227,8,21,1,22,1,22,1,22,1,22,1,22,1,22,5,
-        22,235,8,22,10,22,12,22,238,9,22,1,22,1,22,1,23,1,23,1,23,1,23,3,
-        23,246,8,23,1,23,0,1,30,24,0,2,4,6,8,10,12,14,16,18,20,22,24,26,
-        28,30,32,34,36,38,40,42,44,46,0,7,3,0,25,25,27,27,34,34,1,0,28,29,
-        1,0,30,31,1,0,13,16,1,0,17,18,1,0,35,36,1,0,32,34,259,0,50,1,0,0,
-        0,2,54,1,0,0,0,4,61,1,0,0,0,6,65,1,0,0,0,8,76,1,0,0,0,10,86,1,0,
-        0,0,12,88,1,0,0,0,14,103,1,0,0,0,16,123,1,0,0,0,18,125,1,0,0,0,20,
-        134,1,0,0,0,22,138,1,0,0,0,24,142,1,0,0,0,26,146,1,0,0,0,28,154,
-        1,0,0,0,30,177,1,0,0,0,32,202,1,0,0,0,34,207,1,0,0,0,36,210,1,0,
-        0,0,38,214,1,0,0,0,40,216,1,0,0,0,42,222,1,0,0,0,44,228,1,0,0,0,
-        46,245,1,0,0,0,48,51,3,2,1,0,49,51,3,44,22,0,50,48,1,0,0,0,50,49,
-        1,0,0,0,51,52,1,0,0,0,52,50,1,0,0,0,52,53,1,0,0,0,53,1,1,0,0,0,54,
-        55,3,6,3,0,55,56,5,34,0,0,56,57,5,1,0,0,57,58,3,8,4,0,58,59,5,2,
-        0,0,59,60,3,14,7,0,60,3,1,0,0,0,61,62,7,0,0,0,62,5,1,0,0,0,63,66,
-        3,4,2,0,64,66,5,26,0,0,65,63,1,0,0,0,65,64,1,0,0,0,66,7,1,0,0,0,
-        67,72,3,12,6,0,68,69,5,3,0,0,69,71,3,12,6,0,70,68,1,0,0,0,71,74,
-        1,0,0,0,72,70,1,0,0,0,72,73,1,0,0,0,73,77,1,0,0,0,74,72,1,0,0,0,
-        75,77,5,26,0,0,76,67,1,0,0,0,76,75,1,0,0,0,77,9,1,0,0,0,78,83,3,
-        30,15,0,79,80,5,3,0,0,80,82,3,30,15,0,81,79,1,0,0,0,82,85,1,0,0,
-        0,83,81,1,0,0,0,83,84,1,0,0,0,84,87,1,0,0,0,85,83,1,0,0,0,86,78,
-        1,0,0,0,86,87,1,0,0,0,87,11,1,0,0,0,88,89,3,4,2,0,89,90,5,34,0,0,
-        90,13,1,0,0,0,91,95,5,4,0,0,92,94,3,16,8,0,93,92,1,0,0,0,94,97,1,
-        0,0,0,95,93,1,0,0,0,95,96,1,0,0,0,96,98,1,0,0,0,97,95,1,0,0,0,98,
-        104,5,5,0,0,99,100,5,4,0,0,100,101,3,14,7,0,101,102,5,5,0,0,102,
-        104,1,0,0,0,103,91,1,0,0,0,103,99,1,0,0,0,104,15,1,0,0,0,105,106,
-        3,18,9,0,106,107,5,6,0,0,107,124,1,0,0,0,108,109,3,20,10,0,109,110,
-        5,6,0,0,110,124,1,0,0,0,111,112,3,22,11,0,112,113,5,6,0,0,113,124,
-        1,0,0,0,114,115,3,30,15,0,115,116,5,6,0,0,116,124,1,0,0,0,117,118,
-        3,24,12,0,118,119,5,6,0,0,119,124,1,0,0,0,120,124,3,26,13,0,121,
-        124,3,28,14,0,122,124,5,6,0,0,123,105,1,0,0,0,123,108,1,0,0,0,123,
-        111,1,0,0,0,123,114,1,0,0,0,123,117,1,0,0,0,123,120,1,0,0,0,123,
-        121,1,0,0,0,123,122,1,0,0,0,124,17,1,0,0,0,125,126,3,4,2,0,126,131,
-        5,34,0,0,127,128,5,3,0,0,128,130,5,34,0,0,129,127,1,0,0,0,130,133,
-        1,0,0,0,131,129,1,0,0,0,131,132,1,0,0,0,132,19,1,0,0,0,133,131,1,
-        0,0,0,134,135,5,34,0,0,135,136,5,7,0,0,136,137,3,30,15,0,137,21,
-        1,0,0,0,138,139,3,40,20,0,139,140,5,7,0,0,140,141,3,30,15,0,141,
-        23,1,0,0,0,142,144,5,8,0,0,143,145,3,30,15,0,144,143,1,0,0,0,144,
-        145,1,0,0,0,145,25,1,0,0,0,146,147,5,9,0,0,147,148,5,1,0,0,148,149,
-        3,30,15,0,149,150,5,2,0,0,150,151,3,14,7,0,151,152,5,10,0,0,152,
-        153,3,14,7,0,153,27,1,0,0,0,154,155,5,11,0,0,155,156,5,1,0,0,156,
-        157,3,30,15,0,157,158,5,2,0,0,158,159,3,14,7,0,159,29,1,0,0,0,160,
-        161,6,15,-1,0,161,162,5,1,0,0,162,163,3,4,2,0,163,164,5,2,0,0,164,
-        165,3,30,15,14,165,178,1,0,0,0,166,167,5,1,0,0,167,168,3,30,15,0,
-        168,169,5,2,0,0,169,178,1,0,0,0,170,171,5,12,0,0,171,178,3,30,15,
-        12,172,178,3,32,16,0,173,178,3,34,17,0,174,178,3,36,18,0,175,178,
-        3,40,20,0,176,178,5,34,0,0,177,160,1,0,0,0,177,166,1,0,0,0,177,170,
-        1,0,0,0,177,172,1,0,0,0,177,173,1,0,0,0,177,174,1,0,0,0,177,175,
-        1,0,0,0,177,176,1,0,0,0,178,199,1,0,0,0,179,180,10,11,0,0,180,181,
-        7,1,0,0,181,198,3,30,15,12,182,183,10,10,0,0,183,184,7,2,0,0,184,
-        198,3,30,15,11,185,186,10,9,0,0,186,187,7,3,0,0,187,198,3,30,15,
-        10,188,189,10,8,0,0,189,190,7,4,0,0,190,198,3,30,15,9,191,192,10,
-        7,0,0,192,193,5,19,0,0,193,198,3,30,15,8,194,195,10,6,0,0,195,196,
-        5,20,0,0,196,198,3,30,15,7,197,179,1,0,0,0,197,182,1,0,0,0,197,185,
-        1,0,0,0,197,188,1,0,0,0,197,191,1,0,0,0,197,194,1,0,0,0,198,201,
-        1,0,0,0,199,197,1,0,0,0,199,200,1,0,0,0,200,31,1,0,0,0,201,199,1,
-        0,0,0,202,203,5,34,0,0,203,204,5,1,0,0,204,205,3,10,5,0,205,206,
-        5,2,0,0,206,33,1,0,0,0,207,208,5,24,0,0,208,209,5,34,0,0,209,35,
-        1,0,0,0,210,211,7,5,0,0,211,37,1,0,0,0,212,215,7,6,0,0,213,215,3,
-        32,16,0,214,212,1,0,0,0,214,213,1,0,0,0,215,39,1,0,0,0,216,217,3,
-        38,19,0,217,218,5,21,0,0,218,219,3,42,21,0,219,41,1,0,0,0,220,223,
-        3,32,16,0,221,223,5,34,0,0,222,220,1,0,0,0,222,221,1,0,0,0,223,226,
-        1,0,0,0,224,225,5,21,0,0,225,227,3,42,21,0,226,224,1,0,0,0,226,227,
-        1,0,0,0,227,43,1,0,0,0,228,229,5,23,0,0,229,230,5,34,0,0,230,231,
-        5,22,0,0,231,232,5,34,0,0,232,236,5,4,0,0,233,235,3,46,23,0,234,
-        233,1,0,0,0,235,238,1,0,0,0,236,234,1,0,0,0,236,237,1,0,0,0,237,
-        239,1,0,0,0,238,236,1,0,0,0,239,240,5,5,0,0,240,45,1,0,0,0,241,242,
-        3,18,9,0,242,243,5,6,0,0,243,246,1,0,0,0,244,246,3,2,1,0,245,241,
-        1,0,0,0,245,244,1,0,0,0,246,47,1,0,0,0,20,50,52,65,72,76,83,86,95,
-        103,123,131,144,177,197,199,214,222,226,236,245
+        7,20,2,21,7,21,2,22,7,22,2,23,7,23,2,24,7,24,1,0,1,0,4,0,53,8,0,
+        11,0,12,0,54,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,2,1,3,1,3,3,3,68,
+        8,3,1,4,1,4,1,4,5,4,73,8,4,10,4,12,4,76,9,4,1,4,3,4,79,8,4,1,5,1,
+        5,1,5,5,5,84,8,5,10,5,12,5,87,9,5,3,5,89,8,5,1,6,1,6,1,6,1,7,1,7,
+        5,7,96,8,7,10,7,12,7,99,9,7,1,7,1,7,1,7,1,7,1,7,3,7,106,8,7,1,8,
+        1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,1,8,
+        1,8,3,8,126,8,8,1,9,1,9,1,9,1,9,5,9,132,8,9,10,9,12,9,135,9,9,1,
+        10,1,10,1,10,1,10,1,11,1,11,1,11,1,11,1,12,1,12,3,12,147,8,12,1,
+        13,1,13,1,13,1,13,1,13,1,13,1,13,3,13,156,8,13,1,14,1,14,1,14,1,
+        15,1,15,1,15,1,15,1,15,1,15,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,
+        16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,3,16,184,8,16,1,
+        16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,
+        16,1,16,1,16,1,16,1,16,5,16,204,8,16,10,16,12,16,207,9,16,1,17,1,
+        17,1,17,1,17,1,17,1,18,1,18,1,18,1,19,1,19,1,20,1,20,3,20,221,8,
+        20,1,21,1,21,1,21,1,21,1,22,1,22,3,22,229,8,22,1,22,1,22,3,22,233,
+        8,22,1,23,1,23,1,23,1,23,1,23,1,23,5,23,241,8,23,10,23,12,23,244,
+        9,23,1,23,1,23,1,24,1,24,1,24,1,24,3,24,252,8,24,1,24,0,1,32,25,
+        0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,
+        46,48,0,7,3,0,25,25,27,27,34,34,1,0,28,29,1,0,30,31,1,0,13,16,1,
+        0,17,18,1,0,35,36,1,0,32,34,265,0,52,1,0,0,0,2,56,1,0,0,0,4,63,1,
+        0,0,0,6,67,1,0,0,0,8,78,1,0,0,0,10,88,1,0,0,0,12,90,1,0,0,0,14,105,
+        1,0,0,0,16,125,1,0,0,0,18,127,1,0,0,0,20,136,1,0,0,0,22,140,1,0,
+        0,0,24,144,1,0,0,0,26,148,1,0,0,0,28,157,1,0,0,0,30,160,1,0,0,0,
+        32,183,1,0,0,0,34,208,1,0,0,0,36,213,1,0,0,0,38,216,1,0,0,0,40,220,
+        1,0,0,0,42,222,1,0,0,0,44,228,1,0,0,0,46,234,1,0,0,0,48,251,1,0,
+        0,0,50,53,3,2,1,0,51,53,3,46,23,0,52,50,1,0,0,0,52,51,1,0,0,0,53,
+        54,1,0,0,0,54,52,1,0,0,0,54,55,1,0,0,0,55,1,1,0,0,0,56,57,3,6,3,
+        0,57,58,5,34,0,0,58,59,5,1,0,0,59,60,3,8,4,0,60,61,5,2,0,0,61,62,
+        3,14,7,0,62,3,1,0,0,0,63,64,7,0,0,0,64,5,1,0,0,0,65,68,3,4,2,0,66,
+        68,5,26,0,0,67,65,1,0,0,0,67,66,1,0,0,0,68,7,1,0,0,0,69,74,3,12,
+        6,0,70,71,5,3,0,0,71,73,3,12,6,0,72,70,1,0,0,0,73,76,1,0,0,0,74,
+        72,1,0,0,0,74,75,1,0,0,0,75,79,1,0,0,0,76,74,1,0,0,0,77,79,5,26,
+        0,0,78,69,1,0,0,0,78,77,1,0,0,0,79,9,1,0,0,0,80,85,3,32,16,0,81,
+        82,5,3,0,0,82,84,3,32,16,0,83,81,1,0,0,0,84,87,1,0,0,0,85,83,1,0,
+        0,0,85,86,1,0,0,0,86,89,1,0,0,0,87,85,1,0,0,0,88,80,1,0,0,0,88,89,
+        1,0,0,0,89,11,1,0,0,0,90,91,3,4,2,0,91,92,5,34,0,0,92,13,1,0,0,0,
+        93,97,5,4,0,0,94,96,3,16,8,0,95,94,1,0,0,0,96,99,1,0,0,0,97,95,1,
+        0,0,0,97,98,1,0,0,0,98,100,1,0,0,0,99,97,1,0,0,0,100,106,5,5,0,0,
+        101,102,5,4,0,0,102,103,3,14,7,0,103,104,5,5,0,0,104,106,1,0,0,0,
+        105,93,1,0,0,0,105,101,1,0,0,0,106,15,1,0,0,0,107,108,3,18,9,0,108,
+        109,5,6,0,0,109,126,1,0,0,0,110,111,3,20,10,0,111,112,5,6,0,0,112,
+        126,1,0,0,0,113,114,3,22,11,0,114,115,5,6,0,0,115,126,1,0,0,0,116,
+        117,3,32,16,0,117,118,5,6,0,0,118,126,1,0,0,0,119,120,3,24,12,0,
+        120,121,5,6,0,0,121,126,1,0,0,0,122,126,3,26,13,0,123,126,3,30,15,
+        0,124,126,5,6,0,0,125,107,1,0,0,0,125,110,1,0,0,0,125,113,1,0,0,
+        0,125,116,1,0,0,0,125,119,1,0,0,0,125,122,1,0,0,0,125,123,1,0,0,
+        0,125,124,1,0,0,0,126,17,1,0,0,0,127,128,3,4,2,0,128,133,5,34,0,
+        0,129,130,5,3,0,0,130,132,5,34,0,0,131,129,1,0,0,0,132,135,1,0,0,
+        0,133,131,1,0,0,0,133,134,1,0,0,0,134,19,1,0,0,0,135,133,1,0,0,0,
+        136,137,5,34,0,0,137,138,5,7,0,0,138,139,3,32,16,0,139,21,1,0,0,
+        0,140,141,3,42,21,0,141,142,5,7,0,0,142,143,3,32,16,0,143,23,1,0,
+        0,0,144,146,5,8,0,0,145,147,3,32,16,0,146,145,1,0,0,0,146,147,1,
+        0,0,0,147,25,1,0,0,0,148,149,5,9,0,0,149,150,5,1,0,0,150,151,3,32,
+        16,0,151,152,5,2,0,0,152,155,3,14,7,0,153,154,5,10,0,0,154,156,3,
+        14,7,0,155,153,1,0,0,0,155,156,1,0,0,0,156,27,1,0,0,0,157,158,5,
+        10,0,0,158,159,3,14,7,0,159,29,1,0,0,0,160,161,5,11,0,0,161,162,
+        5,1,0,0,162,163,3,32,16,0,163,164,5,2,0,0,164,165,3,14,7,0,165,31,
+        1,0,0,0,166,167,6,16,-1,0,167,168,5,1,0,0,168,169,3,4,2,0,169,170,
+        5,2,0,0,170,171,3,32,16,14,171,184,1,0,0,0,172,173,5,1,0,0,173,174,
+        3,32,16,0,174,175,5,2,0,0,175,184,1,0,0,0,176,177,5,12,0,0,177,184,
+        3,32,16,12,178,184,3,34,17,0,179,184,3,36,18,0,180,184,3,38,19,0,
+        181,184,3,42,21,0,182,184,5,34,0,0,183,166,1,0,0,0,183,172,1,0,0,
+        0,183,176,1,0,0,0,183,178,1,0,0,0,183,179,1,0,0,0,183,180,1,0,0,
+        0,183,181,1,0,0,0,183,182,1,0,0,0,184,205,1,0,0,0,185,186,10,11,
+        0,0,186,187,7,1,0,0,187,204,3,32,16,12,188,189,10,10,0,0,189,190,
+        7,2,0,0,190,204,3,32,16,11,191,192,10,9,0,0,192,193,7,3,0,0,193,
+        204,3,32,16,10,194,195,10,8,0,0,195,196,7,4,0,0,196,204,3,32,16,
+        9,197,198,10,7,0,0,198,199,5,19,0,0,199,204,3,32,16,8,200,201,10,
+        6,0,0,201,202,5,20,0,0,202,204,3,32,16,7,203,185,1,0,0,0,203,188,
+        1,0,0,0,203,191,1,0,0,0,203,194,1,0,0,0,203,197,1,0,0,0,203,200,
+        1,0,0,0,204,207,1,0,0,0,205,203,1,0,0,0,205,206,1,0,0,0,206,33,1,
+        0,0,0,207,205,1,0,0,0,208,209,5,34,0,0,209,210,5,1,0,0,210,211,3,
+        10,5,0,211,212,5,2,0,0,212,35,1,0,0,0,213,214,5,24,0,0,214,215,5,
+        34,0,0,215,37,1,0,0,0,216,217,7,5,0,0,217,39,1,0,0,0,218,221,7,6,
+        0,0,219,221,3,34,17,0,220,218,1,0,0,0,220,219,1,0,0,0,221,41,1,0,
+        0,0,222,223,3,40,20,0,223,224,5,21,0,0,224,225,3,44,22,0,225,43,
+        1,0,0,0,226,229,3,34,17,0,227,229,5,34,0,0,228,226,1,0,0,0,228,227,
+        1,0,0,0,229,232,1,0,0,0,230,231,5,21,0,0,231,233,3,44,22,0,232,230,
+        1,0,0,0,232,233,1,0,0,0,233,45,1,0,0,0,234,235,5,23,0,0,235,236,
+        5,34,0,0,236,237,5,22,0,0,237,238,5,34,0,0,238,242,5,4,0,0,239,241,
+        3,48,24,0,240,239,1,0,0,0,241,244,1,0,0,0,242,240,1,0,0,0,242,243,
+        1,0,0,0,243,245,1,0,0,0,244,242,1,0,0,0,245,246,5,5,0,0,246,47,1,
+        0,0,0,247,248,3,18,9,0,248,249,5,6,0,0,249,252,1,0,0,0,250,252,3,
+        2,1,0,251,247,1,0,0,0,251,250,1,0,0,0,252,49,1,0,0,0,21,52,54,67,
+        74,78,85,88,97,105,125,133,146,155,183,203,205,220,228,232,242,251
     ]
 
 class VypParser ( Parser ):
@@ -139,23 +141,24 @@ class VypParser ( Parser ):
     RULE_instance_assign = 11
     RULE_ret_stmt = 12
     RULE_if_else_stmt = 13
-    RULE_while_stmt = 14
-    RULE_expr = 15
-    RULE_fun_call = 16
-    RULE_instance_creation = 17
-    RULE_literal_val = 18
-    RULE_first_instance_ref = 19
-    RULE_instance_expr = 20
-    RULE_nested_invocation = 21
-    RULE_class_def = 22
-    RULE_class_member = 23
+    RULE_else_stmt = 14
+    RULE_while_stmt = 15
+    RULE_expr = 16
+    RULE_fun_call = 17
+    RULE_instance_creation = 18
+    RULE_literal_val = 19
+    RULE_first_instance_ref = 20
+    RULE_instance_expr = 21
+    RULE_nested_invocation = 22
+    RULE_class_def = 23
+    RULE_class_member = 24
 
     ruleNames =  [ "program", "function_def", "var_type", "ret_type", "f_param_list", 
                    "f_call_list", "f_param_def", "code_block", "statement", 
                    "declaration", "var_assign", "instance_assign", "ret_stmt", 
-                   "if_else_stmt", "while_stmt", "expr", "fun_call", "instance_creation", 
-                   "literal_val", "first_instance_ref", "instance_expr", 
-                   "nested_invocation", "class_def", "class_member" ]
+                   "if_else_stmt", "else_stmt", "while_stmt", "expr", "fun_call", 
+                   "instance_creation", "literal_val", "first_instance_ref", 
+                   "instance_expr", "nested_invocation", "class_def", "class_member" ]
 
     EOF = Token.EOF
     T__0=1
@@ -249,25 +252,25 @@ class VypParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 50 
+            self.state = 52 
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while True:
-                self.state = 50
+                self.state = 52
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
                 if token in [25, 26, 27, 34]:
-                    self.state = 48
+                    self.state = 50
                     self.function_def()
                     pass
                 elif token in [23]:
-                    self.state = 49
+                    self.state = 51
                     self.class_def()
                     pass
                 else:
                     raise NoViableAltException(self)
 
-                self.state = 52 
+                self.state = 54 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 if not ((((_la) & ~0x3f) == 0 and ((1 << _la) & 17423138816) != 0)):
@@ -324,17 +327,17 @@ class VypParser ( Parser ):
         self.enterRule(localctx, 2, self.RULE_function_def)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 54
-            self.ret_type()
-            self.state = 55
-            self.match(VypParser.ID)
             self.state = 56
-            self.match(VypParser.T__0)
+            self.ret_type()
             self.state = 57
-            self.f_param_list()
+            self.match(VypParser.ID)
             self.state = 58
-            self.match(VypParser.T__1)
+            self.match(VypParser.T__0)
             self.state = 59
+            self.f_param_list()
+            self.state = 60
+            self.match(VypParser.T__1)
+            self.state = 61
             self.code_block()
         except RecognitionException as re:
             localctx.exception = re
@@ -382,7 +385,7 @@ class VypParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 61
+            self.state = 63
             _la = self._input.LA(1)
             if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 17347641344) != 0)):
                 self._errHandler.recoverInline(self)
@@ -431,17 +434,17 @@ class VypParser ( Parser ):
         localctx = VypParser.Ret_typeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 6, self.RULE_ret_type)
         try:
-            self.state = 65
+            self.state = 67
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [25, 27, 34]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 63
+                self.state = 65
                 self.var_type()
                 pass
             elif token in [26]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 64
+                self.state = 66
                 self.match(VypParser.VOID)
                 pass
             else:
@@ -494,27 +497,27 @@ class VypParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 76
+            self.state = 78
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [25, 27, 34]:
-                self.state = 67
+                self.state = 69
                 self.f_param_def()
-                self.state = 72
+                self.state = 74
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==3:
-                    self.state = 68
+                    self.state = 70
                     self.match(VypParser.T__2)
-                    self.state = 69
+                    self.state = 71
                     self.f_param_def()
-                    self.state = 74
+                    self.state = 76
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
                 pass
             elif token in [26]:
-                self.state = 75
+                self.state = 77
                 self.match(VypParser.VOID)
                 pass
             else:
@@ -564,21 +567,21 @@ class VypParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 86
+            self.state = 88
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if (((_la) & ~0x3f) == 0 and ((1 << _la) & 133160767490) != 0):
-                self.state = 78
+                self.state = 80
                 self.expr(0)
-                self.state = 83
+                self.state = 85
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==3:
-                    self.state = 79
+                    self.state = 81
                     self.match(VypParser.T__2)
-                    self.state = 80
+                    self.state = 82
                     self.expr(0)
-                    self.state = 85
+                    self.state = 87
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
@@ -627,9 +630,9 @@ class VypParser ( Parser ):
         self.enterRule(localctx, 12, self.RULE_f_param_def)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 88
+            self.state = 90
             self.var_type()
-            self.state = 89
+            self.state = 91
             self.match(VypParser.ID)
         except RecognitionException as re:
             localctx.exception = re
@@ -678,34 +681,34 @@ class VypParser ( Parser ):
         self.enterRule(localctx, 14, self.RULE_code_block)
         self._la = 0 # Token type
         try:
-            self.state = 103
+            self.state = 105
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,8,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 91
+                self.state = 93
                 self.match(VypParser.T__3)
-                self.state = 95
+                self.state = 97
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while (((_la) & ~0x3f) == 0 and ((1 << _la) & 133328542530) != 0):
-                    self.state = 92
+                    self.state = 94
                     self.statement()
-                    self.state = 97
+                    self.state = 99
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
-                self.state = 98
+                self.state = 100
                 self.match(VypParser.T__4)
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 99
-                self.match(VypParser.T__3)
-                self.state = 100
-                self.code_block()
                 self.state = 101
+                self.match(VypParser.T__3)
+                self.state = 102
+                self.code_block()
+                self.state = 103
                 self.match(VypParser.T__4)
                 pass
 
@@ -773,64 +776,64 @@ class VypParser ( Parser ):
         localctx = VypParser.StatementContext(self, self._ctx, self.state)
         self.enterRule(localctx, 16, self.RULE_statement)
         try:
-            self.state = 123
+            self.state = 125
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,9,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 105
+                self.state = 107
                 self.declaration()
-                self.state = 106
+                self.state = 108
                 self.match(VypParser.T__5)
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 108
+                self.state = 110
                 self.var_assign()
-                self.state = 109
+                self.state = 111
                 self.match(VypParser.T__5)
                 pass
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 111
+                self.state = 113
                 self.instance_assign()
-                self.state = 112
+                self.state = 114
                 self.match(VypParser.T__5)
                 pass
 
             elif la_ == 4:
                 self.enterOuterAlt(localctx, 4)
-                self.state = 114
+                self.state = 116
                 self.expr(0)
-                self.state = 115
+                self.state = 117
                 self.match(VypParser.T__5)
                 pass
 
             elif la_ == 5:
                 self.enterOuterAlt(localctx, 5)
-                self.state = 117
+                self.state = 119
                 self.ret_stmt()
-                self.state = 118
+                self.state = 120
                 self.match(VypParser.T__5)
                 pass
 
             elif la_ == 6:
                 self.enterOuterAlt(localctx, 6)
-                self.state = 120
+                self.state = 122
                 self.if_else_stmt()
                 pass
 
             elif la_ == 7:
                 self.enterOuterAlt(localctx, 7)
-                self.state = 121
+                self.state = 123
                 self.while_stmt()
                 pass
 
             elif la_ == 8:
                 self.enterOuterAlt(localctx, 8)
-                self.state = 122
+                self.state = 124
                 self.match(VypParser.T__5)
                 pass
 
@@ -882,19 +885,19 @@ class VypParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 125
+            self.state = 127
             self.var_type()
-            self.state = 126
+            self.state = 128
             self.match(VypParser.ID)
-            self.state = 131
+            self.state = 133
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==3:
-                self.state = 127
+                self.state = 129
                 self.match(VypParser.T__2)
-                self.state = 128
+                self.state = 130
                 self.match(VypParser.ID)
-                self.state = 133
+                self.state = 135
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -941,11 +944,11 @@ class VypParser ( Parser ):
         self.enterRule(localctx, 20, self.RULE_var_assign)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 134
-            self.match(VypParser.ID)
-            self.state = 135
-            self.match(VypParser.T__6)
             self.state = 136
+            self.match(VypParser.ID)
+            self.state = 137
+            self.match(VypParser.T__6)
+            self.state = 138
             self.expr(0)
         except RecognitionException as re:
             localctx.exception = re
@@ -991,11 +994,11 @@ class VypParser ( Parser ):
         self.enterRule(localctx, 22, self.RULE_instance_assign)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 138
-            self.instance_expr()
-            self.state = 139
-            self.match(VypParser.T__6)
             self.state = 140
+            self.instance_expr()
+            self.state = 141
+            self.match(VypParser.T__6)
+            self.state = 142
             self.expr(0)
         except RecognitionException as re:
             localctx.exception = re
@@ -1038,13 +1041,13 @@ class VypParser ( Parser ):
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 142
-            self.match(VypParser.T__7)
             self.state = 144
+            self.match(VypParser.T__7)
+            self.state = 146
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if (((_la) & ~0x3f) == 0 and ((1 << _la) & 133160767490) != 0):
-                self.state = 143
+                self.state = 145
                 self.expr(0)
 
 
@@ -1093,21 +1096,72 @@ class VypParser ( Parser ):
 
         localctx = VypParser.If_else_stmtContext(self, self._ctx, self.state)
         self.enterRule(localctx, 26, self.RULE_if_else_stmt)
+        self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 146
-            self.match(VypParser.T__8)
-            self.state = 147
-            self.match(VypParser.T__0)
             self.state = 148
-            self.expr(0)
+            self.match(VypParser.T__8)
             self.state = 149
-            self.match(VypParser.T__1)
+            self.match(VypParser.T__0)
             self.state = 150
-            self.code_block()
+            self.expr(0)
             self.state = 151
-            self.match(VypParser.T__9)
+            self.match(VypParser.T__1)
             self.state = 152
+            self.code_block()
+            self.state = 155
+            self._errHandler.sync(self)
+            _la = self._input.LA(1)
+            if _la==10:
+                self.state = 153
+                self.match(VypParser.T__9)
+                self.state = 154
+                self.code_block()
+
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class Else_stmtContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def code_block(self):
+            return self.getTypedRuleContext(VypParser.Code_blockContext,0)
+
+
+        def getRuleIndex(self):
+            return VypParser.RULE_else_stmt
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterElse_stmt" ):
+                listener.enterElse_stmt(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitElse_stmt" ):
+                listener.exitElse_stmt(self)
+
+
+
+
+    def else_stmt(self):
+
+        localctx = VypParser.Else_stmtContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 28, self.RULE_else_stmt)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 157
+            self.match(VypParser.T__9)
+            self.state = 158
             self.code_block()
         except RecognitionException as re:
             localctx.exception = re
@@ -1150,18 +1204,18 @@ class VypParser ( Parser ):
     def while_stmt(self):
 
         localctx = VypParser.While_stmtContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 28, self.RULE_while_stmt)
+        self.enterRule(localctx, 30, self.RULE_while_stmt)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 154
+            self.state = 160
             self.match(VypParser.T__10)
-            self.state = 155
+            self.state = 161
             self.match(VypParser.T__0)
-            self.state = 156
+            self.state = 162
             self.expr(0)
-            self.state = 157
+            self.state = 163
             self.match(VypParser.T__1)
-            self.state = 158
+            self.state = 164
             self.code_block()
         except RecognitionException as re:
             localctx.exception = re
@@ -1494,26 +1548,26 @@ class VypParser ( Parser ):
         _parentState = self.state
         localctx = VypParser.ExprContext(self, self._ctx, _parentState)
         _prevctx = localctx
-        _startState = 30
-        self.enterRecursionRule(localctx, 30, self.RULE_expr, _p)
+        _startState = 32
+        self.enterRecursionRule(localctx, 32, self.RULE_expr, _p)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 177
+            self.state = 183
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,12,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,13,self._ctx)
             if la_ == 1:
                 localctx = VypParser.Cast_exprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
 
-                self.state = 161
+                self.state = 167
                 self.match(VypParser.T__0)
-                self.state = 162
+                self.state = 168
                 self.var_type()
-                self.state = 163
+                self.state = 169
                 self.match(VypParser.T__1)
-                self.state = 164
+                self.state = 170
                 self.expr(14)
                 pass
 
@@ -1521,11 +1575,11 @@ class VypParser ( Parser ):
                 localctx = VypParser.Brace_exprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 166
+                self.state = 172
                 self.match(VypParser.T__0)
-                self.state = 167
+                self.state = 173
                 self.expr(0)
-                self.state = 168
+                self.state = 174
                 self.match(VypParser.T__1)
                 pass
 
@@ -1533,9 +1587,9 @@ class VypParser ( Parser ):
                 localctx = VypParser.Not_exprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 170
+                self.state = 176
                 self.match(VypParser.T__11)
-                self.state = 171
+                self.state = 177
                 self.expr(12)
                 pass
 
@@ -1543,7 +1597,7 @@ class VypParser ( Parser ):
                 localctx = VypParser.Fun_call_exprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 172
+                self.state = 178
                 self.fun_call()
                 pass
 
@@ -1551,7 +1605,7 @@ class VypParser ( Parser ):
                 localctx = VypParser.Instance_creation_exprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 173
+                self.state = 179
                 self.instance_creation()
                 pass
 
@@ -1559,7 +1613,7 @@ class VypParser ( Parser ):
                 localctx = VypParser.Literal_exprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 174
+                self.state = 180
                 self.literal_val()
                 pass
 
@@ -1567,7 +1621,7 @@ class VypParser ( Parser ):
                 localctx = VypParser.Invocation_exprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 175
+                self.state = 181
                 self.instance_expr()
                 pass
 
@@ -1575,31 +1629,31 @@ class VypParser ( Parser ):
                 localctx = VypParser.Id_exprContext(self, localctx)
                 self._ctx = localctx
                 _prevctx = localctx
-                self.state = 176
+                self.state = 182
                 self.match(VypParser.ID)
                 pass
 
 
             self._ctx.stop = self._input.LT(-1)
-            self.state = 199
+            self.state = 205
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input,14,self._ctx)
+            _alt = self._interp.adaptivePredict(self._input,15,self._ctx)
             while _alt!=2 and _alt!=ATN.INVALID_ALT_NUMBER:
                 if _alt==1:
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    self.state = 197
+                    self.state = 203
                     self._errHandler.sync(self)
-                    la_ = self._interp.adaptivePredict(self._input,13,self._ctx)
+                    la_ = self._interp.adaptivePredict(self._input,14,self._ctx)
                     if la_ == 1:
                         localctx = VypParser.Mul_div_exprContext(self, VypParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 179
+                        self.state = 185
                         if not self.precpred(self._ctx, 11):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 11)")
-                        self.state = 180
+                        self.state = 186
                         localctx.op = self._input.LT(1)
                         _la = self._input.LA(1)
                         if not(_la==28 or _la==29):
@@ -1607,18 +1661,18 @@ class VypParser ( Parser ):
                         else:
                             self._errHandler.reportMatch(self)
                             self.consume()
-                        self.state = 181
+                        self.state = 187
                         self.expr(12)
                         pass
 
                     elif la_ == 2:
                         localctx = VypParser.Add_sub_exprContext(self, VypParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 182
+                        self.state = 188
                         if not self.precpred(self._ctx, 10):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 10)")
-                        self.state = 183
+                        self.state = 189
                         localctx.op = self._input.LT(1)
                         _la = self._input.LA(1)
                         if not(_la==30 or _la==31):
@@ -1626,18 +1680,18 @@ class VypParser ( Parser ):
                         else:
                             self._errHandler.reportMatch(self)
                             self.consume()
-                        self.state = 184
+                        self.state = 190
                         self.expr(11)
                         pass
 
                     elif la_ == 3:
                         localctx = VypParser.Rel_exprContext(self, VypParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 185
+                        self.state = 191
                         if not self.precpred(self._ctx, 9):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 9)")
-                        self.state = 186
+                        self.state = 192
                         localctx.op = self._input.LT(1)
                         _la = self._input.LA(1)
                         if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 122880) != 0)):
@@ -1645,18 +1699,18 @@ class VypParser ( Parser ):
                         else:
                             self._errHandler.reportMatch(self)
                             self.consume()
-                        self.state = 187
+                        self.state = 193
                         self.expr(10)
                         pass
 
                     elif la_ == 4:
                         localctx = VypParser.Eq_exprContext(self, VypParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 188
+                        self.state = 194
                         if not self.precpred(self._ctx, 8):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 8)")
-                        self.state = 189
+                        self.state = 195
                         localctx.op = self._input.LT(1)
                         _la = self._input.LA(1)
                         if not(_la==17 or _la==18):
@@ -1664,40 +1718,40 @@ class VypParser ( Parser ):
                         else:
                             self._errHandler.reportMatch(self)
                             self.consume()
-                        self.state = 190
+                        self.state = 196
                         self.expr(9)
                         pass
 
                     elif la_ == 5:
                         localctx = VypParser.And_exprContext(self, VypParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 191
+                        self.state = 197
                         if not self.precpred(self._ctx, 7):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 7)")
-                        self.state = 192
+                        self.state = 198
                         localctx.op = self.match(VypParser.T__18)
-                        self.state = 193
+                        self.state = 199
                         self.expr(8)
                         pass
 
                     elif la_ == 6:
                         localctx = VypParser.Or_exprContext(self, VypParser.ExprContext(self, _parentctx, _parentState))
                         self.pushNewRecursionContext(localctx, _startState, self.RULE_expr)
-                        self.state = 194
+                        self.state = 200
                         if not self.precpred(self._ctx, 6):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(self, "self.precpred(self._ctx, 6)")
-                        self.state = 195
+                        self.state = 201
                         localctx.op = self.match(VypParser.T__19)
-                        self.state = 196
+                        self.state = 202
                         self.expr(7)
                         pass
 
              
-                self.state = 201
+                self.state = 207
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input,14,self._ctx)
+                _alt = self._interp.adaptivePredict(self._input,15,self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re
@@ -1739,16 +1793,16 @@ class VypParser ( Parser ):
     def fun_call(self):
 
         localctx = VypParser.Fun_callContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 32, self.RULE_fun_call)
+        self.enterRule(localctx, 34, self.RULE_fun_call)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 202
+            self.state = 208
             self.match(VypParser.ID)
-            self.state = 203
+            self.state = 209
             self.match(VypParser.T__0)
-            self.state = 204
+            self.state = 210
             self.f_call_list()
-            self.state = 205
+            self.state = 211
             self.match(VypParser.T__1)
         except RecognitionException as re:
             localctx.exception = re
@@ -1789,12 +1843,12 @@ class VypParser ( Parser ):
     def instance_creation(self):
 
         localctx = VypParser.Instance_creationContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 34, self.RULE_instance_creation)
+        self.enterRule(localctx, 36, self.RULE_instance_creation)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 207
+            self.state = 213
             self.match(VypParser.NEW)
-            self.state = 208
+            self.state = 214
             self.match(VypParser.ID)
         except RecognitionException as re:
             localctx.exception = re
@@ -1835,11 +1889,11 @@ class VypParser ( Parser ):
     def literal_val(self):
 
         localctx = VypParser.Literal_valContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 36, self.RULE_literal_val)
+        self.enterRule(localctx, 38, self.RULE_literal_val)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 210
+            self.state = 216
             _la = self._input.LA(1)
             if not(_la==35 or _la==36):
                 self._errHandler.recoverInline(self)
@@ -1893,15 +1947,15 @@ class VypParser ( Parser ):
     def first_instance_ref(self):
 
         localctx = VypParser.First_instance_refContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 38, self.RULE_first_instance_ref)
+        self.enterRule(localctx, 40, self.RULE_first_instance_ref)
         self._la = 0 # Token type
         try:
-            self.state = 214
+            self.state = 220
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,15,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,16,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 212
+                self.state = 218
                 localctx.ref = self._input.LT(1)
                 _la = self._input.LA(1)
                 if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 30064771072) != 0)):
@@ -1913,7 +1967,7 @@ class VypParser ( Parser ):
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 213
+                self.state = 219
                 self.fun_call()
                 pass
 
@@ -1959,14 +2013,14 @@ class VypParser ( Parser ):
     def instance_expr(self):
 
         localctx = VypParser.Instance_exprContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 40, self.RULE_instance_expr)
+        self.enterRule(localctx, 42, self.RULE_instance_expr)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 216
+            self.state = 222
             self.first_instance_ref()
-            self.state = 217
+            self.state = 223
             self.match(VypParser.T__20)
-            self.state = 218
+            self.state = 224
             self.nested_invocation()
         except RecognitionException as re:
             localctx.exception = re
@@ -2012,30 +2066,30 @@ class VypParser ( Parser ):
     def nested_invocation(self):
 
         localctx = VypParser.Nested_invocationContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 42, self.RULE_nested_invocation)
+        self.enterRule(localctx, 44, self.RULE_nested_invocation)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 222
+            self.state = 228
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,16,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,17,self._ctx)
             if la_ == 1:
-                self.state = 220
+                self.state = 226
                 self.fun_call()
                 pass
 
             elif la_ == 2:
-                self.state = 221
+                self.state = 227
                 self.match(VypParser.ID)
                 pass
 
 
-            self.state = 226
+            self.state = 232
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,17,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,18,self._ctx)
             if la_ == 1:
-                self.state = 224
+                self.state = 230
                 self.match(VypParser.T__20)
-                self.state = 225
+                self.state = 231
                 self.nested_invocation()
 
 
@@ -2090,31 +2144,31 @@ class VypParser ( Parser ):
     def class_def(self):
 
         localctx = VypParser.Class_defContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 44, self.RULE_class_def)
+        self.enterRule(localctx, 46, self.RULE_class_def)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 228
+            self.state = 234
             self.match(VypParser.CLASS)
-            self.state = 229
+            self.state = 235
             localctx.class_id = self.match(VypParser.ID)
-            self.state = 230
-            self.match(VypParser.T__21)
-            self.state = 231
-            localctx.parent_id = self.match(VypParser.ID)
-            self.state = 232
-            self.match(VypParser.T__3)
             self.state = 236
+            self.match(VypParser.T__21)
+            self.state = 237
+            localctx.parent_id = self.match(VypParser.ID)
+            self.state = 238
+            self.match(VypParser.T__3)
+            self.state = 242
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while (((_la) & ~0x3f) == 0 and ((1 << _la) & 17414750208) != 0):
-                self.state = 233
+                self.state = 239
                 self.class_member()
-                self.state = 238
+                self.state = 244
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 239
+            self.state = 245
             self.match(VypParser.T__4)
         except RecognitionException as re:
             localctx.exception = re
@@ -2184,24 +2238,24 @@ class VypParser ( Parser ):
     def class_member(self):
 
         localctx = VypParser.Class_memberContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 46, self.RULE_class_member)
+        self.enterRule(localctx, 48, self.RULE_class_member)
         try:
-            self.state = 245
+            self.state = 251
             self._errHandler.sync(self)
-            la_ = self._interp.adaptivePredict(self._input,19,self._ctx)
+            la_ = self._interp.adaptivePredict(self._input,20,self._ctx)
             if la_ == 1:
                 localctx = VypParser.Class_fieldContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
-                self.state = 241
+                self.state = 247
                 self.declaration()
-                self.state = 242
+                self.state = 248
                 self.match(VypParser.T__5)
                 pass
 
             elif la_ == 2:
                 localctx = VypParser.Class_methodContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
-                self.state = 244
+                self.state = 250
                 self.function_def()
                 pass
 
@@ -2219,7 +2273,7 @@ class VypParser ( Parser ):
     def sempred(self, localctx:RuleContext, ruleIndex:int, predIndex:int):
         if self._predicates == None:
             self._predicates = dict()
-        self._predicates[15] = self.expr_sempred
+        self._predicates[16] = self.expr_sempred
         pred = self._predicates.get(ruleIndex, None)
         if pred is None:
             raise Exception("No predicate with index:" + str(ruleIndex))

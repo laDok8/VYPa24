@@ -33,7 +33,8 @@ declaration: var_type ID (',' ID)*;
 var_assign: ID '=' expr;
 instance_assign: instance_expr '=' expr;
 ret_stmt: 'return' expr?;
-if_else_stmt: 'if' '(' expr ')' code_block 'else' code_block;
+if_else_stmt: 'if' '(' expr ')' code_block ('else' code_block)?;
+else_stmt: 'else' code_block;
 while_stmt: 'while' '(' expr ')' code_block;
 
 expr

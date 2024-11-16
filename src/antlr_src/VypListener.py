@@ -134,6 +134,15 @@ class VypListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by VypParser#else_stmt.
+    def enterElse_stmt(self, ctx:VypParser.Else_stmtContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#else_stmt.
+    def exitElse_stmt(self, ctx:VypParser.Else_stmtContext):
+        pass
+
+
     # Enter a parse tree produced by VypParser#while_stmt.
     def enterWhile_stmt(self, ctx:VypParser.While_stmtContext):
         pass
