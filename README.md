@@ -18,3 +18,6 @@ To invoke the interpreter, run the following command:
 ```bash
 java -jar vypint-1.0.jar src.vypcode < input > output
 ```
+# Test automation
+To test valid and invalid test cases run the all_test_run.sh bash script
+sudo ./all_test_run.sh
