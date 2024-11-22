@@ -1,0 +1,18 @@
+class Rectangle : Object {
+    int width, height;
+
+    void Rectangle(void) {
+        this.width = 5;
+        this.height = 10;
+    }
+
+    int area(void) {
+        return this.width * this.height;
+    }
+}
+
+void main(void) {
+    Rectangle r;
+    r = new Rectangle;
+    print("Area: ", r.area(), "\n");
+}

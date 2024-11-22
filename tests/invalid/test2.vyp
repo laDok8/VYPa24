@@ -1,1 +1,0 @@
-python3 main.py tests/invalid/test_syntax_error.vyp

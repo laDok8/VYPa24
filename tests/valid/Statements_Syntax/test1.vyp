@@ -1,0 +1,9 @@
+void main(void) {
+    int a;
+    a = 5;
+    if (a > 0) {
+        print("Positive\n");
+    } else {
+        print("Non-positive\n");
+    }
+}

@@ -1,0 +1,4 @@
+void main(void) {
+    Shape s;
+    s = new Shape;
+}

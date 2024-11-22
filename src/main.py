@@ -4,10 +4,10 @@ import traceback
 from antlr4 import *
 from antlr4.error.ErrorListener import ConsoleErrorListener
 
-from src.antlr_src.VypLexer import VypLexer
-from src.antlr_src.VypParser import VypParser
-from src.compiler import *
-from src.utils import constants
+from antlr_src.VypLexer import VypLexer
+from antlr_src.VypParser import VypParser
+from compiler import *
+from utils import constants
 
 
 def _exit(code: int, message: str):
