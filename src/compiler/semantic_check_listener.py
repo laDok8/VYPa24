@@ -55,6 +55,7 @@ class SemanticListener(ParseTreeListener):
 
         if self.curr_class:
             current_fun = self.curr_class.get_method(fun_name)
+            self.cur_fun = current_fun
 
         self.assert_legal_return_type(current_fun.get_return_type())
         for param in current_fun.get_params():
@@ -223,6 +224,9 @@ class SemanticListener(ParseTreeListener):
         pass
 
     def exitRet_stmt(self, ctx: VypParser.Ret_stmtContext):
+        if self.cur_fun is None:
+            raise SemanticTypeError("Return statement outside of function context")
+
         sym = None  # void
         if ctx.expr():
             sym = self.result[ctx.expr()]

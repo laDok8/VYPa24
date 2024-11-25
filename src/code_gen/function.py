@@ -14,7 +14,7 @@ class Function:
         return body
 
     def exit(self):
-        len_args = len(self.args)
+        len_args = len(self.args) or 1  # OR should be unreachable during interpretation
         body = f'# exit function\n'
         body += f'{Stack.leave(len_args)}\n'
         return body
@@ -45,7 +45,7 @@ class Function:
         body = f'# return value\n'
         # overwrite arg0 with retval
         ret_symb = str(0) if symb is None else Register.SP
-        len_args = len(self.args)
+        len_args = len(self.args) or 1 # we made space for ret_val if no args
 
         offset = str(-1 - len(self.args)) if len(self.args) != 0 else str(-2 - len(self.args))  # below  PC, args
         body += f'SET [{Register.BP}{offset}] [{ret_symb}]\n'
