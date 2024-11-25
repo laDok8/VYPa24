@@ -1,0 +1,16 @@
+int factorial(int n) {
+    if (n < 2) {
+        return 1;
+    }
+    else{
+        return n * factorial(n - 1);
+    }
+    
+}
+
+void main(void) {
+    int n, result;
+    n = readInt();  // Read input value from stdin
+    result = factorial(n);  // Compute factorial
+    print("Factorial: ", result, "\n");  // Print result
+}
