@@ -50,3 +50,8 @@ SET {Register.BP} {Register.SP}'''
         return f'''{op} {Register.AX} [{Register.SP}-1] [{Register.SP}]\n
 {Stack.pop()}
 {Stack.replace(Register.AX)}'''
+
+    @staticmethod
+    def unary_op(op: str):
+        return f'''{op} {Register.AX} [{Register.SP}]\n
+{Stack.replace(Register.AX)}'''

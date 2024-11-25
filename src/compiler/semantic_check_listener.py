@@ -2,7 +2,7 @@ from antlr4.tree.Tree import ParseTreeListener
 
 from src.antlr_src.VypParser import VypParser  # for the constants
 from src.code_gen.code_generator import *
-from src.compiler.decorators import binary_op
+from src.compiler.decorators import binary_op, unary_op
 from src.compiler.exceptions import *
 from src.sym_table import *
 
@@ -272,3 +272,7 @@ class SemanticListener(ParseTreeListener):
 
     def exitWhile_stmt(self, ctx: VypParser.While_stmtContext):
         self.code_generator.gen_exit_while()
+
+    @unary_op
+    def exitNot_expr(self, ctx: VypParser.Not_exprContext):
+        pass

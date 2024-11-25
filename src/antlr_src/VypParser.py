@@ -1462,6 +1462,7 @@ class VypParser ( Parser ):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a VypParser.ExprContext
             super().__init__(parser)
+            self.op = None # Token
             self.copyFrom(ctx)
 
         def expr(self):
@@ -1676,7 +1677,7 @@ class VypParser ( Parser ):
                 self._ctx = localctx
                 _prevctx = localctx
                 self.state = 183
-                self.match(VypParser.T__11)
+                localctx.op = self.match(VypParser.T__11)
                 self.state = 184
                 self.expr(12)
                 pass

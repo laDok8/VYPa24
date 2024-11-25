@@ -7,12 +7,11 @@ from src.code_gen.literal import Literal
 from src.code_gen.register import Register
 from src.code_gen.stack import Stack
 from src.code_gen.static import Builtin
-from src.compiler import CompilerError
+from src.compiler import SemanticDeclarationError
 from src.sym_table import *
 
 
 # WARN: for some reason, stack grows up
-
 class CodeGenerator:
     """
     use modified cdecl calling convention
@@ -39,7 +38,7 @@ class CodeGenerator:
             # in negative 0-BP, 1-PC, 3-arg1, 4-arg2, 5-arg3, (RTL) ...
             return str(-(self.params.index(symbol) + 2))
         else:
-            raise CompilerError(f"Variable {symbol} not found", 14)
+            raise SemanticDeclarationError(f"Variable {symbol} not found")
 
     def generate_code(self):
         self.body += Builtin.get_all_funs()
@@ -140,25 +139,42 @@ class CodeGenerator:
         self.body += cls_gen.field_expr(field)
 
     def binary_op(self, op: str):
-        map = {
+        op_map = {
             '+': 'ADDI',
             '-': 'SUBI',
             '*': 'MULI',
             '/': 'DIVI',
             '<': 'LTI',
+            '>=': 'LTI',  # ! < # can't be done in single instruction
             '>': 'GTI',
-            '=': 'EQI',
-            '<': 'LTS',
-            '>': 'GTS',
-            '==': 'EQS',
+            '<=': 'GTI',  # ! >
+            '==': 'EQI',
+            '!=': 'EQI',  # !  ==
             '&&': 'AND',
             '||': 'OR',
         }
-        _op = map[op]
-        # TODO: exceptions for >=, <=, !=
+        cur_op = op_map.get(op)
 
         self.body += f'# binary operation: {op}\n'
-        self.body += f'{Stack.binary_op(_op)}\n\n'
+        self.body += f'{Stack.binary_op(cur_op)}\n\n'
+
+        op_map2 = {
+            '>=': '!',
+            '<=': '!',
+            '!=': '!',
+        }
+        cur_op = op_map2.get(op)
+        if cur_op:
+            self.unary_op(cur_op)
+
+    def unary_op(self, op: str):
+        op_map = {
+            '!': 'NOT',
+        }
+        cur_op = op_map.get(op)
+
+        self.body += f'# unary operation: {op}\n'
+        self.body += f'{Stack.unary_op(cur_op)}\n\n'
 
     def ret_val(self, symb: Symbol):
         self.body += self.cur_func.exit_with_val(symb)
