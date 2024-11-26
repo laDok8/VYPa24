@@ -9,6 +9,7 @@ class FunctionSymbol(Symbol):
     def __init__(self, name: str, data_type="void"):
         super().__init__(name, SymbolTypes.FUN, data_type)
         self.f_args = []
+        self.is_class_member = False
 
     def add_param(self, param: Symbol):
         self.f_args.append(param)
@@ -31,4 +32,6 @@ class FunctionSymbol(Symbol):
         return _n == _o and self.data_type == other.data_type and self.f_args == other.f_args
 
     def update_code_name(self, param):
+        """this is used within class symbol"""
         self.name = param
+        self.is_class_member = True

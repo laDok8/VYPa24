@@ -7,6 +7,7 @@ class Function:
     def __init__(self, func: FunctionSymbol):
         self.f_name = func.name
         self.args = func.get_params()  # store param count/name/types
+        self.is_class_member = func.is_class_member
 
     def define(self):
         body = f'LABEL {self.f_name}\n'
@@ -15,6 +16,8 @@ class Function:
 
     def exit(self):
         len_args = len(self.args) or 1  # OR should be unreachable during interpretation
+        if self.is_class_member:
+            len_args += 1
         body = f'# exit function\n'
         body += f'{Stack.leave(len_args)}\n'
         return body
@@ -45,9 +48,12 @@ class Function:
         body = f'# return value\n'
         # overwrite arg0 with retval
         ret_symb = str(0) if symb is None else Register.SP
-        len_args = len(self.args) or 1 # we made space for ret_val if no args
+        len_args = len(self.args)# we made space for ret_val if no args
+        if self.is_class_member:
+            len_args += 1
+        len_args = len_args or 1 # we made space for ret_val if no args
 
-        offset = str(-1 - len(self.args)) if len(self.args) != 0 else str(-2 - len(self.args))  # below  PC, args
+        offset = str(-1 - len_args) if len_args != 0 else str(-2 - len_args)  # below  PC, args
         body += f'SET [{Register.BP}{offset}] [{ret_symb}]\n'
         body += f'{Stack.leave(len_args)}\n\n'
         return body

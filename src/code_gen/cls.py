@@ -20,9 +20,11 @@ class ClassCodeGenerator:
         body = f'# VMT for {self.cls.name}\n'
         body += f'CREATE {Register.AX} {len(methods)}\n'
         for i, method in enumerate(methods):
-            body += f'SETWORD {Register.AX} {i} "{method}"\n'
+            body += f'SETWORD {Register.AX} {i} "{self.cls.getVMT().get(method).name}"\n'
 
-        body += f'{Stack.push(Register.AX)}\n\n'
+        # exception so we start from 0
+        body += f'{Stack.replace(Register.AX)}\n'
+        body += f'{Stack.push()}\n'
 
         body += '\n'
         return body
@@ -65,9 +67,23 @@ class ClassCodeGenerator:
         body += f'SETWORD [{Register.SP}-1] {self._get_field_offset(field_name)} [{Register.SP}]\n'
         return body
 
-    def field_expr(self, field):
+    def field_expr_gen(self, field):
+        """get field ref to stack"""
         body = f'# field expr {field}\n'
         # TODO: cast index problem
         body += f'GETWORD {Register.EX}, [{Register.SP}], {self._get_field_offset(field)}\n'
         body += f'{Stack.replace(Register.EX)}\n\n'
+        return body
+
+    def cls_fun_call(self, fun: Function, args: [str]):
+        # cls fun is called via VMT reference, 1st argument is always class, like python self
+        # assume current object is in {Register.OBJ}
+        body = f'# class function call {fun.f_name}\n'
+        method_name = fun.f_name.split(":")[1]
+        method_idx = list(self.cls.getVMT().keys()).index(method_name)
+
+        # no need for space for return value, we can overwrite obj
+        body += f'GETWORD {Register.AX} {Register.OBJ} 0 # GET VMT\n'
+        body += f'GETWORD {Register.AX} {Register.AX} {method_idx} # GET DYNAMIC FUN REF\n'
+        body += f'CALL [{Register.SP}+1] {Register.AX} # CALL DYNAMIC FUN\n\n'
         return body

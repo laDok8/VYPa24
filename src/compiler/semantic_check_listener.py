@@ -15,6 +15,7 @@ class SemanticListener(ParseTreeListener):
     """
 
     def __init__(self, fun_symbols: SymbolTable, class_symbols: SymbolTable):
+        #TODO: update classes with parent methods
         self.skip_field_redeclaration = False
         self.fun_symbols = fun_symbols
         self.class_symbols = class_symbols
@@ -99,6 +100,7 @@ class SemanticListener(ParseTreeListener):
         self.curr_class = None
 
     def exitFun_call(self, ctx: VypParser.Fun_callContext):
+        # TODO: maybe don't return fun_sym but return sym
         fun_name = ctx.ID().getText()
         fun_sym = self.fun_symbols.get_symbol(fun_name)
         if self.curr_obj:
@@ -135,22 +137,24 @@ class SemanticListener(ParseTreeListener):
         # self.result[ctx] = class_sym
         self.code_generator.create_instance(class_sym)
 
+    def enterFirst_instance_ref(self, ctx: VypParser.First_instance_refContext):
+        left = ctx.ID().getText()
+        instance_sym = self.sym_table.get_symbol(left)
+        cls_sym = self.class_symbols.get_symbol(instance_sym.data_type)
+
+        self.code_generator.push_expr(cls_sym, instance_sym.name, copy_to_obj_reg=True)
+
     def exitInstance_expr(self, ctx: VypParser.Instance_exprContext):
         first = self.result[ctx.first_instance_ref()]
-        if self.result[ctx.nested_invocation()]:
-            second = self.result[ctx.nested_invocation()][-1]  # # TODO: check this - field.name
-        else:
-            # f call
-            second = 'id'  # foo
-            # TODO: this is just redundant
-            pass
+        # self.code_generator.push_object(first) MOVED TO ENTER
+
+        rightmost_sym = self.result[ctx.nested_invocation()]  # # TODO: check this - field.name or fun_call ret
+
         # get first symbol
         instance_type = self.sym_table.get_symbol(first).data_type
         # get class symbol
-        class_sym = self.class_symbols.get_symbol(instance_type)
-        # need to return class symbol and field name
-        self.result[ctx] = (class_sym, second)
-        self.code_generator.push_object(first)
+        # class_sym = self.class_symbols.get_symbol(instance_type)
+        self.result[ctx] = rightmost_sym
         self.curr_obj = None
 
     def exitFirst_instance_ref(self, ctx: VypParser.First_instance_refContext):
@@ -164,24 +168,26 @@ class SemanticListener(ParseTreeListener):
 
         self.result[ctx] = ctx.ID().getText()
 
-    def exitNested_invocation(self, ctx: VypParser.Nested_invocationContext):
-        _res = []
-        if ctx.fun_call():
-            # _res.append(self.result[ctx.fun_call()])
-            pass
-        else:
-            _res.append(ctx.ID().getText())  # list of str - field names
-        if ctx.nested_invocation():
-            _res.extend(self.result[ctx.nested_invocation()])
-        self.result[ctx] = _res
+    def enterNested_invocation(self, ctx: VypParser.Nested_invocationContext):
+        # push next object ref, calls are solved automagically TODO: need to push cls ref
+        if ctx.ID() is not None:
+            field_name = ctx.ID().getText()
+            if field_name:
+                print("NESTED", field_name)
+                self.code_generator.field_expr(field_name)
 
-    def exitInstance_assign(self, ctx: VypParser.Instance_assignContext):
-        cls_sym, field = self.result[ctx.instance_expr()]
-        self.code_generator.assign_field(cls_sym, field)
+    def exitNested_invocation(self, ctx: VypParser.Nested_invocationContext):
+        # I just need to return last symbol
+        if ctx.fun_call():
+            res = self.result[ctx.fun_call()]  # TODO: now fun_sym later ret_sym
+        else:
+            res = ctx.ID().getText()  # field name
+        if ctx.nested_invocation():
+            res = self.result[ctx.nested_invocation()]
+        self.result[ctx] = res
 
     def exitVar_assign(self, ctx: VypParser.Var_assignContext):
         _id = ctx.ID().getText()
-        # _expr = self.result[ctx.expr()]
         self.code_generator.assign_var(_id)
 
     def exitId_expr(self, ctx: VypParser.Id_exprContext):
@@ -194,10 +200,13 @@ class SemanticListener(ParseTreeListener):
     def exitInstance_assign(self, ctx: VypParser.Instance_assignContext):
         cls_sym, field = self.result[ctx.instance_expr()]
         self.code_generator.assign_field(cls_sym, field)
+        self.code_generator.ResetExprClass()
 
     def exitInvocation_expr(self, ctx: VypParser.Invocation_exprContext):
-        cls_sym, field = self.result[ctx.instance_expr()]
-        self.code_generator.field_expr(cls_sym, field)
+        cls_member_sym = self.result[ctx.instance_expr()]
+        self.result[ctx] = cls_member_sym
+        # self.code_generator.field_expr(cls_member_sym)
+        self.code_generator.ResetExprClass()
 
     @binary_op
     def exitAdd_sub_expr(self, ctx: VypParser.Add_sub_exprContext):

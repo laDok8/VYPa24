@@ -1,10 +1,13 @@
 
-int g(int a, int b, int c, int d, int e, int f, int g) {
-    return 2;
-} // end of g
-
+class Moje : Object {
+  string toString2(int a) {
+    return "test\n";
+  }
+}
 
 void main(void) {
-    int x;
-    print(g(1,2,3,4,5,6,7), "\n");
+  Moje r; r = new Moje;
+  string str; str = r.toString2(2);
+  print(str);
+  print("DONE\n");
 } // end of main

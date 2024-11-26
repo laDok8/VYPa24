@@ -46,8 +46,8 @@ SET $BX [{Register.BP}-3] # i
 
 GETSIZE {Register.AX} [{Register.BP}-4]
 LTI {Register.EX} {Register.BX} 0
-GTI $DX {Register.BX} {Register.AX}
-OR {Register.EX} {Register.EX} $DX # i < 0 || i > size
+GTI {Register.OBJ} {Register.BX} {Register.AX}
+OR {Register.EX} {Register.EX} {Register.OBJ} # i < 0 || i > size
 
 CREATE {Register.DI} 1
 SETWORD {Register.DI} 0 ""
