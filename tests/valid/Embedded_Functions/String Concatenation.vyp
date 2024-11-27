@@ -1,0 +1,13 @@
+void main(void) {
+    string firstPart;
+    string secondPart;
+    string result;
+
+    
+    firstPart = "Hello, ";
+    secondPart = "World!";
+   
+    result = firstPart + secondPart;
+
+    print("Concatenated String: ", result, "\n");
+}

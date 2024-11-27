@@ -1,0 +1,8 @@
+void main(void) {
+    int a;
+    a = 3;
+    while (a > 0) {
+        print(a, "\n");
+        a = a - 1;
+    }
+}

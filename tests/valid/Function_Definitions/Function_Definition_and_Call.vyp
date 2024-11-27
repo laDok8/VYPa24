@@ -1,0 +1,9 @@
+int add(int x, int y) {
+    return x + y;
+}
+
+void main(void) {
+    int result;
+    result = add(3, 7);
+    print("Result: ", result, "\n");
+}

@@ -1,0 +1,7 @@
+void main(void) {
+    int a, b;
+    a = 10;
+    b = 20;
+    print("Sum: ", a + b, ", Difference: ", b - a, "\n");
+    print("Is a less than b? ", a < b, "\n");
+}

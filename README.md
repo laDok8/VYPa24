@@ -18,3 +18,8 @@ To invoke the interpreter, run the following command:
 ```bash
 java -jar vypint-1.0.jar src.vypcode < input > output
 ```
+# Test Cases
+To execute all test cases, run the following command:
+```bash
+python3 all_test.py
+```

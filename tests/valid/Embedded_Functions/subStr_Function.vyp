@@ -1,0 +1,5 @@
+void main(void) {
+    string str;
+    str = "Hello World!";
+    print(subStr(str, 6, 5), "\n");
+}

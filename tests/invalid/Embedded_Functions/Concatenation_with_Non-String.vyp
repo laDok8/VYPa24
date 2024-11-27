@@ -1,0 +1,13 @@
+void main(void) {
+    string firstPart;
+    int numberPart;
+    string result;
+
+    firstPart = "The number is: ";
+    numberPart = 42;
+
+   
+    result = firstPart + numberPart;
+
+    print(result, "\n");
+}

@@ -1,0 +1,10 @@
+int add(int x, int y) {
+    int result;
+    result = x + y;
+}
+
+void main(void) {
+    int sum;
+    sum = add(2, 3);
+    print(sum, "\n");
+}

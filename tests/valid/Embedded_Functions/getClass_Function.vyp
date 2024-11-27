@@ -1,0 +1,7 @@
+class Circle : Object {}
+
+void main(void) {
+    Circle c;
+    c = new Circle;
+    print("Class: ", c.getClass(), "\n");
+}
