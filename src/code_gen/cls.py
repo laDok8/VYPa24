@@ -29,10 +29,11 @@ class ClassCodeGenerator:
         body += '\n'
         return body
 
-    def create_instance(self, class_sym: ClassSymbol, vmts: list):
+    def create_cls_instance(self, ordered_classes_all: list):
         """allocate memory for fields and VMT* and call constructor"""
-        vmt_loc = vmts.index(class_sym)
-        vmt_prt = vmts.index(class_sym.parent) if class_sym.parent else 0
+
+        vmt_loc = ordered_classes_all.index(self.cls)
+        vmt_prt = ordered_classes_all.index(self.cls.parent) if self.cls.parent else 0
 
         body = f'# new {self.cls.name}\n'
         # TODO: check field duplication?
@@ -42,13 +43,16 @@ class ClassCodeGenerator:
         body += f'SETWORD {Register.AX} 1 [{vmt_prt}]\n'
         body += f'SETWORD {Register.AX} 2 "{self.cls.name}"\n'
         # init fields to 0
-        for i in range(1, len(self.cls.get_all_fields()) + ClassCodeGenerator.VMT_HEADER - 1):
+        for i in range(2, len(self.cls.get_all_fields()) + ClassCodeGenerator.VMT_HEADER - 1):
             body += f'SETWORD {Register.AX} {i + 1} 0\n'
         body += '\n'
 
+        # available as self param for constructors
+        body += f'{Stack.push(Register.AX)}\n'
+
         """call constructors from outmost parent* to child - omit if default"""
         prts_const = []
-        prt = class_sym
+        prt = self.cls
         while prt:
             cons = prt.get_constructor()
             if cons:
@@ -56,15 +60,15 @@ class ClassCodeGenerator:
             prt = prt.parent
 
         for cons in prts_const:
-            f = Function(cons.name)
-            body += f.call(ret_val=False)
+            f = Function(cons)
+            body += f.call(["no_space_retval"])
 
-        body += f'{Stack.push(Register.AX)}\n\n'
         return body
 
-    def assign_field(self, field_name: str):
+    def assign_cls_field(self, field_name: str):
         body = f'# assign field {field_name}\n'
         body += f'SETWORD [{Register.SP}-1] {self._get_field_offset(field_name)} [{Register.SP}]\n'
+        body += f'{Stack.pops(2)}\n\n'
         return body
 
     def field_expr_gen(self, field):

@@ -15,7 +15,6 @@ class SemanticListener(ParseTreeListener):
     """
 
     def __init__(self, fun_symbols: SymbolTable, class_symbols: SymbolTable):
-        #TODO: update classes with parent methods
         self.skip_field_redeclaration = False
         self.fun_symbols = fun_symbols
         self.class_symbols = class_symbols
@@ -28,6 +27,7 @@ class SemanticListener(ParseTreeListener):
         self.curr_class = None
         self.curr_obj = None
         self.cur_fun = None
+        self.assigning_instance = False
 
         # generate VMT
         for class_sym in class_symbols.get_current_symbols().values():
@@ -89,7 +89,7 @@ class SemanticListener(ParseTreeListener):
         self.curr_class = self.class_symbols.get_symbol(class_name)
 
         # add symbols and fields from class to the table - f()
-        for method in self.curr_class.get_methods().values():
+        for method in self.curr_class.getVMT().values():
             self.fun_symbols.add_symbol(method)
         for field in self.curr_class.get_fields().values():
             self.sym_table.add_symbol(field)
@@ -156,6 +156,8 @@ class SemanticListener(ParseTreeListener):
         # class_sym = self.class_symbols.get_symbol(instance_type)
         self.result[ctx] = rightmost_sym
         self.curr_obj = None
+        # we either left side or expression altogether
+        self.assigning_instance = False
 
     def exitFirst_instance_ref(self, ctx: VypParser.First_instance_refContext):
         if ctx.fun_call():
@@ -173,8 +175,9 @@ class SemanticListener(ParseTreeListener):
         if ctx.ID() is not None:
             field_name = ctx.ID().getText()
             if field_name:
-                print("NESTED", field_name)
-                self.code_generator.field_expr(field_name)
+                # when assigning to field we shouldn't push last one
+                if not self.assigning_instance or ctx.nested_invocation():  # a -> b
+                    self.code_generator.field_expr(field_name)
 
     def exitNested_invocation(self, ctx: VypParser.Nested_invocationContext):
         # I just need to return last symbol
@@ -197,9 +200,12 @@ class SemanticListener(ParseTreeListener):
         self.result[ctx] = _sym
         self.code_generator.push_object(_id)
 
+    def enterInstance_assign(self, ctx: VypParser.Instance_assignContext):
+        self.assigning_instance = True
+
     def exitInstance_assign(self, ctx: VypParser.Instance_assignContext):
-        cls_sym, field = self.result[ctx.instance_expr()]
-        self.code_generator.assign_field(cls_sym, field)
+        field = self.result[ctx.instance_expr()]
+        self.code_generator.assign_field(field)
         self.code_generator.ResetExprClass()
 
     def exitInvocation_expr(self, ctx: VypParser.Invocation_exprContext):

@@ -98,7 +98,7 @@ RETURN [{Register.SP}+3]\n\n'''
         return f'''LABEL Object:toString
 INT2STRING {Register.AX} [{Register.SP}]
 SET [{Register.SP}] {Register.AX}
-RETURN [{Register.SP}]\n\n'''
+RETURN [{Register.SP}+1]\n\n'''
 
     @staticmethod
     def getClass():

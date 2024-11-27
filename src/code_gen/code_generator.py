@@ -25,7 +25,7 @@ class CodeGenerator:
         self.body = ''
         self.vmts = ''
         self.variables = []
-        self.classes = []
+        self.order_class_list = []
         # TODO: perhaps refactor to function class
         self.params = []
         self.if_else_stack = []
@@ -118,23 +118,24 @@ class CodeGenerator:
         self.variables = []
 
     def VMT(self, current_class: ClassSymbol):
+        # here don't care ClassCodeGenerator
         cls_gen = ClassCodeGenerator(current_class)
-        self.classes.append(current_class)
+        self.order_class_list.append(current_class)
         self.vmts += cls_gen.VMT()
 
     def create_instance(self, class_sym: ClassSymbol):
+        # here don't care ClassCodeGenerator
         cls_gen = ClassCodeGenerator(class_sym)
-        self.body += cls_gen.create_instance(class_sym, self.classes)
+        self.body += cls_gen.create_cls_instance(self.order_class_list)
 
-    def assign_field(self, cls_sym, field):
-        cls_gen = ClassCodeGenerator(cls_sym)
-        self.body += cls_gen.assign_field(field)
+    def assign_field(self, field):
+        self.body += self.cur_class_gen.assign_cls_field(field)
 
     def push_object(self, first: str):
         ref = f'[{Register.BP}{self.get_var_offset(first)}]'
 
         self.body += f'# push object ref {first}\n'
-        self.body += f'{Stack.push(ref)}\n\n'
+        self.body += f'{Stack.push(ref)}\n'
         # self.body += f'PUSH [{Register.BP}{self.get_var_offset(first)}]\n\n'
 
     def assign_var(self, _id):
@@ -221,4 +222,4 @@ class CodeGenerator:
         self.push_object(instance_name)
         if copy_to_obj_reg:
             self.body += f'SET {Register.OBJ} [{Register.SP}]\n\n'
-        #2nd one is different
+        # 2nd one is different
