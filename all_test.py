@@ -13,13 +13,10 @@ INTERPRETER = "vypint-1.0.jar"  # Path to the interpreter
 
 # Clean output directories
 def clean_output_dirs():
-    """Remove and recreate output directories."""
+    """Remove and recreate actual output directories."""
     if os.path.exists(ACTUAL_DIR):
         shutil.rmtree(ACTUAL_DIR)
-    if os.path.exists(EXPECTED_DIR):
-        shutil.rmtree(EXPECTED_DIR)
     os.makedirs(ACTUAL_DIR, exist_ok=True)
-    os.makedirs(EXPECTED_DIR, exist_ok=True)
 
 # Ensure subdirectory structure matches
 def ensure_output_dirs(test_file_path, base_dir, output_dir):
@@ -34,7 +31,7 @@ def ensure_output_dirs(test_file_path, base_dir, output_dir):
 # Run test case
 def run_test(test_file, is_valid):
     """
-    Run a single test, compile to VYPcode, and execute with the interpreter if valid.
+    Run a single test, compile to VYPcode, execute with the interpreter, and compare outputs.
     """
     test_name = os.path.splitext(os.path.basename(test_file))[0]
     test_input_file = os.path.splitext(test_file)[0] + ".in"  # Check for corresponding input file
@@ -45,7 +42,7 @@ def run_test(test_file, is_valid):
     # Step 1: Compile to VYPcode
     compile_result = subprocess.run(
         #[VENV_PYTHON, "main.py", test_file],
-        ["src/main.py", test_file],
+        ["main.py", test_file],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True
@@ -53,18 +50,20 @@ def run_test(test_file, is_valid):
 
     # Save .vypcode file or handle compilation failure
     if compile_result.returncode != 0:
-        if is_valid:
-            print(f"[FAIL] {test_name}: Compilation error\n{compile_result.stderr}")
-        else:
-            print(f"[PASS] {test_name}: Correctly failed to compile with return code {compile_result.returncode}.")
+        print(f"[FAIL] {test_name}: Compilation error\n")
+        print(f"stdout:\n{compile_result.stdout}")
+        print(f"stderr:\n{compile_result.stderr}")
+        print(f"return code: {compile_result.returncode}")
+        print(f"tested .vyp code: {test_file}")
+        print("=+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+=")
+
         return
     else:
-        if not is_valid:
-            print(f"[FAIL] {test_name}: Incorrectly compiled.")
-            return
         with open(vypcode_file, "w") as vf:
             vf.write(compile_result.stdout)
-        print(f"[PASS] {test_name}: Compilation successful with return code {compile_result.returncode}.")
+        print(f"[PASS] {test_name}: Compilation successful.\n")
+        print("=+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+=")
+
 
     # Step 2: Execute with interpreter (valid cases only)
     input_redirection = open(test_input_file, "r") if os.path.exists(test_input_file) else None
@@ -82,21 +81,24 @@ def run_test(test_file, is_valid):
     with open(actual_output_file, "w") as af:
         af.write(interpreter_result.stdout)
 
-    # Step 3: Generate expected output if missing
-    if not os.path.exists(expected_output_file):
-        with open(expected_output_file, "w") as ef:
-            ef.write(interpreter_result.stdout)
-        print(f"[INFO] Generated expected output for {test_name}")
+    # Display Results
+    print(f"stdin: {test_input_file if os.path.exists(test_input_file) else 'N/A'}")
+    print(f"stdout:\n{interpreter_result.stdout}")
+    print(f"return code: {interpreter_result.returncode}")
+    print(f"tested .vyp code: {test_file}\n")
 
-    # Compare actual output with expected output
+    # Step 3: Compare actual output with expected output
     if os.path.exists(expected_output_file):
         with open(expected_output_file, "r") as ef, open(actual_output_file, "r") as af:
             if ef.read().strip() == af.read().strip():
-                print(f"[PASS] {test_name}: Output matches expected.")
+                print(f"[PASS] {test_name}: Output matches expected.\n")
+                print("=+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+=")
             else:
-                print(f"[FAIL] {test_name}: Output mismatch.")
+                print(f"[FAIL] {test_name}: Output mismatch.\n")
+                print("=+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+=")
     else:
-        print(f"[FAIL] {test_name}: Missing expected output file.")
+        print(f"[FAIL] {test_name}: Missing expected output file.\n")
+        print("=+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+=")
 
 # Run all test cases
 def run_tests_in_dir(base_dir, is_valid):
@@ -119,11 +121,19 @@ def run_all_tests():
 
     # Step 2: Run valid test cases
     print("Running valid test cases...")
+    print("=+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+=")
+
     run_tests_in_dir(VALID_DIR, is_valid=True)
+    print("End of valid test cases...")
+    print("=+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+=")
+
 
     # Step 3: Run invalid test cases
     print("Running invalid test cases...")
+    print("=+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+==+=+=+=")
+
     run_tests_in_dir(INVALID_DIR, is_valid=False)
+    print("End of invalid test cases...")
 
 if __name__ == "__main__":
     run_all_tests()
