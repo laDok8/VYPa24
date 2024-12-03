@@ -1,18 +1,19 @@
-class Rectangle : Object {
+class Rectangle {
     int width, height;
 
-    void Rectangle(void) {
+    Rectangle() {
         this.width = 5;
         this.height = 10;
     }
 
-    int area(void) {
+    int area() {
         return this.width * this.height;
     }
 }
 
-void main(void) {
-    Rectangle r;
-    r = new Rectangle;
-    print("Area: ", r.area(), "\n");
+public class Main {
+    public static void main(String[] args) {
+        Rectangle r = new Rectangle();
+        System.out.println("Area: " + r.area());
+    }
 }

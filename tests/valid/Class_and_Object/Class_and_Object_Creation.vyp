@@ -1,14 +1,25 @@
-class Point : Object {
-    int x, y;
-    void set(int x, int y) {
-        this.x = x;
-        this.y = y;
+class Car {
+    String color;
+    int year;
+
+    void start() {
+        System.out.println("Car started!");
     }
 }
 
-void main(void) {
-    Point p;
-    p = new Point;
-    p.set(10, 20);
-    print("Point: (", p.x, ", ", p.y, ")\n");
+public class Main {
+    public static void main(String[] args) {
+        // Create a car object
+        Car myCar = new Car();
+        myCar.color = "red";
+        myCar.year = 2023;
+        myCar.start();
+
+        // Test if the car's color is red
+        if (myCar.color.equals("red")) {
+            System.out.println("Car is red!");
+        } else {
+            System.out.println("Car is not red.");
+        }
+    }
 }
