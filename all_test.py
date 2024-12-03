@@ -8,7 +8,7 @@ VALID_DIR = os.path.join(TEST_DIR, "valid")
 INVALID_DIR = os.path.join(TEST_DIR, "invalid")
 EXPECTED_DIR = os.path.join(TEST_DIR, "outputs/expected_outputs")
 ACTUAL_DIR = os.path.join(TEST_DIR, "outputs/actual_outputs")
-VENV_PYTHON = "/media/samantha/disk2/VYPa/Compiler_project/vyp_env/bin/python3"  # Adjust to your virtualenv's Python
+#VENV_PYTHON = "/media/samantha/disk2/VYPa/Compiler_project/vyp_env/bin/python3"  # Adjust to your virtualenv's Python
 INTERPRETER = "vypint-1.0.jar"  # Path to the interpreter
 
 # Clean output directories
@@ -41,8 +41,8 @@ def run_test(test_file, is_valid):
 
     # Step 1: Compile to VYPcode
     compile_result = subprocess.run(
-        [VENV_PYTHON, "main.py", test_file],
-        #["main.py", test_file],
+        #[VENV_PYTHON, "main.py", test_file],
+        ["main.py", test_file],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True
