@@ -1,3 +1,8 @@
+'''
+project: VYPlanguage Compiler
+author: Ladislav Dokoupil - xdokou14
+'''
+
 import src.compiler.exceptions as exceptions
 from src.sym_table.partial_symbol_table import PartialSymbolTable
 from src.sym_table.symbol import Symbol

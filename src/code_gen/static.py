@@ -1,3 +1,8 @@
+'''
+project: VYPlanguage Compiler
+author: Ladislav Dokoupil - xdokou14
+'''
+
 from src.code_gen.register import Register
 
 

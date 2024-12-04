@@ -1,3 +1,8 @@
+'''
+project: VYPlanguage Compiler
+author: Ladislav Dokoupil - xdokou14
+'''
+
 class Register:
     SP = '$SP'
     BP = '$BP'  # - 0

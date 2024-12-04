@@ -1,3 +1,8 @@
+'''
+project: VYPlanguage Compiler
+author: Ladislav Dokoupil - xdokou14
+'''
+
 import sys
 import traceback
 

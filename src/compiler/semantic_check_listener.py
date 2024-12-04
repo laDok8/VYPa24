@@ -1,3 +1,8 @@
+'''
+project: VYPlanguage Compiler
+author: Ladislav Dokoupil - xdokou14
+'''
+
 from antlr4.tree.Tree import ParseTreeListener
 
 from src.antlr_src.VypParser import VypParser  # for the constants

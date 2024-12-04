@@ -1,3 +1,8 @@
+'''
+project: VYPlanguage Compiler
+author: Ladislav Dokoupil - xdokou14
+'''
+
 from .definition_listener import DefinitionListener
 from .exceptions import *
 from .lexical_error_listener import LexicalErrorListener

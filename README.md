@@ -1,4 +1,4 @@
-## VYP compiler
+# VYP compiler
 Compiler for VYPa class.
 
 Compiler translates from VYPlanguage into VYPcode. 
@@ -13,8 +13,16 @@ To compile grammar and run the compiler we need antlr4
 pip install -r requirements.txt
 ```
 
-# Interpreter
+### Grammar generation
+To generate grammar, run the following command:
+```bash
+antlr4 Vyp.g4 -o src/antlr_src
+```
+
+
+## Interpreter
 To invoke the interpreter, run the following command:
 ```bash
 java -jar vypint-1.0.jar src.vypcode < input > output
 ```
+or you can utilize shebang

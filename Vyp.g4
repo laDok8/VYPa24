@@ -1,6 +1,6 @@
 /*
-    to generate parser run:
-    antlr4 Vyp.g4 -o src/antlr_src
+    project: VYPlanguage Compiler
+    author: Ladislav Dokoupil - xdokou14
 */
 grammar Vyp;
 options {

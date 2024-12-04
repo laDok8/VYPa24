@@ -1,3 +1,8 @@
+'''
+project: VYPlanguage Compiler
+author: Ladislav Dokoupil - xdokou14
+'''
+
 import re
 
 from src.code_gen.cls import ClassCodeGenerator
