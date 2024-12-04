@@ -12,8 +12,16 @@ def binary_op(func):
         op = ctx.op.text
         lhs = self.result[ctx.expr(0)]
         rhs = self.result[ctx.expr(1)]
+
         if lhs.data_type != rhs.data_type:
             raise exceptions.SemanticTypeError(f"{lhs.data_type} {op} {rhs.data_type} incompatible")
+
+        if op == '+' and lhs.data_type == 'string':
+            return func(self, ctx) # solved in semantics
+
+        if lhs.data_type != 'int':
+            raise exceptions.SemanticTypeError(f"{op} {lhs.data_type} binary operation inapplicable")
+
         _res = Symbol('tmp', SymbolTypes.VAR, 'int') # note: not stored in symbol table
         self.result[ctx] = _res
         self.code_generator.binary_op(op)

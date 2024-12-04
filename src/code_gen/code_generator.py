@@ -228,3 +228,8 @@ class CodeGenerator:
         if copy_to_obj_reg:
             self.body += f'SET {Register.OBJ} [{Register.SP}]\n\n'
         # 2nd one is different
+
+    def cast_int_to_string(self):
+        self.body += f'# cast int to string\n'
+        self.body += f'INT2STRING {Register.AX} [{Register.SP}]\n'
+        self.body += f'SET [{Register.SP}] {Register.AX}\n\n'

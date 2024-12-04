@@ -15,7 +15,8 @@ class Builtin:
             Builtin.length(),
             Builtin.subStr(),
             Builtin.toString(),
-            Builtin.getClass()
+            Builtin.getClass(),
+            Builtin.concat()
         ]
         return ''.join(functions)
 
@@ -94,7 +95,7 @@ LABEL subStr_end
 # exit function
 SET {Register.SP} {Register.BP}
 SET {Register.BP} [{Register.SP}]
-SUBI {Register.SP}, {Register.SP}, 4
+SUBI {Register.SP} {Register.SP} 4
 SET [{Register.SP}] {Register.DI}
 RETURN [{Register.SP}+3]\n\n'''
 
@@ -112,4 +113,37 @@ GETWORD {Register.AX} [{Register.SP}] 2
 SET [{Register.SP}] {Register.AX}
 RETURN [{Register.SP}+1]\n\n'''
 
-# TODO: concatenate_strings
+    @classmethod
+    def concat(cls):
+        return f'''LABEL __str_concat__
+    # {Register.BX}=len(left), {Register.EX}=len(right)
+    # {Register.AX}={Register.BX}+{Register.EX}
+    # {Register.DI}=copy(left)
+    # {Register.DI}=resize({Register.DI},{Register.AX})
+
+    SUBI {Register.SP} {Register.SP} 1
+    GETSIZE {Register.BX} [{Register.SP}]
+    GETSIZE {Register.EX} [{Register.SP} + 1]
+    COPY {Register.DI} [{Register.SP}]
+    ADDI {Register.AX} {Register.BX} {Register.EX}
+    RESIZE {Register.DI} {Register.AX}
+    SET {Register.CX} 0
+
+    # for {Register.CX}=0,{Register.BX}=len(left); {Register.CX}<{Register.EX}; {Register.CX}++,{Register.BX}++
+    #   {Register.DI}[{Register.BX}]=$right[{Register.CX}]
+
+    LABEL __str_concat__loop
+    LTI {Register.AX} {Register.CX} {Register.EX}
+    JUMPZ __str_concat__end {Register.AX}
+
+    GETWORD {Register.SI} [{Register.SP}+1] {Register.CX}
+    SETWORD {Register.DI} {Register.BX} {Register.SI}
+
+    ADDI {Register.BX} {Register.BX} 1
+    ADDI {Register.CX} {Register.CX} 1
+    JUMP __str_concat__loop
+    LABEL __str_concat__end
+
+    # return {Register.DI}
+    SET [{Register.SP}] {Register.DI}
+    RETURN [{Register.SP}+2]\n\n'''

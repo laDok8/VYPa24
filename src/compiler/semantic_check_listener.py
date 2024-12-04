@@ -221,7 +221,15 @@ class SemanticListener(ParseTreeListener):
 
     @binary_op
     def exitAdd_sub_expr(self, ctx: VypParser.Add_sub_exprContext):
-        pass
+        lhs = self.result[ctx.expr(0)]
+        rhs = self.result[ctx.expr(1)]
+
+        if lhs.data_type == 'string':
+            fun_sym = self.fun_symbols.get_symbol('__str_concat__')
+            self.code_generator.fun_call(fun_sym, [lhs, rhs])
+            _res = Symbol('tmp', SymbolTypes.VAR, 'string')
+            self.result[ctx] = _res
+            return
 
     @binary_op
     def exitMul_div_expr(self, ctx: VypParser.Mul_div_exprContext):
@@ -300,3 +308,19 @@ class SemanticListener(ParseTreeListener):
     @unary_op
     def exitNot_expr(self, ctx: VypParser.Not_exprContext):
         pass
+
+    def exitCast_expr(self, ctx: VypParser.Cast_exprContext):
+        castType = ctx.var_type().getText()
+        inner_expr = self.result[ctx.expr()]
+        if castType in ['int', 'string']:
+            if inner_expr.data_type == 'int' and castType == 'string':
+                self.code_generator.cast_int_to_string()
+            else:
+                raise SemanticTypeError(f"Cannot cast {inner_expr.data_type} to {castType}")
+
+            res_sym = Symbol('tmp', SymbolTypes.VAR, castType)
+            self.result[ctx] = res_sym
+        elif castType := self.class_symbols.get_symbol(castType):
+            self.result[ctx] = inner_expr # class is implicit
+        else:
+            raise SemanticTypeError(f"Unknown cast type {castType}")

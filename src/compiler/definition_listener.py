@@ -61,8 +61,13 @@ class DefinitionListener(ParseTreeListener):
         substr_func.add_param(Symbol('i', SymbolTypes.VAR, 'int'))
         substr_func.add_param(Symbol('n', SymbolTypes.VAR, 'int'))
 
+        concat_func = FunctionSymbol('__str_concat__', 'string')
+        concat_func.add_param(Symbol('s1', SymbolTypes.VAR, 'string'))
+        concat_func.add_param(Symbol('s2', SymbolTypes.VAR, 'string'))
+
         self.function_table.add_symbol(length_func)
         self.function_table.add_symbol(substr_func)
+        self.function_table.add_symbol(concat_func)
 
     def _defineFunc(self, name, ret_type):
         fun_sym = FunctionSymbol(name, ret_type)
