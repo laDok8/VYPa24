@@ -16,7 +16,7 @@ class ClassSymbol(Symbol):
     """
 
     def __init__(self, name: str, prt: None | Symbol):
-        super().__init__(name, SymbolTypes.CLASS, "foo")
+        super().__init__(name, SymbolTypes.CLASS, name)
         self.name = name
         self.parent = prt
         self.methods = OrderedDict()

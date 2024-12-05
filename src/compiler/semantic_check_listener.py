@@ -2,6 +2,7 @@
 project: VYPlanguage Compiler
 author: Ladislav Dokoupil - xdokou14
 '''
+from symtable import Class
 
 from antlr4.tree.Tree import ParseTreeListener
 
@@ -207,6 +208,8 @@ class SemanticListener(ParseTreeListener):
 
 
         if right_sym.data_type not in ['int', 'string']:
+            if isinstance(right_sym,FunctionSymbol):
+                right_sym = self.class_symbols.get_symbol(right_sym.data_type)
             left_cls_sym = self.class_symbols.get_symbol(left_sym.data_type)
             if not left_cls_sym.is_direct_parent(right_sym):
                 raise SemanticTypeError(f'assigning incompatible types {left_sym.data_type} = {right_sym.data_type}')
@@ -280,7 +283,13 @@ class SemanticListener(ParseTreeListener):
                 raise SemanticTypeError(f"Return mismatch {sym} != {self.cur_fun.get_return_type()}")
         else:
             if sym.data_type != self.cur_fun.get_return_type():
-                raise SemanticTypeError(f"Return mismatch {sym.data_type} != {self.cur_fun.get_return_type()}")
+                # for classes
+                if isinstance(sym, ClassSymbol):
+                    ret_type_sym = self.class_symbols.get_symbol(self.cur_fun.get_return_type())
+                    if not sym.is_direct_parent(ret_type_sym):
+                        raise SemanticTypeError(f"Return mismatch {sym.data_type} != {self.cur_fun.get_return_type()}")
+                else:
+                    raise SemanticTypeError(f"Return mismatch {sym.data_type} != {self.cur_fun.get_return_type()}")
 
         self.code_generator.ret_val(sym)
 
