@@ -81,15 +81,17 @@ class ClassCodeGenerator:
         body += f'{Stack.replace(Register.EX)}\n\n'
         return body
 
-    def cls_fun_call(self, fun: Function, args: [str]):
+    def cls_fun_call(self, fun: Function, super_call):
         # cls fun is called via VMT reference, 1st argument is always class, like python self
         # assume current object is in {Register.OBJ}
         body = f'# class function call {fun.f_name}\n'
         method_name = fun.f_name.split(":")[1]
         method_idx = list(self.cls.getVMT().keys()).index(method_name)
 
+        relevant_vmt = 1 if super_call else 0
+
         # no need for space for return value, we can overwrite obj
-        body += f'GETWORD {Register.AX} {Register.OBJ} 0 # GET VMT\n'
+        body += f'GETWORD {Register.AX} {Register.OBJ} {relevant_vmt} # GET VMT\n'
         body += f'GETWORD {Register.AX} {Register.AX} {method_idx} # GET DYNAMIC FUN REF\n'
         body += f'CALL [{Register.SP}+1] {Register.AX} # CALL DYNAMIC FUN\n\n'
         return body

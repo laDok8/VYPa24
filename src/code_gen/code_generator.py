@@ -94,11 +94,11 @@ class CodeGenerator:
 
         self.body += f'{Stack.push()}\n\n'
 
-    def fun_call(self, fun: FunctionSymbol, args: [Symbol]):
+    def fun_call(self, fun: FunctionSymbol, args: [Symbol],super_call=False):
         f = Function(fun)
 
         if self.cur_class_gen:
-            self.body += self.cur_class_gen.cls_fun_call(f, args)
+            self.body += self.cur_class_gen.cls_fun_call(f, super_call)
         else:
             self.body += f.call(args)
         self.cur_func = f
@@ -144,7 +144,7 @@ class CodeGenerator:
         self.body += self.cur_class_gen.assign_cls_field(field)
 
     def push_object(self, first: str):
-        if first == 'this':  # 1st arg is always this
+        if first in ['this', 'super'] :  # 1st arg is always this
             ref = f'[{Register.BP}-{len(self.params) + 2}]'
         else:
             ref = f'[{Register.BP}{self.get_var_offset(first)}]'

@@ -112,7 +112,10 @@ class SemanticListener(ParseTreeListener):
             fun_sym = self.curr_obj.get_method(fun_name)
         args = self.result[ctx.f_call_list()]
         self.verify_fun_signature(fun_sym, args)
-        self.code_generator.fun_call(fun_sym, args)
+
+        super_call = self.curr_class is not None and self.curr_obj != self.curr_class
+
+        self.code_generator.fun_call(fun_sym, args, super_call=super_call)
         self.result[ctx] = fun_sym
 
     def exitLiteral_expr(self, ctx: VypParser.Literal_exprContext):
@@ -160,14 +163,11 @@ class SemanticListener(ParseTreeListener):
             instance_sym = self.sym_table.get_symbol(left)
             cls_sym = self.class_symbols.get_symbol(instance_sym.data_type)
             instance_sym = instance_sym.name
-            pass
-            #cls_sym = self.class_symbols.get_symbol(instance_sym.data_type)
 
         self.code_generator.push_expr(cls_sym, instance_sym, copy_to_obj_reg=True)
 
     def exitInstance_expr(self, ctx: VypParser.Instance_exprContext):
         first = self.result[ctx.first_instance_ref()]
-        # self.code_generator.push_object(first) MOVED TO ENTER
 
         rightmost_sym = self.result[ctx.nested_invocation()]  # # TODO: check this - field.name or fun_call ret
 
@@ -186,16 +186,18 @@ class SemanticListener(ParseTreeListener):
     def exitFirst_instance_ref(self, ctx: VypParser.First_instance_refContext):
         if ctx.fun_call():
             self.result[ctx] = self.result[ctx.fun_call()]
+        elif ctx.THIS():
+            self.result[ctx] = self.curr_class
+            self.curr_obj = self.curr_class
+        elif ctx.SUPER():
+            self.result[ctx] = self.curr_class.parent
+            self.curr_obj = self.curr_class.parent
         else:
-            if ctx.THIS():
-                self.result[ctx] = self.curr_class
-                self.curr_obj = self.curr_class
-            else:
-                _sym = self.sym_table.get_symbol(ctx.ref.text)
-                _sym_type = _sym.data_type
-                _cls_sym = self.class_symbols.get_symbol(_sym_type)
-                self.curr_obj = _cls_sym
-                self.result[ctx] = ctx.ID().getText()
+            _sym = self.sym_table.get_symbol(ctx.ref.text)
+            _sym_type = _sym.data_type
+            _cls_sym = self.class_symbols.get_symbol(_sym_type)
+            self.curr_obj = _cls_sym
+            self.result[ctx] = ctx.ID().getText()
 
     def enterNested_invocation(self, ctx: VypParser.Nested_invocationContext):
         # push next object ref, calls are solved automagically TODO: need to push cls ref
