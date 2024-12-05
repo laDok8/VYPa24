@@ -42,6 +42,7 @@ while_cond: 'while' '(' expr ')';
 expr
     : '(' var_type ')' expr #cast_expr
     | '(' expr ')' #brace_expr
+    | op=('-'|'+') expr #minus_expr
     | op='!' expr  #not_expr
     | expr op=('*' | '/') expr #mul_div_expr
     | expr op=('+' | '-') expr #add_sub_expr

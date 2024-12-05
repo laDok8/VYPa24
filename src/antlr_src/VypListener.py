@@ -287,6 +287,15 @@ class VypListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by VypParser#minus_expr.
+    def enterMinus_expr(self, ctx:VypParser.Minus_exprContext):
+        pass
+
+    # Exit a parse tree produced by VypParser#minus_expr.
+    def exitMinus_expr(self, ctx:VypParser.Minus_exprContext):
+        pass
+
+
     # Enter a parse tree produced by VypParser#fun_call_expr.
     def enterFun_call_expr(self, ctx:VypParser.Fun_call_exprContext):
         pass

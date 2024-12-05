@@ -32,8 +32,10 @@ class DefinitionListener(ParseTreeListener):
         return self.class_table
 
     def exitProgram(self, _):
-        # every good program should have a main function
-        self.function_table.get_symbol("main")
+        from src.compiler import SemanticDeclarationError
+        main_sym = self.function_table.get_symbol("main")
+        if not main_sym or main_sym.data_type != "void":
+            raise SemanticDeclarationError("Program must contain main function")
 
         # set parents for classes
         for class_sym in self.class_table.get_current_symbols().values():

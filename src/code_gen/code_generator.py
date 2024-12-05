@@ -84,7 +84,14 @@ class CodeGenerator:
         self.variables.append(_name)
         _type = symbol.data_type
         self.body += f'# declare {_name}\n'
-        self.body += f'SET [{Register.BP}{self.get_var_offset(_name)}] 0\n'
+        if symbol.data_type == 'int':
+            self.body += f'SET {Register.AX} 0\n'
+        elif symbol.data_type == 'string':
+            self.body += f'CREATE {Register.AX} 1\n'
+            self.body += f'SETWORD {Register.AX} 0 ""\n'
+            self.body += f'GETWORD {Register.AX} {Register.AX} 0\n'
+        self.body += f'SET [{Register.BP}{self.get_var_offset(_name)}] {Register.AX}\n'
+
         self.body += f'{Stack.push()}\n\n'
 
     def fun_call(self, fun: FunctionSymbol, args: [Symbol]):
@@ -150,7 +157,34 @@ class CodeGenerator:
     def field_expr(self, field):
         self.body += self.cur_class_gen.field_expr_gen(field)
 
-    def binary_op(self, op: str):
+    def _binary_op_str(self, op: str):
+        op_map = {
+            '<': 'LTS',
+            '>=': 'LTS',  # ! < # can't be done in single instruction
+            '>': 'GTS',
+            '<=': 'GTS',  # ! >
+            '==': 'EQS',
+            '!=': 'EQS',  # !  ==
+        }
+        cur_op = op_map.get(op)
+
+        self.body += f'# binary operation: {op}\n'
+        self.body += f'{Stack.binary_op(cur_op)}\n\n'
+
+        op_map2 = {
+            '>=': '!',
+            '<=': '!',
+            '!=': '!',
+        }
+        cur_op = op_map2.get(op)
+        if cur_op:
+            self.unary_op(cur_op)
+
+    def binary_op(self, op: str, type: str):
+        if type == 'string':
+            self._binary_op_str(op)
+            return
+
         op_map = {
             '+': 'ADDI',
             '-': 'SUBI',
@@ -180,6 +214,14 @@ class CodeGenerator:
             self.unary_op(cur_op)
 
     def unary_op(self, op: str):
+        if op == '+':
+            return
+        elif op == '-':
+            self.body += f'# unary operation: {op}\n'
+            self.body += f'SUBI {Register.AX} 0 [{Register.SP}]\n'
+            self.body += f'SET [{Register.SP}] {Register.AX}\n'
+            return
+
         op_map = {
             '!': 'NOT',
         }

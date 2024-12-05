@@ -19,12 +19,12 @@ def binary_op(func):
         if op == '+' and lhs.data_type == 'string':
             return func(self, ctx) # solved in semantics
 
-        if lhs.data_type != 'int':
+        if lhs.data_type not in ['int', 'string']:
             raise exceptions.SemanticTypeError(f"{op} {lhs.data_type} binary operation inapplicable")
 
         _res = Symbol('tmp', SymbolTypes.VAR, 'int') # note: not stored in symbol table
         self.result[ctx] = _res
-        self.code_generator.binary_op(op)
+        self.code_generator.binary_op(op,lhs.data_type)
         return func(self, ctx)
 
     return wrapper

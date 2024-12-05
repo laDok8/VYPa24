@@ -32,7 +32,7 @@ def main(argv):
     parser, tree = None, None
     try:
         lexer = VypLexer(input_stream)
-        lexer.removeErrorListener(ConsoleErrorListener.INSTANCE)
+        # lexer.removeErrorListener(ConsoleErrorListener.INSTANCE)
         lexical_error_listener = LexicalErrorListener()
         lexer.addErrorListener(lexical_error_listener)
 
@@ -47,8 +47,11 @@ def main(argv):
         _exit(constants.SYNTAX_ERROR, "Syntax error")
 
     definition_listener = DefinitionListener()
-    walker = ParseTreeWalker()
-    walker.walk(definition_listener, tree)
+    try:
+        walker = ParseTreeWalker()
+        walker.walk(definition_listener, tree)
+    except CompilerError as e:
+        e.handle()
 
     # 2nd pass
     semantic_checker = SemanticListener(definition_listener.getFunctionTable(), definition_listener.getClassTable())

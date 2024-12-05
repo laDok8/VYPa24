@@ -139,13 +139,19 @@ class SemanticListener(ParseTreeListener):
     def exitInstance_creation(self, ctx: VypParser.Instance_creationContext):
         class_name = ctx.ID().getText()
         class_sym = self.class_symbols.get_symbol(class_name)
-        # self.result[ctx] = class_sym
+        self.result[ctx] = class_sym
         self.code_generator.create_instance(class_sym)
 
     def enterFirst_instance_ref(self, ctx: VypParser.First_instance_refContext):
-        left = ctx.ID().getText()
-        instance_sym = self.sym_table.get_symbol(left)
-        cls_sym = self.class_symbols.get_symbol(instance_sym.data_type)
+        cls_sym = None
+        if ctx.THIS():
+            cls_sym = self.curr_class
+        elif ctx.SUPER():
+            cls_sym = self.curr_class.parent
+        else:
+            left = ctx.ID().getText()
+            instance_sym = self.sym_table.get_symbol(left)
+            cls_sym = self.class_symbols.get_symbol(instance_sym.data_type)
 
         self.code_generator.push_expr(cls_sym, instance_sym.name, copy_to_obj_reg=True)
 
@@ -195,7 +201,17 @@ class SemanticListener(ParseTreeListener):
         self.result[ctx] = res
 
     def exitVar_assign(self, ctx: VypParser.Var_assignContext):
+        right_sym = self.result[ctx.expr()]
         _id = ctx.ID().getText()
+        left_sym = self.sym_table.get_symbol(_id)
+
+
+        if right_sym.data_type not in ['int', 'string']:
+            left_cls_sym = self.class_symbols.get_symbol(left_sym.data_type)
+            if not left_cls_sym.is_direct_parent(right_sym):
+                raise SemanticTypeError(f'assigning incompatible types {left_sym.data_type} = {right_sym.data_type}')
+        elif right_sym.data_type != left_sym.data_type:
+            raise SemanticTypeError(f'assigning incompatible types {left_sym.data_type} = {right_sym.data_type}')
         self.code_generator.assign_var(_id)
 
     def exitId_expr(self, ctx: VypParser.Id_exprContext):
@@ -309,6 +325,10 @@ class SemanticListener(ParseTreeListener):
     def exitNot_expr(self, ctx: VypParser.Not_exprContext):
         pass
 
+    @unary_op
+    def exitMinus_expr(self, ctx: VypParser.Minus_exprContext):
+        pass
+
     def exitCast_expr(self, ctx: VypParser.Cast_exprContext):
         castType = ctx.var_type().getText()
         inner_expr = self.result[ctx.expr()]
@@ -327,3 +347,9 @@ class SemanticListener(ParseTreeListener):
             self.result[ctx] = inner_expr # class is implicit
         else:
             raise SemanticTypeError(f"Unknown cast type {castType}")
+
+    def exitInstance_creation_expr(self, ctx: VypParser.Instance_creation_exprContext):
+        self.result[ctx] = self.result[ctx.instance_creation()]
+
+    def exitBrace_expr(self, ctx: VypParser.Brace_exprContext):
+        self.result[ctx] = self.result[ctx.expr()]
