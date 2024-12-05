@@ -10,22 +10,22 @@ class Stack:
     @staticmethod
     def push(x=None):
         if x is None:
-            return f'ADDI {Register.SP}, {Register.SP}, 1'
+            return f'ADDI {Register.SP} {Register.SP} 1'
         else:
-            return f'''ADDI {Register.SP}, {Register.SP}, 1
+            return f'''ADDI {Register.SP} {Register.SP} 1
 SET [{Register.SP}] {x}'''
 
     @staticmethod
     def pop(x=None):
         if x is None:
-            return f'SUBI {Register.SP}, {Register.SP}, 1'
+            return f'SUBI {Register.SP} {Register.SP} 1'
         else:
             return f'''SET {x} [{Register.SP}]
-SUBI {Register.SP}, {Register.SP}, 1'''
+SUBI {Register.SP} {Register.SP} 1'''
 
     @staticmethod
     def pops(x: int):
-        return f'SUBI {Register.SP}, {Register.SP}, {x}'
+        return f'SUBI {Register.SP} {Register.SP} {x}'
 
     @staticmethod
     def leave(pops: int):

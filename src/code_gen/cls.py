@@ -47,8 +47,9 @@ class ClassCodeGenerator:
         body += f'SETWORD {Register.AX} 1 [{vmt_prt}]\n'
         body += f'SETWORD {Register.AX} 2 "{self.cls.name}"\n'
         # init fields to 0
-        for i in range(2, len(self.cls.get_all_fields()) + ClassCodeGenerator.VMT_HEADER - 1):
-            body += f'SETWORD {Register.AX} {i + 1} 0\n'
+        for i, field in enumerate(self.cls.get_all_fields().values(), start=2):
+            def_val = '0' if field.data_type == 'int' else '""'
+            body += f'SETWORD {Register.AX} {i + 1} {def_val}\n'
         # available as self param for constructors
         body += f'{Stack.push(Register.AX)}\n\n'
 
