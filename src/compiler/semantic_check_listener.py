@@ -169,15 +169,9 @@ class SemanticListener(ParseTreeListener):
     def exitInstance_expr(self, ctx: VypParser.Instance_exprContext):
         first = self.result[ctx.first_instance_ref()]
 
-        rightmost_sym = self.result[ctx.nested_invocation()]  # # TODO: check this - field.name or fun_call ret
+        rightmost_sym = self.result[ctx.nested_invocation()]
 
-        # get first symbol
-        if not isinstance(first, ClassSymbol):
-            instance_type = self.sym_table.get_symbol(first).data_type
-        else:
-            instance_type = first
         # get class symbol
-        # class_sym = self.class_symbols.get_symbol(instance_type)
         self.result[ctx] = rightmost_sym
         self.curr_obj = None
         # we either left side or expression altogether
@@ -323,8 +317,6 @@ class SemanticListener(ParseTreeListener):
         self.result[ctx] = self.result[ctx.fun_call()]
 
     def verify_fun_signature(self, fun_sym, args):
-        arg0 =  [arg for arg in args]
-        #arg_types = [arg.data_type for arg in args]
         arg_types = []
         for arg in args:
             if isinstance(arg, str):

@@ -120,7 +120,7 @@ RESIZE {Register.DI} {Register.AX}
 SET {Register.CX} 0
 
 # for {Register.CX}=0,{Register.BX}=len(left); {Register.CX}<{Register.EX}; {Register.CX}++,{Register.BX}++
-#   {Register.DI}[{Register.BX}]=$right[{Register.CX}]
+# {Register.DI}[{Register.BX}]=$right[{Register.CX}]
 
 LABEL __str_concat__loop
 LTI {Register.AX} {Register.CX} {Register.EX}
