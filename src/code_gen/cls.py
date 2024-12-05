@@ -41,7 +41,6 @@ class ClassCodeGenerator:
         vmt_prt = ordered_classes_all.index(self.cls.parent) if self.cls.parent else 0
 
         body = f'# new {self.cls.name}\n'
-        # TODO: check field duplication?
         # VMT, prt, fields
         body += f'CREATE {Register.AX} {len(self.cls.get_all_fields()) + ClassCodeGenerator.VMT_HEADER}\n'
         body += f'SETWORD {Register.AX} 0 [{vmt_loc}]\n'

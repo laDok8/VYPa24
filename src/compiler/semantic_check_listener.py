@@ -106,7 +106,6 @@ class SemanticListener(ParseTreeListener):
         self.curr_class = None
 
     def exitFun_call(self, ctx: VypParser.Fun_callContext):
-        # TODO: maybe don't return fun_sym but return sym
         fun_name = ctx.ID().getText()
         fun_sym = self.fun_symbols.get_symbol(fun_name)
         if self.curr_obj:
@@ -194,7 +193,7 @@ class SemanticListener(ParseTreeListener):
     def exitNested_invocation(self, ctx: VypParser.Nested_invocationContext):
         # I just need to return last symbol
         if ctx.fun_call():
-            res = self.result[ctx.fun_call()]  # TODO: now fun_sym later ret_sym
+            res = self.result[ctx.fun_call()]
         else:
             res = ctx.ID().getText()  # field name
         if ctx.nested_invocation():
