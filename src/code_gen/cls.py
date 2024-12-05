@@ -79,7 +79,6 @@ class ClassCodeGenerator:
     def field_expr_gen(self, field):
         """get field ref to stack"""
         body = f'# field expr {field}\n'
-        # TODO: cast index problem
         body += f'GETWORD {Register.EX}, [{Register.SP}], {self._get_field_offset(field)}\n'
         body += f'{Stack.replace(Register.EX)}\n\n'
         return body

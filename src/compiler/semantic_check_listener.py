@@ -39,7 +39,7 @@ class SemanticListener(ParseTreeListener):
             self.code_generator.VMT(class_sym)
 
     def exitProgram(self, _):
-        # TODO: uncomment
+        # comment this to suppress output for debugging
         self.code_generator.generate_code()
         pass
 
@@ -321,6 +321,9 @@ class SemanticListener(ParseTreeListener):
             res_sym = Symbol('tmp', SymbolTypes.VAR, castType)
             self.result[ctx] = res_sym
         elif castType := self.class_symbols.get_symbol(castType):
+            inner_expr_type = self.class_symbols.get_symbol(inner_expr.data_type);
+            if not inner_expr_type.is_direct_parent(castType):
+                raise SemanticTypeError(f"Cannot cast {inner_expr_type.name} to {castType}")
             self.result[ctx] = inner_expr # class is implicit
         else:
             raise SemanticTypeError(f"Unknown cast type {castType}")

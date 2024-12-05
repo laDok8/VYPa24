@@ -3,11 +3,11 @@ project: VYPlanguage Compiler
 author: Ladislav Dokoupil - xdokou14
 '''
 
+from collections import OrderedDict
+
 import src.compiler.exceptions as exceptions
 from src.sym_table import Symbol, FunctionSymbol
 from src.sym_table.symbol import SymbolTypes
-from collections import OrderedDict
-
 
 
 class ClassSymbol(Symbol):
@@ -33,8 +33,13 @@ class ClassSymbol(Symbol):
     def get_self_methods(self):
         return self.methods
 
-    #def get_self_methods(self):
-    #    return {nm: sym for nm, sym in self.methods.items() if nm.startswith(self.name)}
+    def is_direct_parent(self, other: Symbol) -> bool:
+        tmp = self
+        while tmp is not None:
+            if tmp == other:
+                return True
+            tmp = tmp.parent
+        return False
 
     def get_constructor(self):
         return self.get_self_methods().get(self.name)

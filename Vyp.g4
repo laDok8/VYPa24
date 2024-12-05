@@ -56,7 +56,7 @@ expr
     | ID #id_expr;
 
 fun_call: ID '(' f_call_list ')';
-instance_creation: NEW ID; //('(' f_call_list ')')?; // TODO: constructor is parameterless for now
+instance_creation: NEW ID;
 
 literal_val: INT_LIT | STRING_LIT;
 
