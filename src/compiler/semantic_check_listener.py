@@ -353,3 +353,9 @@ class SemanticListener(ParseTreeListener):
 
     def exitBrace_expr(self, ctx: VypParser.Brace_exprContext):
         self.result[ctx] = self.result[ctx.expr()]
+
+    def enterCode_block(self, ctx:VypParser.Code_blockContext):
+        self.sym_table.push_scope()
+
+    def exitCode_block(self, ctx:VypParser.Code_blockContext):
+        self.sym_table.push_scope()
