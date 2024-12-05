@@ -23,6 +23,9 @@ class Function:
         len_args = len(self.args) or 1  # OR should be unreachable during interpretation
         if self.is_class_member:
             len_args += 1
+        nm_split = self.f_name.split(':')
+        if len(nm_split) == 2 and nm_split[0] == nm_split[1]:
+            len_args = 1  # constructor doesn't consume args
         body = f'# exit function\n'
         body += f'{Stack.leave(len_args)}\n'
         return body

@@ -49,10 +49,8 @@ class ClassCodeGenerator:
         # init fields to 0
         for i in range(2, len(self.cls.get_all_fields()) + ClassCodeGenerator.VMT_HEADER - 1):
             body += f'SETWORD {Register.AX} {i + 1} 0\n'
-        body += '\n'
-
         # available as self param for constructors
-        body += f'{Stack.push(Register.AX)}\n'
+        body += f'{Stack.push(Register.AX)}\n\n'
 
         """call constructors from outmost parent* to child - omit if default"""
         prts_const = []
