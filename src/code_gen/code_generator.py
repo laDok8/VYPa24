@@ -145,7 +145,7 @@ class CodeGenerator:
 
     def push_object(self, first: str):
         if first == 'this':  # 1st arg is always this
-            ref = f'[{Register.BP}-{len(self.variables) + 2}]'
+            ref = f'[{Register.BP}-{len(self.params) + 2}]'
         else:
             ref = f'[{Register.BP}{self.get_var_offset(first)}]'
 
