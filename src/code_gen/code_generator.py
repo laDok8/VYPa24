@@ -144,11 +144,13 @@ class CodeGenerator:
         self.body += self.cur_class_gen.assign_cls_field(field)
 
     def push_object(self, first: str):
-        ref = f'[{Register.BP}{self.get_var_offset(first)}]'
+        if first == 'this':  # 1st arg is always this
+            ref = f'[{Register.BP}-{len(self.variables) + 2}]'
+        else:
+            ref = f'[{Register.BP}{self.get_var_offset(first)}]'
 
         self.body += f'# push object ref {first}\n'
         self.body += f'{Stack.push(ref)}\n'
-        # self.body += f'PUSH [{Register.BP}{self.get_var_offset(first)}]\n\n'
 
     def assign_var(self, _id):
         self.body += f'# assign var {_id}\n'

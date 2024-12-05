@@ -123,7 +123,12 @@ class SemanticListener(ParseTreeListener):
     def exitF_call_list(self, ctx: VypParser.F_call_listContext):
         f_args = []
         for arg in ctx.expr():
-            f_args.append(self.result[arg])
+            res = self.result[arg]
+            if isinstance(res, str):
+                _res = self.sym_table.get_symbol(res)
+                f_args.append(_res)
+            else:
+                f_args.append(res)
         self.result[ctx] = f_args
 
     def exitStatement(self, ctx: VypParser.StatementContext):
@@ -146,14 +151,19 @@ class SemanticListener(ParseTreeListener):
         cls_sym = None
         if ctx.THIS():
             cls_sym = self.curr_class
+            instance_sym = 'this'
         elif ctx.SUPER():
             cls_sym = self.curr_class.parent
+            instance_sym = 'super'
         else:
             left = ctx.ID().getText()
             instance_sym = self.sym_table.get_symbol(left)
             cls_sym = self.class_symbols.get_symbol(instance_sym.data_type)
+            instance_sym = instance_sym.name
+            pass
+            #cls_sym = self.class_symbols.get_symbol(instance_sym.data_type)
 
-        self.code_generator.push_expr(cls_sym, instance_sym.name, copy_to_obj_reg=True)
+        self.code_generator.push_expr(cls_sym, instance_sym, copy_to_obj_reg=True)
 
     def exitInstance_expr(self, ctx: VypParser.Instance_exprContext):
         first = self.result[ctx.first_instance_ref()]
@@ -162,7 +172,10 @@ class SemanticListener(ParseTreeListener):
         rightmost_sym = self.result[ctx.nested_invocation()]  # # TODO: check this - field.name or fun_call ret
 
         # get first symbol
-        instance_type = self.sym_table.get_symbol(first).data_type
+        if not isinstance(first, ClassSymbol):
+            instance_type = self.sym_table.get_symbol(first).data_type
+        else:
+            instance_type = first
         # get class symbol
         # class_sym = self.class_symbols.get_symbol(instance_type)
         self.result[ctx] = rightmost_sym
@@ -174,12 +187,15 @@ class SemanticListener(ParseTreeListener):
         if ctx.fun_call():
             self.result[ctx] = self.result[ctx.fun_call()]
         else:
-            _sym = self.sym_table.get_symbol(ctx.ref.text)
-            _sym_type = _sym.data_type
-            _cls_sym = self.class_symbols.get_symbol(_sym_type)
-            self.curr_obj = _cls_sym
-
-        self.result[ctx] = ctx.ID().getText()
+            if ctx.THIS():
+                self.result[ctx] = self.curr_class
+                self.curr_obj = self.curr_class
+            else:
+                _sym = self.sym_table.get_symbol(ctx.ref.text)
+                _sym_type = _sym.data_type
+                _cls_sym = self.class_symbols.get_symbol(_sym_type)
+                self.curr_obj = _cls_sym
+                self.result[ctx] = ctx.ID().getText()
 
     def enterNested_invocation(self, ctx: VypParser.Nested_invocationContext):
         # push next object ref, calls are solved automagically TODO: need to push cls ref
@@ -188,7 +204,8 @@ class SemanticListener(ParseTreeListener):
             if field_name:
                 # when assigning to field we shouldn't push last one
                 if not self.assigning_instance or ctx.nested_invocation():  # a -> b
-                    self.code_generator.field_expr(field_name)
+                    field_sym = self.curr_obj.get_field(field_name)
+                    self.code_generator.field_expr(field_sym)
 
     def exitNested_invocation(self, ctx: VypParser.Nested_invocationContext):
         # I just need to return last symbol
@@ -196,6 +213,7 @@ class SemanticListener(ParseTreeListener):
             res = self.result[ctx.fun_call()]
         else:
             res = ctx.ID().getText()  # field name
+            res = self.curr_obj.get_field(res)
         if ctx.nested_invocation():
             res = self.result[ctx.nested_invocation()]
         self.result[ctx] = res
@@ -281,6 +299,13 @@ class SemanticListener(ParseTreeListener):
             if self.cur_fun.get_return_type() != 'void':
                 raise SemanticTypeError(f"Return mismatch {sym} != {self.cur_fun.get_return_type()}")
         else:
+            if isinstance(sym, str):
+                _sym = self.sym_table.get_symbol(sym)
+                if _sym is None:
+                    sym = self.sym_table.get_symbol(sym)
+                else:
+                    sym = _sym
+
             if sym.data_type != self.cur_fun.get_return_type():
                 # for classes
                 if isinstance(sym, ClassSymbol):
@@ -295,9 +320,17 @@ class SemanticListener(ParseTreeListener):
     def exitFun_call_expr(self, ctx: VypParser.Fun_call_exprContext):
         self.result[ctx] = self.result[ctx.fun_call()]
 
-    @staticmethod
-    def verify_fun_signature(fun_sym, args):
-        arg_types = [arg.data_type for arg in args]
+    def verify_fun_signature(self, fun_sym, args):
+        arg0 =  [arg for arg in args]
+        #arg_types = [arg.data_type for arg in args]
+        arg_types = []
+        for arg in args:
+            if isinstance(arg, str):
+                _arg = self.sym_table.get_symbol(arg)
+                arg_types.append(_arg.data_type)
+            else:
+                arg_types.append(arg.data_type)
+
         if fun_sym.name == 'print':
             return all(arg_type in ['int', 'string'] for arg_type in arg_types)
 

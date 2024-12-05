@@ -15,8 +15,8 @@ class ClassCodeGenerator:
     def __init__(self, cls: ClassSymbol):
         self.cls = cls
 
-    def _get_field_offset(self, field_name: str):
-        return self.cls.get_field_offset(field_name) + ClassCodeGenerator.VMT_HEADER
+    def _get_field_offset(self, field_name):
+        return self.cls.get_field_offset(field_name.name) + ClassCodeGenerator.VMT_HEADER
 
     def VMT(self):
         """VMT goes before functions"""

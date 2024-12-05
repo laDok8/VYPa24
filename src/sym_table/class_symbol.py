@@ -85,6 +85,9 @@ class ClassSymbol(Symbol):
         fields = {**prt_fields, **fields}
         return fields
 
+    def get_field(self, field_name: str):
+        return self.get_all_fields().get(field_name)
+
     def get_field_offset(self, field_name: str):
         fields = self.get_all_fields()
         return list(fields.keys()).index(field_name)
