@@ -3,7 +3,7 @@ project: VYPlanguage Compiler
 author: Ladislav Dokoupil - xdokou14
 '''
 
-from src.sym_table.symbol import SymbolTypes, Symbol
+from sym_table.symbol import SymbolTypes, Symbol
 
 
 class FunctionSymbol(Symbol):

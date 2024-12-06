@@ -3,10 +3,10 @@ project: VYPlanguage Compiler
 author: Ladislav Dokoupil - xdokou14
 '''
 
-from src.code_gen.function import Function
-from src.code_gen.register import Register
-from src.code_gen.stack import Stack
-from src.sym_table import ClassSymbol
+from code_gen.function import Function
+from code_gen.register import Register
+from code_gen.stack import Stack
+from sym_table.class_symbol import ClassSymbol
 
 
 class ClassCodeGenerator:

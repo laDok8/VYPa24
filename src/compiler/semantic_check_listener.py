@@ -6,11 +6,11 @@ from symtable import Class
 
 from antlr4.tree.Tree import ParseTreeListener
 
-from src.antlr_src.VypParser import VypParser  # for the constants
-from src.code_gen.code_generator import *
-from src.compiler.decorators import binary_op, unary_op
-from src.compiler.exceptions import *
-from src.sym_table import *
+from antlr_src.VypParser import VypParser  # for the constants
+from code_gen.code_generator import *
+from compiler.decorators import binary_op, unary_op
+from compiler.exceptions import *
+from sym_table import *
 
 
 class SemanticListener(ParseTreeListener):

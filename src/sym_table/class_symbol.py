@@ -5,9 +5,9 @@ author: Ladislav Dokoupil - xdokou14
 
 from collections import OrderedDict
 
-import src.compiler.exceptions as exceptions
-from src.sym_table import Symbol, FunctionSymbol
-from src.sym_table.symbol import SymbolTypes
+from compiler.exceptions import SemanticDeclarationError
+from sym_table.function_symbol import FunctionSymbol
+from sym_table.symbol import SymbolTypes,Symbol
 
 
 class ClassSymbol(Symbol):
@@ -78,7 +78,7 @@ class ClassSymbol(Symbol):
             return self.fields
 
         if self.name in recursion_check:
-            raise exceptions.SemanticDeclarationError("Circular inheritance")
+            raise SemanticDeclarationError("Circular inheritance")
 
         fields = self.fields.copy()
         prt_fields = self.parent.get_all_fields(recursion_check + [self.name])

@@ -3,9 +3,11 @@ project: VYPlanguage Compiler
 author: Ladislav Dokoupil - xdokou14
 '''
 
-from src.code_gen.register import Register
-from src.code_gen.stack import Stack
-from src.sym_table import Symbol, FunctionSymbol
+from code_gen.register import Register
+from code_gen.stack import Stack
+from sym_table.symbol import Symbol
+from sym_table.function_symbol import FunctionSymbol
+
 
 
 class Function:

@@ -5,8 +5,12 @@ author: Ladislav Dokoupil - xdokou14
 
 from antlr4.tree.Tree import ParseTreeListener
 
-from src.antlr_src.VypParser import VypParser  # for the constants
-from src.sym_table import *
+from antlr_src.VypParser import VypParser  # for the constants
+from sym_table.symbol_table import SymbolTable
+from sym_table.class_symbol import ClassSymbol
+from sym_table.function_symbol import FunctionSymbol
+from sym_table.symbol import Symbol, SymbolTypes
+from compiler.exceptions import SemanticDeclarationError
 
 
 class DefinitionListener(ParseTreeListener):
@@ -32,7 +36,6 @@ class DefinitionListener(ParseTreeListener):
         return self.class_table
 
     def exitProgram(self, _):
-        from src.compiler import SemanticDeclarationError
         main_sym = self.function_table.get_symbol("main")
         if not main_sym or main_sym.data_type != "void":
             raise SemanticDeclarationError("Program must contain main function")

@@ -3,7 +3,7 @@ project: VYPlanguage Compiler
 author: Ladislav Dokoupil - xdokou14
 '''
 
-from src.code_gen.register import Register
+from code_gen.register import Register
 
 
 class Stack:

@@ -5,15 +5,15 @@ author: Ladislav Dokoupil - xdokou14
 
 import re
 
-from src.code_gen.cls import ClassCodeGenerator
-from src.code_gen.function import Function
-from src.code_gen.if_else import IfElseGenerator
-from src.code_gen.literal import Literal
-from src.code_gen.register import Register
-from src.code_gen.stack import Stack
-from src.code_gen.static import Builtin
-from src.compiler import SemanticDeclarationError
-from src.sym_table import *
+from code_gen.cls import ClassCodeGenerator
+from code_gen.function import Function
+from code_gen.if_else import IfElseGenerator
+from code_gen.literal import Literal
+from code_gen.register import Register
+from code_gen.stack import Stack
+from code_gen.static import Builtin
+from compiler.exceptions import SemanticDeclarationError
+from sym_table import *
 
 
 # WARN: for some reason, stack grows up

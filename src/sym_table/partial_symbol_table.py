@@ -3,8 +3,8 @@ project: VYPlanguage Compiler
 author: Ladislav Dokoupil - xdokou14
 '''
 
-from src.sym_table.symbol import Symbol
-import src.compiler.exceptions as exceptions
+from sym_table.symbol import Symbol
+from compiler.exceptions import SemanticDeclarationError
 
 
 class PartialSymbolTable:
@@ -17,12 +17,12 @@ class PartialSymbolTable:
 
     def add_symbol(self, symbol: Symbol):
         if symbol.name in [s.name for s in self.symbols.values()]:
-            raise exceptions.SemanticDeclarationError(f"Symbol {symbol.name} already exists")
+            raise SemanticDeclarationError(f"Symbol {symbol.name} already exists")
         self.symbols[symbol.name] = symbol
 
     def get_symbol(self, name: str) -> Symbol:
         if name not in [s.name for s in self.symbols.values()]:
-            raise exceptions.SemanticDeclarationError(f"Symbol {name} not found")
+            raise SemanticDeclarationError(f"Symbol {name} not found")
         return self.symbols.get(name)
 
     def get_symbols(self) -> dict:

@@ -3,9 +3,9 @@ project: VYPlanguage Compiler
 author: Ladislav Dokoupil - xdokou14
 '''
 
-import src.compiler.exceptions as exceptions
-from src.sym_table.partial_symbol_table import PartialSymbolTable
-from src.sym_table.symbol import Symbol
+from sym_table.partial_symbol_table import PartialSymbolTable
+from sym_table.symbol import Symbol
+from compiler.exceptions import CompilerError
 
 
 class SymbolTable:
@@ -54,7 +54,7 @@ class SymbolTable:
             # We are looking through all tables so exception is possible
             try:
                 s = table.get_symbol(name)
-            except exceptions.CompilerError:
+            except CompilerError:
                 continue
             if s:
                 return s

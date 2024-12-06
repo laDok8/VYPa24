@@ -7,12 +7,14 @@ import sys
 import traceback
 
 from antlr4 import *
-from antlr4.error.ErrorListener import ConsoleErrorListener
 
-from antlr_src.VypLexer import VypLexer
 from antlr_src.VypParser import VypParser
-from src.compiler import *
-from src.utils import constants
+from antlr_src.VypLexer import VypLexer
+from compiler.exceptions import *
+from compiler.lexical_error_listener import LexicalErrorListener
+from compiler.definition_listener import DefinitionListener
+from compiler.semantic_check_listener import SemanticListener
+from utils import constants
 
 
 def _exit(code: int, message: str):

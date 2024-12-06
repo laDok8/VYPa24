@@ -5,7 +5,7 @@ author: Ladislav Dokoupil - xdokou14
 
 from enum import Enum
 
-import src.compiler.exceptions as exceptions
+from compiler.exceptions import SemanticDeclarationError
 
 class SymbolTypes(Enum):
     CLASS = 'class'
@@ -23,7 +23,7 @@ class Symbol:
         self.name = name
         self.data_type = data_type
         if symbol_type not in SymbolTypes:
-            raise exceptions.SemanticDeclarationError(f"Unknown type {symbol_type}")
+            raise SemanticDeclarationError(f"Unknown type {symbol_type}")
         self.symbol_type = symbol_type
 
     def __str__(self):
