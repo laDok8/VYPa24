@@ -1,13 +1,12 @@
 PIP = pip3
 
-all: setup
+all: nothing
 
-setup:
-	$(PIP) install -r requirements.txt
-
+nothing:
+	@echo ""
 
 #TODO: add docs
 zip:
-	tar czf xdokou14.tgz src/* Makefile README.md division extensions Makefile requirements.txt Vyp.g4 vypcomp.sh
+	tar czf xdokou14.tgz src/* Makefile README.md division extensions Makefile Vyp.g4 vypcomp.sh
 
-.PHONY: all setup zip
+.PHONY: all setup zip nothing
