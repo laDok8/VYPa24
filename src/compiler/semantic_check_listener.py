@@ -194,7 +194,7 @@ class SemanticListener(ParseTreeListener):
             self.result[ctx] = ctx.ID().getText()
 
     def enterNested_invocation(self, ctx: VypParser.Nested_invocationContext):
-        # push next object ref, calls are solved automagically TODO: need to push cls ref
+        # push next object ref, calls are solved automagically
         if ctx.ID() is not None:
             field_name = ctx.ID().getText()
             if field_name:

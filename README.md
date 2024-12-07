@@ -19,10 +19,22 @@ To generate grammar, run the following command:
 antlr4 Vyp.g4 -o src/antlr_src
 ```
 
+### Running the compiler
+To run the compiler, run the following command:
+```bash
+python3 src/main.py src.vyplang
+```
 
 ## Interpreter
 To invoke the interpreter, run the following command:
 ```bash
 java -jar vypint-1.0.jar src.vypcode < input > output
 ```
-or you can utilize shebang
+alternatively you can utilize shebang
+
+## Disclaimer
+This project is mostly functional, but due to time pressure it's due for a refactor.
+Known issues:
+- Variable shadowing
+- code_gen is due for a refactor 
+```
