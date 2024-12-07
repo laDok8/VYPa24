@@ -110,9 +110,17 @@ class CodeGenerator:
             self.body += Literal.string_literal(symbol.name)
 
     def restore_stack(self):
-        _vars = len(self.variables)
-        self.body += f'# restore stack\n'
-        self.body += f'ADDI {Register.SP} {Register.BP} {_vars}\n\n'
+        """
+        pros of using this:
+        + infinite while with declaration won't overflow stack
+        + can keep trash on stack
+
+        - less readable/effective code
+        """
+        pass
+        # _vars = len(self.variables)
+        # self.body += f'# restore stack\n'
+        # self.body += f'ADDI {Register.SP} {Register.BP} {_vars}\n\n'
 
     def function_def(self, fun_sym: FunctionSymbol):
         function = Function(fun_sym)
