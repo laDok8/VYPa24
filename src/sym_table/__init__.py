@@ -1,7 +1,7 @@
-'''
+"""
 project: VYPlanguage Compiler
 author: Ladislav Dokoupil - xdokou14
-'''
+"""
 
 from .symbol_table import *
 from .symbol import *

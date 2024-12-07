@@ -1,7 +1,7 @@
-'''
+"""
 project: VYPlanguage Compiler
 author: Ladislav Dokoupil - xdokou14
-'''
+"""
 
 from antlr4.error.ErrorListener import ErrorListener
 

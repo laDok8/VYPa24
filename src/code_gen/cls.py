@@ -1,7 +1,7 @@
-'''
+"""
 project: VYPlanguage Compiler
 author: Ladislav Dokoupil - xdokou14
-'''
+"""
 
 from code_gen.function import Function
 from code_gen.register import Register

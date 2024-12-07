@@ -1,7 +1,7 @@
-'''
+"""
 project: VYPlanguage Compiler
 author: Ladislav Dokoupil - xdokou14
-'''
+"""
 
 from sym_table.partial_symbol_table import PartialSymbolTable
 from sym_table.symbol import Symbol

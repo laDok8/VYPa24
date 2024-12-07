@@ -1,7 +1,7 @@
-'''
+"""
 project: VYPlanguage Compiler
 author: Ladislav Dokoupil - xdokou14
-'''
+"""
 
 from sym_table import Symbol, SymbolTypes
 from compiler.exceptions import SemanticTypeError

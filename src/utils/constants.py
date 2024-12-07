@@ -1,7 +1,7 @@
-'''
+"""
 project: VYPlanguage Compiler
 author: Ladislav Dokoupil - xdokou14
-'''
+"""
 
 LEXICAL_ERROR = 11
 SYNTAX_ERROR = 12

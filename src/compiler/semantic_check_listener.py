@@ -1,7 +1,7 @@
-'''
+"""
 project: VYPlanguage Compiler
 author: Ladislav Dokoupil - xdokou14
-'''
+"""
 from symtable import Class
 
 from antlr4.tree.Tree import ParseTreeListener
