@@ -115,7 +115,7 @@ class SemanticListener(ParseTreeListener):
 
         super_call = self.curr_class is not None and self.curr_obj != self.curr_class
 
-        self.code_generator.fun_call(fun_sym, args, super_call=super_call)
+        self.code_generator.fun_call(fun_sym, args, super_call=super_call, obj=self.curr_obj)
         self.result[ctx] = fun_sym
 
     def exitLiteral_expr(self, ctx: VypParser.Literal_exprContext):
@@ -221,10 +221,9 @@ class SemanticListener(ParseTreeListener):
 
 
         if right_sym.data_type not in ['int', 'string']:
-            if isinstance(right_sym,FunctionSymbol):
-                right_sym = self.class_symbols.get_symbol(right_sym.data_type)
+            right_class_sym = self.class_symbols.get_symbol(right_sym.data_type)
             left_cls_sym = self.class_symbols.get_symbol(left_sym.data_type)
-            if not left_cls_sym.is_direct_parent(right_sym):
+            if not right_class_sym.has_direct_parent(left_cls_sym):
                 raise SemanticTypeError(f'assigning incompatible types {left_sym.data_type} = {right_sym.data_type}')
         elif right_sym.data_type != left_sym.data_type:
             raise SemanticTypeError(f'assigning incompatible types {left_sym.data_type} = {right_sym.data_type}')
@@ -306,7 +305,7 @@ class SemanticListener(ParseTreeListener):
                 # for classes
                 if isinstance(sym, ClassSymbol):
                     ret_type_sym = self.class_symbols.get_symbol(self.cur_fun.get_return_type())
-                    if not sym.is_direct_parent(ret_type_sym):
+                    if not sym.has_direct_parent(ret_type_sym):
                         raise SemanticTypeError(f"Return mismatch {sym.data_type} != {self.cur_fun.get_return_type()}")
                 else:
                     raise SemanticTypeError(f"Return mismatch {sym.data_type} != {self.cur_fun.get_return_type()}")
@@ -377,7 +376,7 @@ class SemanticListener(ParseTreeListener):
             self.result[ctx] = res_sym
         elif castType := self.class_symbols.get_symbol(castType):
             inner_expr_type = self.class_symbols.get_symbol(inner_expr.data_type);
-            if not inner_expr_type.is_direct_parent(castType):
+            if not inner_expr_type.has_direct_parent(castType):
                 raise SemanticTypeError(f"Cannot cast {inner_expr_type.name} to {castType}")
             self.result[ctx] = inner_expr # class is implicit
         else:

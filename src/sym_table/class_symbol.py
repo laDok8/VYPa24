@@ -33,7 +33,7 @@ class ClassSymbol(Symbol):
     def get_self_methods(self):
         return self.methods
 
-    def is_direct_parent(self, other: Symbol) -> bool:
+    def has_direct_parent(self, other: Symbol) -> bool:
         tmp = self
         while tmp is not None:
             if tmp == other:

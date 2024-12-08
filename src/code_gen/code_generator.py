@@ -94,10 +94,10 @@ class CodeGenerator:
 
         self.body += f'{Stack.push()}\n\n'
 
-    def fun_call(self, fun: FunctionSymbol, args: [Symbol],super_call=False):
+    def fun_call(self, fun: FunctionSymbol, args: [Symbol],super_call=False, obj=None):
         f = Function(fun)
 
-        if self.cur_class_gen:
+        if self.cur_class_gen and obj:
             self.body += self.cur_class_gen.cls_fun_call(f, super_call)
         else:
             self.body += f.call(args)
