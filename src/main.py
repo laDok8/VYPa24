@@ -31,10 +31,9 @@ def main(argv):
     except FileNotFoundError:
         _exit(constants.INTERNAL_ERROR, "File not found")
 
-    stdout_file = 'test.vc'
+    stdout_file = 'out.vc'
     if len(argv) == 3:
         stdout_file = argv[2]
-
     sys.stdout = open(stdout_file, "w")
 
     parser, tree = None, None

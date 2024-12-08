@@ -101,7 +101,6 @@ class CodeGenerator:
             self.body += self.cur_class_gen.cls_fun_call(f, super_call)
         else:
             self.body += f.call(args)
-        self.cur_func = f
 
     def literal(self, symbol: Symbol):
         if symbol.data_type == 'int':
