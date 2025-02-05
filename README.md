@@ -37,4 +37,22 @@ This project is mostly functional, but due to time pressure it's due for a refac
 Known issues:
 - Variable shadowing
 - code_gen is due for a refactor 
+
+## Results
 ```
+Lexical analysis (error detection): 73% (157/214)
+Syntactical analysis (error detection): 88% (266/301)
+Semantic analysis (error detection): 82% (248/300)
+Basic code generation (no classes): 93% (373/401)
+Code generation (objects and classes): 36% (182/500)
+SHORTEVAL: 0% (0/150)
+MINUS: 100% (100/100)
+FOR: 0% (0/100)
+IFONLY: 90% (90/100)
+INITVAR: 0% (0/70)
+OVERLOAD: 0% (0/200)
+FLOAT: 0% (0/100)
+VISIBILITY: 0% (0/100)
+Total without extensions: 71% (1226/1716)
+```
+19.8/20
